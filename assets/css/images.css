@@ -9,14 +9,13 @@
 	initial-value: 0;
 }
 
-/* Standard css  */
+/* --object properties are standard css that will apply either when you fix a height or use --height-fix mechanism  */
 @property --object-fit {
 	syntax: 'scale-down | cover | contain | fill'; 
 	initial-value: scale-down;
 	inherits: true;
 }
 
-/* this the vertical alignment you're after */
 @property --object-position-x {
 	syntax: 'left | center | right | <length-percentage>'; 
 	initial-value: center;

@@ -100,7 +100,7 @@ Fade In Testing Page
 			// make the items - nothing to do with the styling.
 			var $item = $(".item");
 			var $list = $(".list > .gridInner");
-			for (i=1; i <= 6; i++) {
+			for (let i=1; i <= 6; i++) {
 				let $newItem = $item.clone().attr("id","item" + i);
 				$list.append($newItem);
 			}
@@ -116,4 +116,3 @@ Fade In Testing Page
 
 </body>
 </html>
-

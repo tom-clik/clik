@@ -51,7 +51,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 				resize();
 			});
 		}
-
+		
 		var resize = function() {
 			let resize =  clik.trueFalse( $image.css("--heightfix") ) || false;
 			if (resize) {
@@ -67,7 +67,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 				$image.removeAttr("style");
 			}
 			
-			$image.css({"display":"block"});
+			$image.css({"display":"block","visibility":"visible"});
 		}
 
 		plugin.init();

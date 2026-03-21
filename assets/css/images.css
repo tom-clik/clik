@@ -97,15 +97,10 @@
 	max-height:100%;
 	height:auto;
 }
-
-.cs-image.fixedheight figure  {
-	width: 100%;
-	height:100%;
-}
-
+/** Apply this class only to avoid FOUC when using JS fixed-heights
+ * It's removed by the script */
 .cs-image.fixedheight img {
-	object-fit:var(--object-fit);
-	object-position: var(--object-position-x) var(--object-position-y);
+	visibility: hidden;
 }
 
 .popup {

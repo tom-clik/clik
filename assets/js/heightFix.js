@@ -58,7 +58,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 			if (resize) {
 				$element.addClass("fixedheight");
 				$element.css("height","auto");
-				$image.css({"visibility":"hidden"});
+				$image.css({"display":"none"});
 				let h = $container.height();
 				$element.css("height",(h-paddings) + "px");
 			}
@@ -68,7 +68,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 				$image.removeAttr("style");
 			}
 			
-			$image.css({"visibility":"visible"});
+			$image.css({"display":"block"});
 			$element.removeClass("heightfix-pending");
 		}
 

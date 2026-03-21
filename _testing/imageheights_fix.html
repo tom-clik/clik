@@ -28,6 +28,7 @@ It works by hiding the image, getting the height of the container, fixing that h
 		background-color: #ccc;
 	}
 
+	/** Set the page to */
 	#ubercontainer {
 		background-color: #fff;
 		border: 1px solid #000;
@@ -37,17 +38,18 @@ It works by hiding the image, getting the height of the container, fixing that h
 		min-height:100%;
 		--grid-mode: rows;
 		--grid-template-rows: min-content auto;
-}
+	}
 
 
 	#test {
 		border:1px solid gray;
 		padding:4px;
 		margin:20px 0;
-		display: block;
-		display: grid;
-		grid-template-rows: minmax(0,1fr) min-content;
 		--heightfix:1;
+		--object-position-y:80%;
+		--object-position-x:60%;
+		/* this will work */
+		--object-fit: cover;
 		min-height:120px;
 	}
 
@@ -58,21 +60,37 @@ It works by hiding the image, getting the height of the container, fixing that h
 		display: inline-block;
 	}
 
-
 	@media (max-width:800px) {
 		#test {
+			--object-fit: contain;
+			--object-position-y:middle;
+			--object-position-x:center;
 			--heightfix:0;
 			max-height: 300px;
 		}
+
 	}
+
+	div.mid span {
+		display: none;
+	}
+
+	@media (min-width:1000px) and (max-width:1200px) {
+		#test figcaption {
+			display: none;
+		}
+		div.mid span {
+			display: block;
+		}
+	}
+
+
+	
 	@media (min-width:1200px) {
 		#test {
 			--heightfix:0;
 		}
 	}
-
-
-
 	</style>
 </head>
 
@@ -81,15 +99,13 @@ It works by hiding the image, getting the height of the container, fixing that h
 	<div id="ubercontainer" class="grid">
 		<div class="gridInner">
 			<div class="max">No Fixed height</div>
-			<div class="mid">Dynamic Fixed height applied by script</div>
+			<div class="mid">Dynamic Fixed height applied by script <span>NO CAPTION</span></div>
 			<div class="mobile">Container has fixed height applied by CSS</div>
-			<div id="test" class="cs-image fixedheight">
-				<div class="image">
+			<div id="test" class="cs-image">
+				<figure>
 					<img src="images/earthly-beauties-V3W8Lknvhq8-unsplash.jpg"> 
-				</div>
-				<div class='caption'>
-				Lorem iposum
-				</div>
+					<figcaption>Lorem iposum</figcaption>
+				</figure>
 			</div>
 		</div>
 	</div>

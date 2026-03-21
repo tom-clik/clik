@@ -50,7 +50,43 @@ body {
 
 div:not(.grid):has( > .inner) {
 	container-name:hasInner;
+	--inner: 1;
 	--sticky: 0;
+}
+
+/* Use inner divs to stop a host of issues like margin expanding etc. Also needed in grid layouts
+to expand content to fit. Apply .container div around the normal div.
+ */
+div.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+div.container > * {
+  position: relative;
+  flex-grow: 1;
+  width:100%;
+}
+
+div.container > .inner > * {
+	  width:100%;
+	}
+
+@container hasInner ( style(--inner:1) ) {
+	.inner {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: stretch;
+	  flex-grow: 1;
+	}
+
+	/*.inner > * {
+	  position: relative;
+	  flex-grow: 1;
+	  height:100%;
+	  width:100%;
+	}*/
 }
 
 #header {

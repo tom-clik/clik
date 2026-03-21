@@ -61,8 +61,11 @@ It works by hiding the image, getting the height of the container, fixing that h
 		width: 100%;
 		height: 100%;
 		object-fit: scale-down;
-		display: none;
+		display: block;
 		object-position: 0 0;
+	}
+	.cs-image.heightfix-pending .image img {
+		visibility: hidden;
 	}
 
 	@media (max-width:800px) {
@@ -87,7 +90,7 @@ It works by hiding the image, getting the height of the container, fixing that h
 			<div class="max">No Fixed height</div>
 			<div class="mid">Dynamic Fixed height applied by script</div>
 			<div class="mobile">Container has fixed height applied by CSS</div>
-			<div id="test" class="cs-image">
+			<div id="test" class="cs-image heightfix-pending">
 				<div class="image">
 					<img src="images/earthly-beauties-V3W8Lknvhq8-unsplash.jpg"> 
 				</div>

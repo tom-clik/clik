@@ -44,6 +44,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 			plugin.settings = $.extend({}, defaults, options);
 			$container = $element.parent();
 			$image = $element.find("img");
+			$element.addClass("heightfix-pending");
 			paddings = $element.outerHeight(true) - $element.height();
 			resize();
 
@@ -57,7 +58,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 			if (resize) {
 				$element.addClass("fixedheight");
 				$element.css("height","auto");
-				$image.css({"display":"none"});
+				$image.css({"visibility":"hidden"});
 				let h = $container.height();
 				$element.css("height",(h-paddings) + "px");
 			}
@@ -67,7 +68,8 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 				$image.removeAttr("style");
 			}
 			
-			$image.css({"display":"block"});
+			$image.css({"visibility":"visible"});
+			$element.removeClass("heightfix-pending");
 		}
 
 		plugin.init();

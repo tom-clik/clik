@@ -36,7 +36,9 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 		var $element = $(element), 
 			element = element,
 			$container,
-			$image; 
+			$image,
+			$imageDiv,
+			$caption; 
 
 		plugin.init = function() {
 
@@ -58,7 +60,7 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 				$element.addClass("fixedheight");
 				$imageDiv.css("height","auto");
 				$image.css({"display":"none"});
-				let h = $imageDiv.height();// - ( $caption.height() || 0 )
+				let h = $imageDiv.height();
 				$imageDiv.css("height",h + "px");
 			}
 			else {

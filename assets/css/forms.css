@@ -174,16 +174,16 @@ input[type="checkbox"] + label:before, input[type="radio"] + label:before {
     vertical-align:middle;
     cursor:pointer;
     content:"";
-    background:url(/_assets/images/forms/square.svg) left center no-repeat;
+    background:url(../images/forms/square.svg) left center no-repeat;
     background-size: contain;
 }
 
 input[type="checkbox"]:checked + label:before {
-  	background-image:url(/_assets/images/forms/square-check.svg);
+  	background-image:url(../images/forms/square-check.svg);
 }
 input[type="radio"] + label:before {
-	background-image:url(/_assets/images/forms/circle.svg);
+	background-image:url(../images/forms/circle.svg);
 }
 input[type="radio"]:checked + label:before {
-	background-image:url(/_assets/images/forms/circle-check.svg);
+	background-image:url(../images/forms/circle-check.svg);
 }

@@ -52,7 +52,7 @@ clik = {
 		clik.autoopen();
 		clik.grids();
 		
-		$('.item.fade-in').fadeInOnScroll();
+		$('.item.fade-in, .item.fade-in-scroll').fadeInOnScroll();
 		
 	},
 	/* Legacy function applies name of media to body as class. 

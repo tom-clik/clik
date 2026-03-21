@@ -14,7 +14,7 @@
     plugin.settings["threshold"] = $element.css("--scroll-threshold")  || plugin.settings.threshold;
     
     function updateHeader() {
-       console.log($element);
+      
       if ($(window).scrollTop() >  plugin.settings.threshold) {
         $element.addClass( plugin.settings.scrolledClass);
       } else {

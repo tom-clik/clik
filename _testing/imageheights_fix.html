@@ -19,6 +19,8 @@ It works by hiding the image, getting the height of the container, fixing that h
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/_assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/_assets/css/grids.css">
+	<link rel="stylesheet" type="text/css" href="/_assets/css/images.css">
 	<link rel="stylesheet" type="text/css" href="css/testing.css">
 	<style>
 	body {
@@ -26,6 +28,7 @@ It works by hiding the image, getting the height of the container, fixing that h
 		background-color: #ccc;
 	}
 
+	/** Set the page to expand */
 	#ubercontainer {
 		background-color: #fff;
 		border: 1px solid #000;
@@ -33,16 +36,20 @@ It works by hiding the image, getting the height of the container, fixing that h
 		margin: 0 auto;
 		max-width: 660px;
 		min-height:100%;
+		--grid-mode: rows;
+		--grid-template-rows: min-content auto;
 	}
+
 
 	#test {
 		border:1px solid gray;
 		padding:4px;
 		margin:20px 0;
-		display: block;
-		display: grid;
-		grid-template-rows: minmax(0,1fr) min-content;
 		--heightfix:1;
+		--object-position-y:80%;
+		--object-position-x:60%;
+		/* this will work */
+		--object-fit: cover;
 		min-height:120px;
 	}
 
@@ -53,47 +60,52 @@ It works by hiding the image, getting the height of the container, fixing that h
 		display: inline-block;
 	}
 
-	.image {
-		width: 100%;
-		height: 100%;
-	}
-	.image img {
-		width: 100%;
-		height: 100%;
-		object-fit: scale-down;
-		display: none;
-		object-position: 0 0;
-	}
-
 	@media (max-width:800px) {
 		#test {
+			--object-fit: contain;
+			--object-position-y:middle;
+			--object-position-x:center;
 			--heightfix:0;
 			max-height: 300px;
 		}
+
 	}
+
+	div.mid span {
+		display: none;
+	}
+
+	@media (min-width:1000px) and (max-width:1200px) {
+		#test figcaption {
+			display: none;
+		}
+		div.mid span {
+			display: block;
+		}
+	}
+
+
+	
 	@media (min-width:1200px) {
 		#test {
 			--heightfix:0;
 		}
 	}
-
 	</style>
 </head>
 
 <body>
 
-	<div id="ubercontainer">
-		<div class="inner">
+	<div id="ubercontainer" class="grid">
+		<div class="gridInner">
 			<div class="max">No Fixed height</div>
-			<div class="mid">Dynamic Fixed height applied by script</div>
+			<div class="mid">Dynamic Fixed height applied by script <span>NO CAPTION</span></div>
 			<div class="mobile">Container has fixed height applied by CSS</div>
 			<div id="test" class="cs-image">
-				<div class="image">
+				<figure>
 					<img src="images/earthly-beauties-V3W8Lknvhq8-unsplash.jpg"> 
-				</div>
-				<div class='caption'>
-				Lorem iposum
-				</div>
+					<figcaption>Lorem iposum</figcaption>
+				</figure>
 			</div>
 		</div>
 	</div>
@@ -106,10 +118,14 @@ It works by hiding the image, getting the height of the container, fixing that h
 <script src="/_assets/js/swipeDetector.js"></script>
 <script src="/_assets/js/heightFix.js"></script>
 <script src="/_assets/js/clik_common.js"></script>
-<script src="/_assets/js/clik_onready.js"></script>
+
 <script>
 $(document).ready(function() {
-	// NB fixHeight handled by clik_onready and --fixHeight css property
+	$(".cs-image").heightFix(
+		{
+			resize: clik.resize,
+		}
+	);
 });
 </script>
 

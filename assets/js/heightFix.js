@@ -37,37 +37,39 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 			element = element,
 			$container,
 			$image,
-			paddings; 
+			$imageDiv,
+			$caption; 
 
 		plugin.init = function() {
 
 			plugin.settings = $.extend({}, defaults, options);
 			$container = $element.parent();
+			$imageDiv = $element.find("figure");
+			$caption = $element.find("figcaption");
 			$image = $element.find("img");
-			paddings = $element.outerHeight(true) - $element.height();
 			resize();
 
 			$(window).on(plugin.settings.resize,function() {
 				resize();
 			});
 		}
-
+		
 		var resize = function() {
 			let resize =  clik.trueFalse( $image.css("--heightfix") ) || false;
 			if (resize) {
 				$element.addClass("fixedheight");
-				$element.css("height","auto");
+				$imageDiv.css("height","auto");
 				$image.css({"display":"none"});
-				let h = $container.height();
-				$element.css("height",(h-paddings) + "px");
+				let h = $imageDiv.height();
+				$imageDiv.css("height",h + "px");
 			}
 			else {
 				$element.removeClass("fixedheight");
-				$element.css("height","auto");
+				$imageDiv.css("height","auto");
 				$image.removeAttr("style");
 			}
 			
-			$image.css({"display":"block"});
+			$image.css({"display":"block","visibility":"visible"});
 		}
 
 		plugin.init();

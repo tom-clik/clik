@@ -95,7 +95,6 @@ HTML
 	initial-value: normal;
 }
 
-/* the default for this 0 for mode=flex. This is applied explicitly below in a property query NB this does inherit, be careful  */
 @property --flex-stretch {
 	syntax: '<number>'; 
 	inherits: false;

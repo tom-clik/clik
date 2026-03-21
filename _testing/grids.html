@@ -143,6 +143,11 @@
 		--grid-mode: flex;
 		--align-items: center;
 	}
+
+	#testflexcolsstretch {
+		--grid-mode: flex;
+		--flex-direction: column;
+	}
 	
 
 
@@ -212,6 +217,11 @@
 	<div class="test">
 		<div class="test-header">Flex Stretch - note text centering not part of grid system</div>
 		<div id="testflexstretch" class="grid" data-cols="5"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Flex Columns - stretch</div>
+		<div id="testflexcolsstretch" class="grid" data-cols="5"></div>
 	</div>
 	
 	<script src="/_assets/js/jquery-3.4.1.js"></script>

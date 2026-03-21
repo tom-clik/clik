@@ -2,10 +2,36 @@
 	--bordercolor: #eee;
 }
 
+/** Uses javascript to fix the height of the container */
+@property --height-fix {
+	syntax: '<number>'; 
+	inherits: false;
+	initial-value: 0;
+}
+
+/* --object properties are standard css that will apply either when you fix a height or use --height-fix mechanism  */
+@property --object-fit {
+	syntax: 'scale-down | cover | contain | fill'; 
+	initial-value: scale-down;
+	inherits: true;
+}
+
+@property --object-position-x {
+	syntax: 'left | center | right | <length-percentage>'; 
+	initial-value: center;
+	inherits: true;
+}
+
+@property --object-position-y {
+	syntax: 'top | middle | bottom | <length-percentage>'; 
+	initial-value: middle;
+	inherits: true;
+}
+
+
 .cs-imagegrid, .cs-image {
 	--image-max-height: auto;
   	--image-max-width: 100%;
-  	--object-fit: scale-down;
   	--align-frame:center;/* align items within frame */
 	--justify-frame:start;/* justify content within frame */
 	--align-caption:center;/* align caption */
@@ -13,9 +39,9 @@
 	--image-grow:0;/* expand image to frame */
 	--frame-flex-direction:column; /* image on top of caption (can reverse) */
 	--transition-time:1s;/* time for rollover transition */
-	--object-position-x: center;
-	--object-position-y: center;
+
 }
+
 
 .cs-imagegrid.masonry, .cs-imagegrid.justifiedGallery {
 	--grid-mode:none;
@@ -79,13 +105,16 @@
 }
 
 .cs-image {
+	container-name: image;
 	overflow: hidden;
 	min-width: 0;
 	min-height: 0;
+	display: flex;
 }
 
 .cs-image figure {
 	display: flex;
+	flex-grow:1;
 	max-height:100%;
 	flex-direction: column;
 }
@@ -95,17 +124,21 @@
 	flex-grow:1;
 	max-width: 100%;
 	max-height:100%;
+	min-height: 0;
 	height:auto;
-}
-
-.cs-image.fixedheight figure  {
 	width: 100%;
-	height:100%;
+	object-position: var(--object-position-x) var(--object-position-y);
 }
 
-.cs-image.fixedheight img {
-	object-fit:var(--object-fit);
-	object-position: var(--object-position-x) var(--object-position-y);
+.cs-image.fixedheight {
+	height: 100%;
+	margin:0 !important; /* you CANNOT apply margin here */
+}
+
+@container image ( style(--heightfix:1) ) {
+	img {
+		display: none;
+	}
 }
 
 .popup {

@@ -61,11 +61,11 @@ It works by hiding the image, getting the height of the container, fixing that h
 		width: 100%;
 		height: 100%;
 		object-fit: scale-down;
-		display: block;
+		display: none;
 		object-position: 0 0;
 	}
-	.cs-image.heightfix-pending .image img {
-		display: none;
+	.cs-image.heightfix-pending {
+		visibility: hidden;
 	}
 
 	@media (max-width:800px) {

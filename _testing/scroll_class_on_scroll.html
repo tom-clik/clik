@@ -40,7 +40,7 @@
       transition: all 0.2s ease;
     }
 
-    .demo-header.solid {
+    .demo-header.scroll {
       border-bottom-color: var(--border);
       box-shadow: 0 8px 20px rgba(31, 41, 55, 0.08);
       backdrop-filter: blur(3px);
@@ -51,6 +51,11 @@
       font-size: 1.5rem;
       font-weight: 700;
     }
+
+    .demo-header h1.scroll {
+       font-size: 1.2rem;
+    }
+
 
     .demo-header p {
       margin: 8px 0 0;
@@ -84,7 +89,7 @@
       color: #4b5563;
     }
 
-    .panel.active {
+    .panel.scroll {
       transform: translateY(-2px);
       border-color: var(--accent);
       background: linear-gradient(180deg, #fff 0%, var(--accent-soft) 100%);
@@ -106,52 +111,49 @@
       border-radius: 4px;
       padding: 0 4px;
     }
+  
   </style>
 </head>
 <body>
   <div class="page">
-    <header id="topHeader" class="demo-header">
-      <h1>Scroll Class Plugin Demo</h1>
-      <p>The header gets <code>.solid</code> after you scroll beyond 32px.</p>
+    <header id="topHeader" class="demo-header scroll-fix" style="--scroll-threshold: 32">
+      <h1 class="scroll-fix">Scroll Class Plugin Demo</h1>
+      <p>The header (and the h1 tag) gets <code>.scroll</code> after you scroll beyond 32px. Note scroll-threshold inherits. This fits with the Clik system where we only really want one scroll state</p>
     </header>
 
     <section class="intro">
       <p>
         This page demonstrates applying classes to divs on scroll using
-        <code>shrinkHeaderOnScroll</code>. The same plugin is used on each panel
-        with a different threshold so you can see class toggling at different
-        points in the page.
+        <code>scrollFix</code>. The divs need a class (<code>.scroll-fix</code>) applying to them to trigger the behaviour. Otherwise we'd have to check every container and every CS.
       </p>
+      <p>As all this does is apply a class (scroll by default) you can control all the bevahiours via CSS anyway.<p>
     </section>
 
-    <div id="panelOne" class="panel">
+    <div id="panelOne" class="panel scroll-fix" style="--scroll-threshold: 120">
       <h2>Panel One</h2>
-      <p>Adds <code>.active</code> after 220px of window scroll.</p>
+      <p>Adds <code>.scroll</code> after 120px of window scroll.</p>
     </div>
 
     <div class="spacer">Scroll down…</div>
 
-    <div id="panelTwo" class="panel">
+    <div id="panelTwo" class="panel scroll-fix" style="--scroll-threshold: 620">
       <h2>Panel Two</h2>
-      <p>Adds <code>.active</code> after 620px of window scroll.</p>
+      <p>Adds <code>.scroll</code> after 620px of window scroll.</p>
     </div>
 
     <div class="spacer">Keep scrolling…</div>
 
-    <div id="panelThree" class="panel">
+    <div id="panelThree" class="panel scroll-fix" style="--scroll-threshold: 980">
       <h2>Panel Three</h2>
-      <p>Adds <code>.active</code> after 980px of window scroll.</p>
+      <p>Adds <code>.scroll</code> after 980px of window scroll.</p>
     </div>
   </div>
 
   <script src="../assets/js/jquery-3.4.1.js"></script>
-  <script src="../assets/js/shrinkHeaderOnScroll.js"></script>
+  <script src="../assets/js/scrollFix.js"></script>
   <script>
     $(function () {
-      $("#topHeader").shrinkHeaderOnScroll({ threshold: 32, scrolledClass: "solid" });
-      $("#panelOne").shrinkHeaderOnScroll({ threshold: 220, scrolledClass: "active" });
-      $("#panelTwo").shrinkHeaderOnScroll({ threshold: 620, scrolledClass: "active" });
-      $("#panelThree").shrinkHeaderOnScroll({ threshold: 980, scrolledClass: "active" });
+      $(".scroll-fix").scrollFix();
     });
   </script>
 </body>

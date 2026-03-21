@@ -83,7 +83,7 @@ clik = {
 		if(jQuery().scrollFix) {
 			$(".scroll-fix").scrollFix();
 		}
-	}
+	},
 	heightFix: function() {
 		if(jQuery().heightFix) {
 			$(".cs-image").heightFix(

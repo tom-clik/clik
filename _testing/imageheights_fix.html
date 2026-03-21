@@ -106,10 +106,13 @@ It works by hiding the image, getting the height of the container, fixing that h
 <script src="/_assets/js/swipeDetector.js"></script>
 <script src="/_assets/js/heightFix.js"></script>
 <script src="/_assets/js/clik_common.js"></script>
-<script src="/_assets/js/clik_onready.js"></script>
 <script>
 $(document).ready(function() {
-	// NB fixHeight handled by clik_onready and --fixHeight css property
+	$(".cs-image").heightFix(
+		{
+			resize: clik.resize,
+		}
+	);
 });
 </script>
 

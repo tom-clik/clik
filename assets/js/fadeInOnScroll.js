@@ -4,6 +4,7 @@
 
         var settings = $.extend({
             visibleClass: "fade-in-visible",
+            hideClass: "fade-in-notvisible",
             baseClass: "fade-in-scroll",
             threshold: 0.15
         }, options);
@@ -14,10 +15,13 @@
 
                 if (entry.isIntersecting) {
 
-                    $(entry.target).addClass(settings.visibleClass);
+                    $(entry.target).addClass(settings.visibleClass).removeClass(settings.hideClass);;
 
                     // Only run once
                     obs.unobserve(entry.target);
+                }
+                else {
+                    $(entry.target).addClass(settings.hideClass);
                 }
 
             });

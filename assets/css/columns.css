@@ -45,43 +45,51 @@ Style a standard layout with some pre-defined options
 }
 
 body {
-	container-name:body;
+	container-name: body;
 }
 
-div:not(.grid):has( > .inner) {
-	container-name:hasInner;
+
+div:has( > .inner) {
 	--inner: 1;
 	--sticky: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 /* Use inner divs to stop a host of issues like margin expanding etc. Also needed in grid layouts
 to expand content to fit. Apply .container div around the normal div.
  */
-div.container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
 
-div.container > * {
+div.container > .inner {
   position: relative;
   flex-grow: 1;
   width:100%;
 }
 
-div.container > .inner > * {
-	  width:100%;
-	}
+div.container:not(.grid) {
+	container-name: container;
+}
 
-@container hasInner ( style(--inner:1) ) {
-	.inner {
+div.container > div.container {
+	flex-grow: 1;
+}
+
+
+/*div.container > .inner > * {
+	  width:100%;
+}
+*/
+div.container:has(> div.container) {
 	  display: flex;
 	  flex-direction: column;
-	  align-items: stretch;
 	  flex-grow: 1;
-	}
-
 }
+
+/*@container hasInner ( style( --inner: 1 ) ) {
+	.inner {
+
+	}
+}*/
 
 #header {
 	grid-area:header;
@@ -307,20 +315,21 @@ div.container > .inner > * {
  *  
  */
 
-@container hasInner ( style( --sticky:1 ) ) {
+@container container ( style( --sticky:1 ) ) {
 
+/*	MUST DO: fix these*/
 	
-	#xcol .inner {
+	.inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--xcol-top-padding, 4px) );
 		z-index: 90;
 	}
 
-	#menu .inner {
+	/*#menu .inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--menu-top-padding,4px) );
 		z-index: 90;
-	}
+	}*/
 
 
 }

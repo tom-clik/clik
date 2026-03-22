@@ -290,6 +290,15 @@ hi      li.hi a
 	width: max-content;
 }
 
+/* inline horizontal behaviour handled by jquery.menu.js */
+.menu.menu-inline-horizontal > ul > li > .submenu {
+	left: 0;
+	right: auto;
+	min-width: 100%;
+	width: 100%;
+	top: 100%;
+}
+
 /* show submenus all the time via setting */
 @container menu (style(--menu-submenu-show: show)) {
 	.submenu {

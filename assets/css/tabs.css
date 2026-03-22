@@ -55,6 +55,7 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 }
 
 .cs-tabs {
+	container-name: tabs;
 	position: relative;
 	display: flex;
 	flex-wrap: nowrap;
@@ -77,6 +78,7 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	--tab-width:160px;
 	--tab-first-inset:6px;
 }
+
 .cs-tabs .tab:not(.state_open) .title {
 	--tab-background:var(--dark-color);
 }
@@ -84,18 +86,11 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	--tab-background:var(--lightcolor);
 }
 
+/* NB These classes are applied by the javaScript. Always uses the css settings */
 .cs-tabs.vertical {
 	flex-direction: column;
 	grid-gap:0; /* Applying a grid gap seems to work in some browsers */
 	/*align-items: center;*/
-}
-
-.cs-tabs.vertical .title {
-	width:var(--tab-width);
-}
-.cs-tabs.vertical .item {
-	left:var(--tab-width);
-	top:0;
 }
 
 .cs-tabs.accordian {
@@ -116,24 +111,32 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	background: var(--tab-background);
 }
 
-.cs-tabs:not(.vertical, .accordian) .title {
-	margin-left:-1px;
-	margin-bottom:-1px;
-	border-top-left-radius: var(--tab-border-radius);
-	border-top-right-radius: var(--tab-border-radius);
+@container tabs (style(--vertical: false) and style(--accordian: false) ) {
+
+	.title {
+		margin-left:-1px;
+		margin-bottom:-1px;
+		border-top-left-radius: var(--tab-border-radius);
+		border-top-right-radius: var(--tab-border-radius);
+	}
+
+	.tab:first-of-type .title {
+		margin-left:var(--tab-first-inset);
+	} 
+
 }
 
-.cs-tabs.vertical .title, .cs-tabs.accordian .title {
-	border-top-width: 0;
-}
+@container tabs ( style(--vertical: true) or style(--accordian: true) ) {
 
-.cs-tabs.vertical .tab:first-of-type .title, .cs-tabs.accordian .tab:first-of-type .title {
-	border-top-width: var(--tab-border-width);
-}
+	.title {
+		border-top-width: 0 !important;
+	}
+	
+	.tab:first-of-type .title {
+		border-top-width: var(--tab-border-width) !important;
+	}
 
-.cs-tabs:not(.vertical, .accordian) .tab:first-of-type .title {
-	margin-left:var(--tab-first-inset);
-} 
+}
 
 .cs-tabs .state_open .title { 
 	border-bottom-color: transparent;
@@ -142,9 +145,6 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 
 .cs-tabs .item {
 	visibility: hidden;
-	height:0;
-	position:absolute;
-	left:0;
 	border-style:solid;
 	border-width:var(--tab-border-width);
 	border-color:var(--tab-border-color);
@@ -162,21 +162,44 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	display: block;
 }
 
-.cs-tabs.accordian .item {
-	position:static;
-	height: 0;
-	display: none;
+@container tabs (style(--vertical: false) and style(--accordian: false) ) {
+	.item {
+		height:0;
+		position:absolute;
+		left:0;
+	}
 }
 
-.cs-tabs.accordian .state_open .item {
-	height: auto;
-	display: block;
+@container tabs ( style(--vertical: true) ) {
+
+	.title {
+		width:var(--tab-width);
+		border-right-width: 0 !important;
+	}
+	.item {
+		left:var(--tab-width);
+		position:absolute;
+		top:0;
+	}
+
 }
 
-.cs-tabs.accordian .title {
-	margin-left:0px;
+@container tabs ( style(--accordian: true) ) {
+
+	.item {
+		position:static;
+		height: 0;
+		display: none;
+	}
+
+	.state_open .item {
+		height: auto;
+		display: block;
+	}
+
+	.title {
+		margin-left:0px;
+	}
+
 }
 
-/*.modal .cs-tabs .item {
-	z-index: 1001;
-}*/

@@ -195,8 +195,13 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
     			$element.css({"height":"auto"});
     			var maxheight = 0;
 	    		if (plugin.settings.fixedheight) {
+		    		$element.find(".item").css({"height":""});
 		    		$element.find(".item").each(function() {
-		    			let height = $(this).outerHeight();
+		    			let $item = $(this);
+		    			let originalStyle = $item.attr("style") || "";
+		    			$item.css({"height":"auto", "visibility":"hidden", "display":"block"});
+		    			let height = $item.outerHeight();
+		    			$item.attr("style", originalStyle);
 		    			if (height > maxheight) maxheight = height;
 		    		});
 		    		$element.find(".item").outerHeight(maxheight);

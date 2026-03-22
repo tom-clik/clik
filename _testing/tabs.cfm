@@ -1,44 +1,42 @@
-<!---
-
-Different ideas for tabs. Working nicely.
-
---->
-
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Tabs test</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/_assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/_assets/css/title.css">
 	<link rel="stylesheet" type="text/css" href="/_assets/css/fonts/fonts_local.css">
 	<link rel="stylesheet" type="text/css" href="/_assets/css/tabs.css">
-
-	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/testing.css">
 	<style>
 		body {
-			--title-font:font-family: 'Open Sans';
+			--title-font: font-family: 'Open Sans';
+			padding: 20px;
 		}
+
 		img {
 			max-width: 100%;
 		}
+
 		.cs-tabs {
-/*			background-color: #9d9d9d;*/
-			margin:20px 0;
+			margin: 20px 0;
 		}
-		
+
 		.container {
-			margin:40px;
-			--tab-font-weight:300;
-			--tab-font-size:.8em;
-			--tab-border-radius:0;
+			margin: 40px;
+			--tab-font-weight: 300;
+			--tab-font-size: .8em;
+			--tab-border-radius: 0;
 		}
-		
+
 		.cs-tabs .item {
 			border-top: 1px solid #9c9c9c;
 			--tab-border-color: #9c9c9c;
 			--tab-border-width: 1px 0 0 0;
-			padding:6px;
+			padding: 6px;
 		}
+
 		.cs-tabs .title {
 			--tab-border-color: #9c9c9c;
 		}
@@ -48,49 +46,43 @@ Different ideas for tabs. Working nicely.
 		}
 
 		#test {
-			--tab-border-radius:4px;
+			--tab-border-radius: 4px;
 			background-color: transparent;
-			--fixedheight:false;
+			--vertical: true;
+			--fixedheight: true;
 		}
 
 		#test.cs-tabs .item {
 			border: 1px solid #9c9c9c;
 		}
 
-		#test {
-			--vertical:true;
-			--fixedheight:true;
-		}
-		
 		@media screen and (min-width:1200px) {
-			
 			#test {
-				--vertical:false;
-				--fixedheight:false;
+				--vertical: false;
+				--fixedheight: false;
 			}
-
 		}
 
 		@media screen and (max-width:800px) {
 			#test {
-				--vertical:false;
-				--accordian:true;
-				--allowClosed:true;
+				--vertical: false;
+				--accordian: true;
+				--allowClosed: true;
 			}
-
 		}
 	</style>
 </head>
 <body>
 
-<div class="cs-title">
-Tab/Accordion/info panel Testing
+<div class="cs-title">Tab/Accordion/info panel Testing</div>
+
+<div id="settingsTitle">
+	<div class="max">Desktop (&gt;=1200px): --vertical:false, --fixedheight:false</div>
+	<div class="mid">Tablet (801px-1199px): --vertical:true, --fixedheight:true</div>
+	<div class="mobile">Mobile (&lt;=800px): --vertical:false, --accordian:true, --allowClosed:true</div>
 </div>
 
-<cfoutput>
-	#getTabs(id="test",count=6)#
-
-</cfoutput>
+<div class="container cs-tabs" id="test"></div>
 
 <script src="/_assets/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 <script src="/_assets/js/clik_common.js"></script>
@@ -98,34 +90,39 @@ Tab/Accordion/info panel Testing
 <script src="/_assets/js/jquery.tabs.js"></script>	
 <script src="/_assets/js/jquery.throttledresize.js"></script>
 <script src="/_assets/js/clik_onready.js"></script>
+<script>
+(function () {
+	function createTabs(containerId, count) {
+		const container = document.getElementById(containerId);
+		if (!container) return;
+
+		for (let i = 1; i <= count; i++) {
+			const tab = document.createElement('div');
+			tab.id = `${containerId}_tab${i}`;
+			if (i === 2) tab.classList.add('state_open');
+
+			const title = document.createElement('h3');
+			title.className = 'title';
+			title.textContent = `tab ${i}`;
+
+			const item = document.createElement('div');
+			item.className = 'item';
+
+			for (let p = 1; p <= i; p++) {
+				const para = document.createElement('p');
+				para.textContent = `Tab ${i} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+				item.appendChild(para);
+			}
+
+			tab.appendChild(title);
+			tab.appendChild(item);
+			container.appendChild(tab);
+		}
+	}
+
+	createTabs('test', 6);
+})();
+</script>
 
 </body>
 </html>
-
-<cfscript>
-function getTabs(required string id, numeric count=4) {
-
-	var ret="";
-	
-	ret &= "<div class='container cs-tabs' id='#arguments.id#'>\n";
-	
-	for (var i = 1; i lte arguments.count; i++) {
-		local.open = false and i eq 2 ? " state_open": "";
-		ret &= "	<div class='#local.open#' id='#arguments.id#_tab#i#'>\n";
-		ret &= "		<h3 class='title'>tab #i#</h3>\n";
-		ret &= "		<div class='item'>\n";
-		for (var p=1 ; p lte i; p++) {
-			ret &= "			<p>Tab #i# Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n";
-			ret &= "			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n";
-			ret &= "			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n";
-			ret &= "			consequat.</p>\n";
-		}
-		ret &= "		</div>\n";
-		ret &= "	</div>\n";
-	}
-	ret &= "</div>";
-
-	return Replace(ret,"\n",NewLine(1),"all");
-
-}
-</cfscript>

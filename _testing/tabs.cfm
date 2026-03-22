@@ -21,13 +21,14 @@
 
 		.cs-tabs {
 			margin: 20px 0;
+			--tab-font-weight: 300;
+			--tab-font-size: .8em;
+			--tab-border-radius: 0;
 		}
 
 		.container {
 			margin: 40px;
-			--tab-font-weight: 300;
-			--tab-font-size: .8em;
-			--tab-border-radius: 0;
+			
 		}
 
 		.cs-tabs .item {
@@ -57,9 +58,14 @@
 		}
 
 		@media screen and (min-width:1200px) {
+			#outer {
+				height:360px;
+			}
 			#test {
 				--vertical: false;
 				--fixedheight: false;
+				--fitheight:true;
+				
 			}
 		}
 
@@ -77,12 +83,14 @@
 <div class="cs-title">Tab/Accordion/info panel Testing</div>
 
 <div id="settingsTitle">
-	<div class="max">Desktop (&gt;=1200px): --vertical:false, --fixedheight:false</div>
+	<div class="max">Desktop (&gt;=1200px): --vertical:false, --fitheight:true</div>
 	<div class="mid">Tablet (801px-1199px): --vertical:true, --fixedheight:true</div>
-	<div class="mobile">Mobile (&lt;=800px): --vertical:false, --accordian:true, --allowClosed:true</div>
+	<div class="mobile">Mobile (&lt;=800px): --accordian:true, --allowClosed:true</div>
 </div>
 
-<div class="container cs-tabs" id="test"></div>
+<div class="container" id="outer">
+<div class="cs-tabs" id="test"></div>
+</div>
 
 <script src="/_assets/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 <script src="/_assets/js/clik_common.js"></script>

@@ -10,6 +10,7 @@
  */
 (function($) {
 	"use strict";
+	let instanceId = 0;
 
 	$.menu = function(element, options) {
 		var defaults = {
@@ -29,6 +30,7 @@
 
 		var plugin = this;
 		var $element = $(element);
+		var eventNamespace = ".menu" + (++instanceId);
 		plugin.settings = {};
 		plugin.mode = {
 			orientation: "horizontal",
@@ -187,14 +189,14 @@
 		}
 
 		function bindEvents() {
-			$element.off("click.menu");
-			$(window).off("resize.menu");
+			$element.off("click" + eventNamespace);
+			$(window).off("resize" + eventNamespace);
 
 			if (plugin.mode.submenuShow === "hover") {
 				return;
 			}
 
-			$element.on("click.menu", "a.hasmenu > .openicon", function(e) {
+			$element.on("click" + eventNamespace, "a.hasmenu > .openicon", function(e) {
 				e.preventDefault();
 				e.stopPropagation();
 
@@ -211,7 +213,7 @@
 				}
 			});
 
-			$(window).on("resize.menu", function() {
+			$(window).on("resize" + eventNamespace, function() {
 				readMode();
 				syncModeClasses();
 				if (!isInlineHorizontal()) {

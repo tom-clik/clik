@@ -313,6 +313,14 @@ hi      li.hi a
 	}
 }
 
+/* horizontal + right aligned menus: pin top-level submenu to the right edge of parent item */
+@container menu (style(--menu-orientation: horizontal)) and (style(--menu-align: right)) {
+	.menu > ul > li > .submenu {
+		left: auto;
+		right: 0;
+	}
+}
+
 /* position submenus relative to whole menu when using 'menu-*' submenualign variants */
 @container menu (style(--menu-submenualign: menu-bottom-left)) or 
                 (style(--menu-submenualign: menu-top-left)) or

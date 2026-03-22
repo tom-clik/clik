@@ -290,6 +290,15 @@ hi      li.hi a
 	width: max-content;
 }
 
+/* inline horizontal behaviour handled by jquery.menu.js */
+.menu.menu-inline-horizontal > ul > li > .submenu {
+	left: 0;
+	right: auto;
+	min-width: 100%;
+	width: 100%;
+	top: 100%;
+}
+
 /* show submenus all the time via setting */
 @container menu (style(--menu-submenu-show: show)) {
 	.submenu {
@@ -301,6 +310,14 @@ hi      li.hi a
 @container menu (style(--menu-orientation: horizontal)) {
 	.submenu {
 		--menu-orientation: vertical;
+	}
+}
+
+/* horizontal + right aligned menus: pin top-level submenu to the right edge of parent item */
+@container menu (style(--menu-orientation: horizontal)) and (style(--menu-align: right)) {
+	.menu > ul > li > .submenu {
+		left: auto;
+		right: 0;
 	}
 }
 

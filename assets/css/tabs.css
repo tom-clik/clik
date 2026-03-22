@@ -2,9 +2,38 @@
 
 # Tabs styling
 
-NB Propbably broken by deprecated of CSS settings styff
+This stylesheet is read by `assets/js/jquery.tabs.js`. The script loads several
+CSS custom properties from `.cs-tabs` at runtime via `clik.parseCssVar(...)`.
+Those settings control layout/behavior, not only appearance.
 
-MUST DO: container styling version of the styling applied by tabs here.
+## Behaviour settings read by tabs.js
+
+- `--vertical` (`true`/`false`, boolean)
+  - `false` (default): horizontal tab headers; selected panel is positioned below.
+  - `true`: adds `.vertical` class and places headers in a left column.
+- `--accordian` (`true`/`false`, boolean)
+  - `false` (default): classic tabs (one open tab, click already-open tab = no-op).
+  - `true`: adds `.accordian` class and animates open/close panel height.
+- `--fixedheight` (`true`/`false`, boolean)
+  - Used in non-accordion mode when `--fitheight` is `false`.
+  - `true` (default): container and all `.item` panels use the tallest panel height.
+  - `false`: container height follows the currently open panel only.
+- `--fitheight` (`true`/`false`, boolean)
+  - `false` (default): height is computed from panel content.
+  - `true`: panel height is forced to parent height minus tab-title row height.
+- `--menuAnimationTime` (integer milliseconds)
+  - Duration of accordion open/close animation.
+- `--allowClosed` (`true`/`false`, boolean)
+  - Accordion-only behavior.
+  - `true` (default in JS): clicking an open section can close it (all closed allowed).
+  - `false`: prevents closing the currently open section.
+
+## Visual style settings (CSS-only)
+
+These are not parsed by JS, but are used by CSS rules to theme/size tabs:
+`--tab-padding`, `--tab-font-size`, `--tab-font-weight`, `--tab-font`,
+`--tab-background`, `--tab-border-width`, `--tab-border-color`,
+`--tab-border-radius`, `--tab-width`, and `--tab-first-inset`.
 
 */
 

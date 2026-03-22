@@ -51,6 +51,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 			accordian: false, // use accordion mode (vertical ignored)
 			resize: "resize", // window event to trigger resize. use e.g. throttledresize
 			fixedheight:true,// height is always maximum size
+			fixheight:null,// deprecated alias for fixedheight
 			fitheight:false,// fit to element height 
 			menuAnimationTime: 200,
 			allowClosed: true // all tabs can close in accordion
@@ -61,6 +62,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 			vertical: "boolean",
 			accordian: "boolean",
 			fixedheight: "boolean",
+			fixheight: "boolean",
 			fitheight: "boolean",
 			menuAnimationTime: "integer",
 			allowClosed: "boolean"
@@ -70,8 +72,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 		plugin.settings = {}
 
-		var $element = $(element), // reference to the jQuery version of DOM element
-			element = element; // reference to the actual DOM element
+		var $element = $(element); // reference to the jQuery version of DOM element
 
 		plugin.init = function() {
 
@@ -157,6 +158,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 		$element.on("resize",function(e) {
 			e.stopPropagation();
+			clearDynamicHeights();
 			getCssSettings();
 			let $tab = $element.find(".state_open").first();
 			setHeight($tab);
@@ -170,6 +172,11 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 		// private methods
 		
+		var clearDynamicHeights = function() {
+			$element.css({"height":""});
+			$element.find(".item").css({"height":""});
+		}
+
 		var setHeight = function($tab) {
     		console.log("Setting height for " + $tab.attr("id"));
     		if (plugin.settings.accordian) return;
@@ -187,16 +194,33 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
     		if (plugin.settings.fitheight) {
     			console.log("fitheight");
-    			let $parent = $element.parent();
-    			let panel_height = $parent.height() - tabs_height;
-    			element.find(".item").outerHeight(panel_height);
+    			let panel_height = 0;
+
+    			if (plugin.settings.vertical) {
+    				$element.find(".title").each(function() {
+	    				panel_height += $(this).outerHeight();
+	    			});
+    			}
+    			else {
+	    			let $parent = $element.parent();
+	    			panel_height = $parent.height() - tabs_height;
+    			}
+
+    			panel_height = Math.max(0, panel_height);
+    			$element.find(".item").outerHeight(panel_height);
+    			$element.outerHeight(panel_height + tabs_height);
     		}
     		else {
     			$element.css({"height":"auto"});
     			var maxheight = 0;
 	    		if (plugin.settings.fixedheight) {
+		    		$element.find(".item").css({"height":""});
 		    		$element.find(".item").each(function() {
-		    			let height = $(this).outerHeight();
+		    			let $item = $(this);
+		    			let originalStyle = $item.attr("style") || "";
+		    			$item.css({"height":"auto", "visibility":"hidden", "display":"block"});
+		    			let height = $item.outerHeight();
+		    			$item.attr("style", originalStyle);
 		    			if (height > maxheight) maxheight = height;
 		    		});
 		    		$element.find(".item").outerHeight(maxheight);
@@ -229,6 +253,10 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 				if (val != null) plugin.settings[setting] = val;
 			}
 
+			if (plugin.settings.fixheight != null) {
+				plugin.settings.fixedheight = plugin.settings.fixheight;
+			}
+
 			if (plugin.settings.vertical) {
 				$element.addClass("vertical");
 			}
@@ -238,7 +266,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 			if (plugin.settings.accordian) {
 				$element.addClass("accordian");
-				$element.find(".item").css({height:""});
+				clearDynamicHeights();
 			}
 			else {
 				$element.removeClass("accordian");

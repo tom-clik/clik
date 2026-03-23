@@ -54,6 +54,7 @@ div:has( > .inner) {
 	--sticky: 0;
 	display: flex;
 	flex-direction: column;
+	align-items: stretch;
 }
 
 /* Use inner divs to stop a host of issues like margin expanding etc. Also needed in grid layouts
@@ -99,16 +100,20 @@ div.container:has(> div.container) {
 /* Body wrapper is required to allow padding between content and the edge of page */
 #bodyWrapper {
 	min-height:100%;
+	display: flex;
+	flex-direction: column;
 	padding: var(--site-top-padding) var(--site-right-padding)	var(--site-bottom-padding)	var(--site-left-padding);
+	align-items: stretch;
 }
-
 
 #ubercontainer {
 	min-height:100%;
-	--grid-mode: rows;
-}
-#ubercontainer {
-	--grid-template-rows: min-content auto min-content;
+	--grid-mode: flex;
+	--flex-direction: column;
+	flex: 1;
+	--align-items: stretch;
+	align-self: stretch;
+  width: 100%;
 }
 
 @container body ( style(--header-fixed:1) ) {
@@ -124,12 +129,8 @@ div.container:has(> div.container) {
 	}
 	#ubercontainer {
 		padding-top: calc( var(--header-height) + var(--site-top-padding) );
-		--grid-mode: rows;
-		min-height:100%;
 	}
-	#ubercontainer {
-		--grid-template-rows: auto min-content;
-	}
+
 }
 
 @container body ( style(--headerpos:side) ) {
@@ -142,15 +143,6 @@ div.container:has(> div.container) {
 		height: 100vh;
 	}
 	
-	#ubercontainer {
-		--grid-mode: rows;
-		min-height:100%;
-	}
-
-	#ubercontainer {
-		--grid-template-rows: auto min-content;
-	}
-
 	#menu {
 		display: none;
 	}
@@ -177,23 +169,6 @@ div.container:has(> div.container) {
 
 	#ubercontainer {
 		padding-bottom: calc( var(--footer-height) + var(--site-bottom-padding) );
-	}
-
-	@container body ( style(--header-fixed:0) ) {
-		#ubercontainer {
-			--grid-mode: rows;
-		}
-		#ubercontainer {
-			--grid-template-rows: min-content auto ;
-		}
-	}
-	@container body ( style(--header-fixed:1) ) {
-		#ubercontainer {
-			--grid-mode: rows;
-		}
-		#ubercontainer {
-			--grid-template-rows:  auto ;
-		}
 	}
 
 }
@@ -266,10 +241,9 @@ div.container:has(> div.container) {
 
 }
 
-
-
 #content {
 	grid-area:content;
+	flex: 1;
 }
 #bottomnav {
 	grid-area:bottomnav;
@@ -345,12 +319,7 @@ div.container:has(> div.container) {
 
 
 #content_main {
-	--grid-mode: named;
-}
-#content_main {
-	--grid-template-areas: "menu content_wrap";
-	--grid-template-columns: var(--menu-width) auto;
-	--grid-template-rows: auto;
+	--grid-mode: flex;
 }
 
 @container body ( style(--headerpos:side) ) {
@@ -363,19 +332,13 @@ div.container:has(> div.container) {
 
 #content {
 	--grid-mode: rows;
-	--grid-template-rows: min-content auto min-content;
+	--grid-template-rows: max-content auto max-content;
 }
 
 #content_wrap {
-	--grid-mode: named;
+	--grid-mode: flex;
+	flex: 1;
 }
-#content_wrap {
-	--grid-template-areas: "maincol xcol";
-	--grid-template-columns: auto var(--xcol-width) ;
-	--grid-template-rows: auto;
-	height:100%;
-}
-
 
 @container body ( style( --xcol:close ) ) {
 	
@@ -383,19 +346,13 @@ div.container:has(> div.container) {
 		display:none;
 	}
 	
-	#content_wrap {
-		--grid-mode: flex;
-	}
-	
 }
 
 #maincol {
-	height:100%;
-}
-
-#maincol {
-	--grid-mode: none;
-	--grid-template-rows: min-content auto min-content;
+	flex: 1;
+	--grid-mode: flex;
+	--flex-direction: column;
+	--flex-stretch: 0;
 }
 
 #maincol_grid {
@@ -405,10 +362,13 @@ div.container:has(> div.container) {
 
 #footer {
 	height: var(--footer-height);
-	--grid-mode: rows;
+	--grid-mode: none;
+	flex:0;
 }
-#footer {
-	--grid-template-rows: min-content auto;
+
+#menubuttons {
+	--grid-mode: flex;
+	--flex-stretch: 0;
 }
 
 
@@ -424,25 +384,24 @@ div.container:has(> div.container) {
 	justify-self: center;
 }
 
-
 #header {
-	--grid-mode: rows;
-}
-#header {	
-	--grid-template-rows:auto  min-content ;
+	--grid-mode: flex;
+	--flex-direction: column;
+	flex: 0;
 }
 
 #nav {
 	--grid-mode: columns;
-	--grid-template-columns: min-content 1fr min-content;
-	--grid-gap: 0 8px ;
-/*	--align-items: center;*/
+	--grid-gap: 0 ;
+	--grid-template-columns: var(--menu-width) auto var(--xcol-width);
+}
+
+#xcolbutton {
+	justify-self: end;
 }
 
 #footer_main {
 	--grid-mode: fixed;
-}
-#footer_main {
 	--grid-columns: 3;
 }
 
@@ -455,6 +414,17 @@ div.container:has(> div.container) {
 	
 	#maincol {
 		height:auto;
+	}
+
+	#footer_main {
+		--grid-mode: flex;
+		--flex-direction: column-reverse;
+	}
+
+	#nav {
+		--grid-mode: columns;
+		--grid-gap: 0 ;
+		--grid-template-columns: max-content auto min-content;
 	}
 
 }
@@ -515,6 +485,12 @@ div.container:has(> div.container) {
 	}
 }
 
+#menu {
+		flex: 0 0 var(--menu-width);
+}
+#xcol {
+	flex: 0 0 var(--xcol-width);
+}
 
 #menubutton, #hamburger, #menuclose {
 	display: none;
@@ -530,7 +506,7 @@ div.container:has(> div.container) {
 		top: calc(var(--header-fixed) * var(--header-height) );
 		left: 0;
 		height: calc( 100vh - (var(--header-fixed) * var(--header-height)) - (var(--footer-fixed) * var(--footer-height) ) );
-		width: var(--menu-width);
+	
 		transition: transform var(--menu-anim-time) ease-in-out; /* Smooth transition */
 	}
 }	

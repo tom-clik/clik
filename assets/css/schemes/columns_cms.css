@@ -71,8 +71,24 @@ Blue grey sort of thing
 }
 
 #nav {
+	--grid-template-columns: 1fr var(--xcol-width);
  	border-bottom: 1px solid var(--border-color);
 }
+
+#menubuttons {
+	display:none;
+}
+
+@media (max-width:800px) {
+	#menubuttons {
+		display:block;
+	}
+
+	#nav {
+		--grid-template-columns: max-content auto min-content;
+	}
+}
+
 
 #section-title {
 	flex-grow: 1;
@@ -107,6 +123,10 @@ Blue grey sort of thing
 	--menu-border-color: transparent;
 }
 
+#content {
+	--grid-template-rows: 1fr;
+}
+
 #mainmenu li.hi a {
 	--menu-border-color: var(--accent);
 	background-color:  var(--darkcolor);
@@ -117,10 +137,6 @@ Blue grey sort of thing
 	background-color:  var(--mediumpluscolor);
 	box-shadow: var(--shadow);
     --menu-border-color: var(--darkcolor);
-}
-
-#content {
-	--grid-template-rows: 1fr;
 }
 
 #footer {
@@ -145,10 +161,7 @@ Blue grey sort of thing
 	}
 
 	#content_wrap {
-		--grid-mode: named;
-		--grid-template-areas: "xcol" "maincol";
-		--grid-template-columns: 1fr;
-		--grid-template-rows: min-content auto;
+		--flex-direction: column-reverse;
 	}
 }
 

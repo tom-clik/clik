@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/grids.css">
+    <link rel="stylesheet" type="text/css" href="css/testing.css">
+    <style>
+        #imagegrid {
+            --grid-mode: masonry;
+            --grid-width:25%;
+            --grid-gap: 12px;
+        }
+        .is20 {
+            display: none;
+        }
+        .is25 {
+            display: inline-block;
+        }
+        
+        
+
+        @media screen and (min-width: 1000px) {
+            .is25 {
+                display: none;
+            }
+            .is20 {
+                display: inline-block;
+            }
+            #imagegrid {
+                --grid-width:20%;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            #imagegrid  {
+                --grid-mode: none;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            #imagegrid {
+                --grid-mode: fit;
+                --grid-width:260px;
+            }
+        }
+        
+        .frame img {
+            max-width: 100%;
+            height:auto;
+        }
+        
+        #uberContainer {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Layout test</h1>
+    
+    <div id="settingsTitle">
+        <div class="max">Desktop (&gt;=1200px):--grid-mode: fit; </div>
+        <div class="mid">Tablet (801px-1199px):--grid-mode: masonry --grid-width:<span class='is25'>25%</span><span class='is20'>20%</span>; </div>
+        <div class="mobile">Mobile (&lt;=800px):</div>
+    </div>
+
+    <div id="imagegrid" class="cs-imagegrid grid">
+        <div class="gridInner" id="inner"></div>
+        
+    </div>
+    
+    <script src="/_assets/js/jquery-3.4.1.js"></script>
+    <script src="/_assets/js/imagesloaded.pkgd.js"></script>
+    <script src="/_assets/js/masonry.pkgd.min.js"></script>
+    <script src="/_assets/js/masonryGrid.js"></script>
+    <script src="/_assets/js/clik_common.js"></script>
+
+    <script src="sample_images.js"></script>
+    
+
+    <script>
+        $(document).ready(function(){
+            $elem = $("#imagegrid");
+            showPhotos(data.photos.photo,$("#inner"));
+            $elem.masonryGrid({
+                resize: clik.resize,
+            });
+        });
+       
+    </script>
+</body>
+
+</html>

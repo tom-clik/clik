@@ -45,43 +45,52 @@ Style a standard layout with some pre-defined options
 }
 
 body {
-	container-name:body;
+	container-name: body;
 }
 
-div:not(.grid):has( > .inner) {
-	container-name:hasInner;
+
+div:has( > .inner) {
 	--inner: 1;
 	--sticky: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
 }
 
 /* Use inner divs to stop a host of issues like margin expanding etc. Also needed in grid layouts
 to expand content to fit. Apply .container div around the normal div.
  */
-div.container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
 
-div.container > * {
+div.container > .inner {
   position: relative;
   flex-grow: 1;
   width:100%;
 }
 
-div.container > .inner > * {
-	  width:100%;
-	}
+div.container:not(.grid) {
+	container-name: container;
+}
 
-@container hasInner ( style(--inner:1) ) {
-	.inner {
+div.container > div.container {
+	flex-grow: 1;
+}
+
+
+/*div.container > .inner > * {
+	  width:100%;
+}
+*/
+div.container:has(> div.container) {
 	  display: flex;
 	  flex-direction: column;
-	  align-items: stretch;
 	  flex-grow: 1;
-	}
-
 }
+
+/*@container hasInner ( style( --inner: 1 ) ) {
+	.inner {
+
+	}
+}*/
 
 #header {
 	grid-area:header;
@@ -91,16 +100,20 @@ div.container > .inner > * {
 /* Body wrapper is required to allow padding between content and the edge of page */
 #bodyWrapper {
 	min-height:100%;
+	display: flex;
+	flex-direction: column;
 	padding: var(--site-top-padding) var(--site-right-padding)	var(--site-bottom-padding)	var(--site-left-padding);
+	align-items: stretch;
 }
-
 
 #ubercontainer {
 	min-height:100%;
-	--grid-mode: rows;
-}
-#ubercontainer {
-	--grid-template-rows: min-content auto min-content;
+	--grid-mode: flex;
+	--flex-direction: column;
+	flex: 1;
+	--align-items: stretch;
+	align-self: stretch;
+  width: 100%;
 }
 
 @container body ( style(--header-fixed:1) ) {
@@ -116,12 +129,8 @@ div.container > .inner > * {
 	}
 	#ubercontainer {
 		padding-top: calc( var(--header-height) + var(--site-top-padding) );
-		--grid-mode: rows;
-		min-height:100%;
 	}
-	#ubercontainer {
-		--grid-template-rows: auto min-content;
-	}
+
 }
 
 @container body ( style(--headerpos:side) ) {
@@ -134,15 +143,6 @@ div.container > .inner > * {
 		height: 100vh;
 	}
 	
-	#ubercontainer {
-		--grid-mode: rows;
-		min-height:100%;
-	}
-
-	#ubercontainer {
-		--grid-template-rows: auto min-content;
-	}
-
 	#menu {
 		display: none;
 	}
@@ -169,23 +169,6 @@ div.container > .inner > * {
 
 	#ubercontainer {
 		padding-bottom: calc( var(--footer-height) + var(--site-bottom-padding) );
-	}
-
-	@container body ( style(--header-fixed:0) ) {
-		#ubercontainer {
-			--grid-mode: rows;
-		}
-		#ubercontainer {
-			--grid-template-rows: min-content auto ;
-		}
-	}
-	@container body ( style(--header-fixed:1) ) {
-		#ubercontainer {
-			--grid-mode: rows;
-		}
-		#ubercontainer {
-			--grid-template-rows:  auto ;
-		}
 	}
 
 }
@@ -258,10 +241,9 @@ div.container > .inner > * {
 
 }
 
-
-
 #content {
 	grid-area:content;
+	flex: 1;
 }
 #bottomnav {
 	grid-area:bottomnav;
@@ -288,6 +270,7 @@ div.container > .inner > * {
 	grid-area:content_bottom;
 }
 #menu {
+	container-name: menu;
 	grid-area:menu;
 	overflow: clip;
 }
@@ -296,6 +279,7 @@ div.container > .inner > * {
 	overflow: clip;
 }
 #xcol {
+	container-name: xcol;
 	grid-area:xcol;
 	overflow: clip;
 }
@@ -307,21 +291,23 @@ div.container > .inner > * {
  *  
  */
 
-@container hasInner ( style( --sticky:1 ) ) {
+@container xcol ( style( --sticky:1 ) ) {
 
-	
-	#xcol .inner {
+	.inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--xcol-top-padding, 4px) );
 		z-index: 90;
 	}
 
-	#menu .inner {
+}
+
+@container menu ( style( --sticky:1 ) ) {
+
+	.inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--menu-top-padding,4px) );
 		z-index: 90;
 	}
-
 
 }
 
@@ -336,12 +322,7 @@ div.container > .inner > * {
 
 
 #content_main {
-	--grid-mode: named;
-}
-#content_main {
-	--grid-template-areas: "menu content_wrap";
-	--grid-template-columns: var(--menu-width) auto;
-	--grid-template-rows: auto;
+	--grid-mode: flex;
 }
 
 @container body ( style(--headerpos:side) ) {
@@ -354,19 +335,13 @@ div.container > .inner > * {
 
 #content {
 	--grid-mode: rows;
-	--grid-template-rows: min-content auto min-content;
+	--grid-template-rows: max-content auto max-content;
 }
 
 #content_wrap {
-	--grid-mode: named;
+	--grid-mode: flex;
+	flex: 1;
 }
-#content_wrap {
-	--grid-template-areas: "maincol xcol";
-	--grid-template-columns: auto var(--xcol-width) ;
-	--grid-template-rows: auto;
-	height:100%;
-}
-
 
 @container body ( style( --xcol:close ) ) {
 	
@@ -374,19 +349,13 @@ div.container > .inner > * {
 		display:none;
 	}
 	
-	#content_wrap {
-		--grid-mode: flex;
-	}
-	
 }
 
 #maincol {
-	height:100%;
-}
-
-#maincol {
-	--grid-mode: none;
-	--grid-template-rows: min-content auto min-content;
+	flex: 1;
+	--grid-mode: flex;
+	--flex-direction: column;
+	--flex-stretch: 0;
 }
 
 #maincol_grid {
@@ -396,10 +365,13 @@ div.container > .inner > * {
 
 #footer {
 	height: var(--footer-height);
-	--grid-mode: rows;
+	--grid-mode: none;
+	flex:0;
 }
-#footer {
-	--grid-template-rows: min-content auto;
+
+#menubuttons {
+	--grid-mode: flex;
+	--flex-stretch: 0;
 }
 
 
@@ -415,25 +387,24 @@ div.container > .inner > * {
 	justify-self: center;
 }
 
-
 #header {
-	--grid-mode: rows;
-}
-#header {	
-	--grid-template-rows:auto  min-content ;
+	--grid-mode: flex;
+	--flex-direction: column;
+	flex: 0;
 }
 
 #nav {
 	--grid-mode: columns;
-	--grid-template-columns: min-content 1fr min-content;
-	--grid-gap: 0 8px ;
-/*	--align-items: center;*/
+	--grid-gap: 0 ;
+	--grid-template-columns: var(--menu-width) auto var(--xcol-width);
+}
+
+#xcolbutton {
+	justify-self: end;
 }
 
 #footer_main {
 	--grid-mode: fixed;
-}
-#footer_main {
 	--grid-columns: 3;
 }
 
@@ -446,6 +417,17 @@ div.container > .inner > * {
 	
 	#maincol {
 		height:auto;
+	}
+
+	#footer_main {
+		--grid-mode: flex;
+		--flex-direction: column-reverse;
+	}
+
+	#nav {
+		--grid-mode: columns;
+		--grid-gap: 0 ;
+		--grid-template-columns: max-content auto min-content;
 	}
 
 }
@@ -506,6 +488,12 @@ div.container > .inner > * {
 	}
 }
 
+#menu {
+		flex: 0 0 var(--menu-width);
+}
+#xcol {
+	flex: 0 0 var(--xcol-width);
+}
 
 #menubutton, #hamburger, #menuclose {
 	display: none;
@@ -521,7 +509,7 @@ div.container > .inner > * {
 		top: calc(var(--header-fixed) * var(--header-height) );
 		left: 0;
 		height: calc( 100vh - (var(--header-fixed) * var(--header-height)) - (var(--footer-fixed) * var(--footer-height) ) );
-		width: var(--menu-width);
+	
 		transition: transform var(--menu-anim-time) ease-in-out; /* Smooth transition */
 	}
 }	

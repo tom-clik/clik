@@ -123,7 +123,7 @@ body[class*="layout-fixed"] {
 
 	body[class*="mobilefixed"] {
 		--menupos:fixed;
-		--menu-width:100%;
+		--menu-width:100vw;
 		--menu: close;
 	}
 

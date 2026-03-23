@@ -71,8 +71,24 @@ Blue grey sort of thing
 }
 
 #nav {
+	--grid-template-columns: 1fr var(--xcol-width);
  	border-bottom: 1px solid var(--border-color);
 }
+
+#menubuttons {
+	display:none;
+}
+
+@media (max-width:800px) {
+	#menubuttons {
+		display:block;
+	}
+
+	#nav {
+		--grid-template-columns: max-content auto min-content;
+	}
+}
+
 
 #section-title {
 	flex-grow: 1;
@@ -107,8 +123,8 @@ Blue grey sort of thing
 	--menu-border-color: transparent;
 }
 
-#content_top, #content_bottom {
-	display: none;
+#content {
+	--grid-template-rows: 1fr;
 }
 
 #mainmenu li.hi a {

@@ -270,6 +270,7 @@ div.container:has(> div.container) {
 	grid-area:content_bottom;
 }
 #menu {
+	container-name: menu;
 	grid-area:menu;
 	overflow: clip;
 }
@@ -278,6 +279,7 @@ div.container:has(> div.container) {
 	overflow: clip;
 }
 #xcol {
+	container-name: xcol;
 	grid-area:xcol;
 	overflow: clip;
 }
@@ -289,22 +291,23 @@ div.container:has(> div.container) {
  *  
  */
 
-@container container ( style( --sticky:1 ) ) {
+@container xcol ( style( --sticky:1 ) ) {
 
-/*	MUST DO: fix these*/
-	
 	.inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--xcol-top-padding, 4px) );
 		z-index: 90;
 	}
 
-	/*#menu .inner {
+}
+
+@container menu ( style( --sticky:1 ) ) {
+
+	.inner {
 		position:sticky;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--menu-top-padding,4px) );
 		z-index: 90;
-	}*/
-
+	}
 
 }
 

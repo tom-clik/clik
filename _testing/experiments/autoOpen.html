@@ -2,9 +2,7 @@
 
 # Test auto open
 
-Never really got this working.
-
-Animate auto not working properly. Also this demo uses fixed widths and wouldn't work with this.
+Seems to work fine. Need to integrate into our sliding menu thing.
 
 --->
 
@@ -40,10 +38,6 @@ Animate auto not working properly. Also this demo uses fixed widths and wouldn't
 			overflow: hidden;
 		}
 
-		#item2 {
-			flex-grow: 1;
-		}
-
 		#item3 {
 			--open:1;
 			width:200px;
@@ -55,7 +49,9 @@ Animate auto not working properly. Also this demo uses fixed widths and wouldn't
 		}
 
 		#container {
-			display: flex;
+			display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: max-content auto max-content;
 			height:400px;
 		}
 		.buttons {

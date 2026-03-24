@@ -118,7 +118,8 @@ div.fieldrow.error {
 .fieldrow :where(input:not([type='checkbox'], [type='radio'], [type='search'])), 
 .fieldrow textarea, .field textarea,
 .select2-container--default .select2-selection--single,
-.select2-container--default .select2-selection--multiple   {
+.select2-container--default .select2-selection--multiple,
+.select   {
 	padding:var(--field-padding);
 	border:var(--field-border-width) solid var(--field-border-color);
 	background-color: var(--field-background-color);

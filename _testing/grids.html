@@ -88,6 +88,12 @@
 		}
 	}
 
+
+	.scrolloverflow {
+		max-width: 100%;
+		overflow-x: scroll;
+	}
+
 	/* See named areas test */
 	.header {
 		grid-area: header;
@@ -216,7 +222,7 @@
 		<div id="testflexheight" class="grid"></div>
 	</div>
 
-	<div class="test">
+	<div class="test scrolloverflow">
 		<div class="test-header">Flex No Wrap</div>
 		<div id="testflexnowrap" class="grid"></div>
 	</div>

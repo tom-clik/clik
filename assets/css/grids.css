@@ -25,7 +25,6 @@ HTML
 	inherits: false;
 	initial-value: fit;
 }
-/* ALL OTHER PROPERTIES inherit and shuold be defined for every nested grid 
 
 /* Gap between cells. One value or column gap, row gap */
 @property --grid-gap {
@@ -110,7 +109,7 @@ HTML
 @property --grid-max-height {
 	syntax: '*'; 
 	inherits: false;
-	initial-value: 1fr;
+	initial-value: auto;
 }
 
 .grid {

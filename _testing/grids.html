@@ -91,7 +91,7 @@
 
 	.scrolloverflow {
 		max-width: 100%;
-		overflow-x: scroll;
+		overflow-x: auto;
 	}
 
 	/* See named areas test */
@@ -153,12 +153,15 @@
 	}
 
 	#testflex {
+		--flex-stretch: 0;
 		--grid-mode: flex;
 		--align-items: center;
 	}
 
 	#testflexcolsstretch {
+		height:300px;
 		--grid-mode: flex;
+		--flex-stretch: 1;
 		--flex-direction: column;
 	}
 	
@@ -171,12 +174,12 @@
 	
 	<div class="test">
 		<div class="test-header">Auto grid (fit)</div>
-		<div id="testfit" class="grid" data-cols="8"></div>
+		<div id="testfit" class="grid" data-cols="9"></div>
 	</div>
 
 	<div class="test">
 		<div class="test-header">Auto grid (with fill - expand page to see difference) </div>
-		<div id="testfill" class="grid" data-cols="5"></div>
+		<div id="testfill" class="grid" data-cols="9"></div>
 	</div>
 
 

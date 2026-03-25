@@ -1,0 +1,269 @@
+<!---
+
+Support for container queries seems to be a long way from where we need it.
+
+Here we use classes to achieve what we need.
+
+It works well enough but the complications of viewports are horrible. Really you're better off just copying the class definitions.
+
+--->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS Grid Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/reset.css">
+	<link rel="stylesheet" href="../assets/css/grids_classes.css">
+	
+	<meta charset="UTF-8">
+	<style>
+	body {
+		padding:20px;
+	}
+	.test-header {
+		font-weight: bold;
+		font-size: 24px;
+	}
+
+	.test {
+		margin:20px;
+	}
+
+	g {
+		display: inline-block;
+		background-color: #cecece;
+		padding:4px;
+	}
+	
+	.grid {
+		grid-gap:10px;
+	}
+
+	@media screen and (max-width: 800px) {
+		.fix  {
+			--grid-columns:2;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		.fix  {
+			display:block;
+		}
+	}
+
+	@media screen and (max-width: 800px) {
+		.fixedwidth  {
+			--grid-width: 100px;
+		}
+	}
+
+	.columns {
+		grid-template-columns: 220px auto 360px;
+	}
+
+	/* 2nd column */
+	.columns > *:nth-child(3n + 2) {
+	  justify-self: center;
+	}
+
+	/* 3rd column */
+	.columns > *:nth-child(3n + 3) {
+	  justify-self: end;
+	  text-align: right;
+	}
+
+	.rows {
+		height: 400px;
+		grid-template-rows: 40px auto 40px;
+	}
+
+	.named {
+		height: 400px;
+		grid-template-areas: "header header" "left right" "footer footer";
+		grid-template-columns: 200px auto;
+		grid-template-rows: 40px auto 40px;
+	}
+
+	@media screen and (max-width: 800px) {
+		.named  {
+			height: 280px;
+			grid-template-areas: "header header" "right right" "left footer";
+			grid-template-columns: 200px auto;
+			grid-template-rows: 20px auto 40px;
+		}
+	}
+	.flex {
+		grid-gap: 12px;
+	}
+
+
+	.scrolloverflow {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	/* See named areas test */
+	.header {
+		grid-area: header;
+	}
+	.left {
+		grid-area: left;
+	}
+	.right {
+		grid-area: right;
+	}
+	.footer {
+		grid-area: footer;
+	}
+
+	@media screen and (max-width: 800px) {
+		.columns {
+			grid-template-columns: 120px auto 160px;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		.columns {
+			grid-template-columns: 120px auto;
+		}
+	}
+
+	#testflexheight {
+		height:250px;
+		background-color: #8c8c8c;
+		justify-content: end;
+		align-content: space-between;
+	}
+	
+
+	@media screen and (max-width: 800px) {
+		#testflexheight {
+			height:auto;
+		}
+	}
+
+
+	#testflexnowrap {
+		flex-wrap: nowrap;
+	}
+	
+	#testflexstretch {
+		flex-direction: row-reverse;
+		--flex-stretch: 1;
+	}
+	
+/*	-- note the text centering is not within the scope of the grid system, you can do whatever you like here */
+	#testflexstretch g {
+		text-align: center;
+	}
+
+	#testcolsstretch {
+		height:400px;
+		--flex-stretch: 1;
+		flex-direction: column;
+	}
+	
+
+
+	</style>
+</head>
+<body>
+
+	
+	<div class="test">
+		<div class="test-header">Auto grid (fit)</div>
+		<div id="testfit" class="grid fit" data-cols="9"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Auto grid (with fill - expand page to see difference) </div>
+		<div id="testfill" class="grid fill" data-cols="9"></div>
+	</div>
+
+
+	<div class="test">
+		<div class="test-header">Grid with fixed width cols</div>
+		<div id="testfixedwidth" class="grid fixedwidth"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Grid with fixed number of columns</div>
+		<div id="testfix" class="grid fixed"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Grid with set columns</div>
+		<div id="testcolumns" class="grid columns"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Grid with set rows</div>
+		<div id="testrows" class="grid rows" data-cols="3"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Grid with named areas</div>
+		<div id="testnamed" class="grid named manual">
+			<g class="header">header</g>
+			<g class="left">left</g>
+			<g class="right">right</g>
+			<g class="footer">footer</g>
+		
+		</div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Flex</div>
+		<div id="testflex" class="flex" data-cols="5"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Flex - with a height to show what align-content actually does</div>
+		<div id="testflexheight" class="flex"></div>
+	</div>
+
+	<div class="test scrolloverflow">
+		<div class="test-header">Flex No Wrap</div>
+		<div id="testflexnowrap" class="flex"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Flex Stretch - note text centering not part of grid system</div>
+		<div id="testflexstretch" class="flex" data-cols="5"></div>
+	</div>
+
+	<div class="test">
+		<div class="test-header">Flex Columns - stretch</div>
+		<div id="testcolsstretch" class="flex" data-cols="5"></div>
+	</div>
+	
+	<script src="../assets/js/jquery-3.4.1.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".grid,.flex").each( function() {
+				if (! $(this).hasClass("manual") ) {
+					const cols = $(this).data("cols") ? $(this).data("cols") : 12;
+					$(this).html(testgrid(cols));
+				}
+			});
+		});
+
+		lorem = ["Lorem","ipsum","dolor","sit","amet,","consectetur","adipisicing","elit,","sed","do","eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua."];
+
+		function testgrid(cols) {
+			var html = "";
+			text = "";
+			for (let i = 1 ; i <= cols; i++) {
+				text += lorem[i] + " ";
+				html += "<g>" + text + "</g>";
+			}
+			html += "";
+			return html;
+		}
+	</script>
+
+</body>
+</html>

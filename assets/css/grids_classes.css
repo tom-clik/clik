@@ -1,1 +1,67 @@
-/* deprecated */
+/* 
+
+# Grids
+
+Using classes only for compatibility
+
+*/
+
+
+.grid, .flex   {
+  box-sizing: border-box;
+}
+
+.grid {
+  display: grid;
+  display:grid;
+  grid-gap: 0px;
+  align-content: normal;
+  align-items: normal;
+  justify-content: normal;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: none;
+  --grid-max-height: auto;
+  --grid-width: 180px;
+  --grid-columns: 3;
+}
+
+.flex {
+  display: flex;
+  --flex-stretch: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid > * {
+  height: var(--grid-max-height);
+}
+
+.flex > * {
+  flex-grow: var(--flex-stretch);
+}
+
+.grid.fit {
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-width),1fr));
+}
+
+.grid.fill {
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-width),1fr));
+}
+
+.grid.fixed {
+	grid-template-columns: repeat(var(--grid-columns), 1fr);
+}
+ 
+.grid.fixedwidth {
+  grid-template-columns:  repeat(auto-fit, var(--grid-width));
+}
+/* See notes on mode=rows */
+.grid.rows {
+	grid-template-columns: 1fr;
+}
+
+/* Setting a name seems to cause issues when in other modes*/
+.grid:not(.named) > * {
+    grid-area: unset !important;
+}

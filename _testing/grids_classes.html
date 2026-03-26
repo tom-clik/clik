@@ -16,6 +16,7 @@ It works well enough but the complications of viewports are horrible. Really you
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/reset.css">
 	<link rel="stylesheet" href="../assets/css/grids_classes.css">
+	<link rel="stylesheet" href="css\testing.css">
 	
 	<meta charset="UTF-8">
 	<style>
@@ -41,15 +42,18 @@ It works well enough but the complications of viewports are horrible. Really you
 		grid-gap:10px;
 	}
 
+	#testfix {
+		--grid-columns:3;
+	}
 	@media screen and (max-width: 800px) {
-		.fix  {
-			--grid-columns:2;
+		#testfix  {
+			display:block;
 		}
 	}
 
-	@media screen and (max-width: 600px) {
-		.fix  {
-			display:block;
+	@media screen and (min-width: 1200px) {
+		#testfix  {
+			--grid-columns:4;
 		}
 	}
 
@@ -59,20 +63,7 @@ It works well enough but the complications of viewports are horrible. Really you
 		}
 	}
 
-	.columns {
-		grid-template-columns: 220px auto 360px;
-	}
-
-	/* 2nd column */
-	.columns > *:nth-child(3n + 2) {
-	  justify-self: center;
-	}
-
-	/* 3rd column */
-	.columns > *:nth-child(3n + 3) {
-	  justify-self: end;
-	  text-align: right;
-	}
+	
 
 	.rows {
 		height: 400px;
@@ -118,15 +109,46 @@ It works well enough but the complications of viewports are horrible. Really you
 		grid-area: footer;
 	}
 
-	@media screen and (max-width: 800px) {
-		.columns {
-			grid-template-columns: 120px auto 160px;
-		}
+	#testcolumns > *:nth-child(2n + 2) {
+		justify-self: end;
+		text-align: right;
 	}
 
-	@media screen and (max-width: 600px) {
-		.columns {
-			grid-template-columns: 120px auto;
+	#testcolumns {
+		grid-template-columns: 180px auto;
+	}
+	
+	@media screen and (min-width: 1200px) {
+		#testcolumns {
+			grid-template-columns: 220px auto 360px;
+		}
+
+		#testcolumns > *:nth-child(2n + 2) {
+		    justify-self: auto;
+		    text-align: initial;
+		}
+
+		/* 2nd column */
+		#testcolumns > *:nth-child(3n + 2) {
+		  justify-self: center;
+		}
+
+		/* 3rd column */
+		#testcolumns > *:nth-child(3n + 3) {
+		  justify-self: end;
+		  text-align: right;
+		}
+	}	
+
+	@media screen and (max-width: 800px) {
+		
+		#testcolumns > *:nth-child(2n + 2) {
+		    justify-self: auto;
+		    text-align: initial;
+		}
+		
+		#testcolumns {
+			grid-template-columns: 1fr;
 		}
 	}
 
@@ -190,11 +212,13 @@ It works well enough but the complications of viewports are horrible. Really you
 
 	<div class="test">
 		<div class="test-header">Grid with fixed number of columns</div>
+		<p class="mobile">No columns</p><p class="mid">Three columns</p><p class="max">Four columns</p>
 		<div id="testfix" class="grid fixed"></div>
 	</div>
 
-	<div class="test">
+	<div class="test labels">
 		<div class="test-header">Grid with set columns</div>
+		<p class="mobile">No columns</p><p class="mid">Two columns</p><p class="max">Three columns</p>
 		<div id="testcolumns" class="grid columns"></div>
 	</div>
 
@@ -203,8 +227,9 @@ It works well enough but the complications of viewports are horrible. Really you
 		<div id="testrows" class="grid rows" data-cols="3"></div>
 	</div>
 
-	<div class="test">
+	<div class="test labels">
 		<div class="test-header">Grid with named areas</div>
+		<p class="mobile">Demo rearrangement columns</p>
 		<div id="testnamed" class="grid named manual">
 			<g class="header">header</g>
 			<g class="left">left</g>

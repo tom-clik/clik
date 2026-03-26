@@ -238,22 +238,8 @@ but we need them to apply to the "inner" div */
 }
 
 /* Setting a name seems to cause issues when in other modes*/
-.grid:not(.named) {
-  grid-template-areas: auto;
-}
-
-/*.grid:not(.named) > * {
-    grid-area: auto !important;
-}*/
-
-/* Setting a name seems to cause issues when in other modes*/
 @container grid ( not style(--grid-mode:named) ) {
-	.gridInner {
-		 grid-template-areas: auto !important;
-	}
-
-
-	/*.gridInner > * {
+	.gridInner > * {
 		grid-area: unset !important;
-	}*/
+	}
 }

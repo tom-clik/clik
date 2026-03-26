@@ -66,10 +66,6 @@ Using classes only for compatibility
 }
 
 /* Setting a name seems to cause issues when in other modes*/
-.grid:not(.named) {
-  grid-template-areas: auto;
+.grid:is(.none, .fit, .fill, .fixed, .fixedwidth, .rows) > * {
+  grid-area: auto !important;
 }
-
-/*.grid:not(.named) > * {
-    grid-area: auto !important;
-}*/

@@ -7,6 +7,19 @@
 	display: block;
 }
 
+:is(.mid,.mobile,.max)::before {
+	font-weight: bold;
+}
+.test.labels .mid::before {
+	content: "Mid: ";
+}
+.test.labels .mobile::before {
+	content: "Mobile: ";
+}
+.test.labels .max:before {
+	content: "Max: ";
+}
+
 @media (max-width:800px) {
 	.mobile {
 		display: block;
@@ -24,3 +37,5 @@
 		display: none;
 	}
 }
+
+

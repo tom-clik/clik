@@ -15,11 +15,7 @@
 	
 		.cs-title {
 			--title-font-size: 200%;
-		}
-
-		.title {
-			--title-font-size: 140%;
-			--title-font-weight: bold;
+			--heading-font-align:center;
 		}
 
 		.scheme-crosshead {
@@ -43,7 +39,16 @@
 		}
 
 		.scheme-crosshead h4 {
-			--heading-font-size: 50%;	
+			--heading-font-size: 110%;	
+		}
+
+		:is(.test-h1,.test-h2,.test-h3,.test-h4,.test-h5,.test-h6) {
+			--heading-font: Courier new;
+			--heading-font-align:right;
+		}
+
+		.test-p {
+			font-style: italic;
 		}
 
 		/* styling for test page */
@@ -63,7 +68,7 @@
 <body>
 
 	<div class="test">
-		<div class="test-header">These tags should be plain</div>
+		<div class="test-header">These tags should be the default</div>
 
 		<h1>Testing h1 plain</h1>
 		<h2>Testing h2 plain</h2>
@@ -75,8 +80,6 @@
 	
 		<div class="cs-title">
 			
-			<p>Plain para in cs-title</p>
-
 			<h1>h1 in cs-title</h1>
 			<h2>h2 in cs-title</h2>
 			<h3>h3 in cs-title</h3>
@@ -84,39 +87,28 @@
 		</div>
 
 	</div>
+	
 	<div class="test">
-
-		<div class="test-header">These tags should all be styled according to the syles applied to .title</div>
-
-			
-		<div class="cs-somethingelese">
-			<div class="title">Title for something else</div>
-			<div class="title"><h1>.title h1 in cs-somethingelese</h1></div>
-			<div class="title">	<h2>.title h2 in cs-somethingelese</h2></div>
-			<div class="title">	<h3>.title h3 in cs-somethingelese</h3></div>
-		</div>
-	</div>
-	<div class="test">
-		<div class="test-header">These headings here should have the default heading .textWrap styling</div>
+		<div class="test-header">All elements have manual style</div>
 
 		<div class="textWrap">
-			<h1>Testing h1 textWrap</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h1 class="test-h1">Testing h1 textWrap</h1>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
-			<h2>Testing h2 textWrap</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h2 class="test-h2">Testing h2 textWrap</h2>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
-			<h3>Testing h3 textWrap</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h3 class="test-h3">Testing h3 textWrap</h3>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
-			<h4>Testing h4 textWrap</h4>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h4 class="test-h4">Testing h4 textWrap</h4>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
-			<h5>Testing h5 textWrap</h5>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h5 class="test-h5">Testing h5 textWrap</h5>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
-			<h6>Testing h6 textWrap</h6>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			<h6 class="test-h6">Testing h6 textWrap</h6>
+			<p class="test-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>
 		</div>
 	</div>
@@ -124,7 +116,7 @@
 	<div class="test">
 		<div class="test-header">These headings here have additional custom styling applied via scheme-crosshead</div>
 
-		<div class="scheme-crosshead testWrap">
+		<div class="scheme-crosshead">
 			<h1>Testing h1 textWrap</h1>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. </p>

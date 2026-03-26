@@ -41,6 +41,10 @@ Using classes only for compatibility
   flex-grow: var(--flex-stretch);
 }
 
+.grid.none {
+	display: block;
+}
+
 .grid.fit {
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-width),1fr));
 }
@@ -62,6 +66,10 @@ Using classes only for compatibility
 }
 
 /* Setting a name seems to cause issues when in other modes*/
-.grid:not(.named) > * {
-    grid-area: unset !important;
+.grid:not(.named) {
+  grid-template-areas: auto;
 }
+
+/*.grid:not(.named) > * {
+    grid-area: auto !important;
+}*/

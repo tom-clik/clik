@@ -1,9 +1,13 @@
 component name="tabs" {
 
+	public function init(boolean debug=0) {
+		this.newLineChar = arguments.debug?  newLine(): "";
+		this.tabChar = arguments.debug?  chr(9): "";
+		return this;
+	}
+
 	private string function cssBlock(required string selector, required array rules) localmode=true {
-		newLineChar = chr(10);
-		tabChar = chr(9);
-		return arguments.selector & " {" & newLineChar & tabChar & arguments.rules.toList(newLineChar & tabChar) & newLineChar & "}";
+		return arguments.selector & " {" & newLineChar & this.tabChar & arguments.rules.toList(newLineChar & this.tabChar) & newLineChar & "}";
 	}
 
 	public string function css(required string selector, required struct settings) localmode=true {
@@ -19,9 +23,9 @@ component name="tabs" {
 			"tab-font-size" = "inherit",
 			"tab-font-weight" = "inherit",
 			"tab-font" = "inherit",
-			"tab-background" = "#e4e4e4",
+			"tab-background" = "##e4e4e4",
 			"tab-border-width" = "1px",
-			"tab-border-color" = "#ffffff",
+			"tab-border-color" = "##ffffff",
 			"tab-border-radius" = "8px 6px",
 			"tab-width" = "160px",
 			"tab-first-inset" = "6px"

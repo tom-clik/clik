@@ -1,9 +1,14 @@
 component name="items" {
 
+	public function init(boolean debug=0) {
+		this.newLineChar = arguments.debug?  newLine(): "";
+		this.tabChar = arguments.debug?  chr(9): "";
+		return this;
+	}
+
 	private string function cssBlock(required string selector, required array rules) localmode=true {
-		newLineChar = chr(10);
-		tabChar = chr(9);
-		return arguments.selector & " {" & newLineChar & tabChar & arguments.rules.toList(newLineChar & tabChar) & newLineChar & "}";
+		
+		return arguments.selector & " {" & this.newLineChar & this.tabChar & arguments.rules.toList(this.newLineChar & this.tabChar) & this.newLineChar & "}";
 	}
 
 	public string function css(required string selector, required struct settings) localmode=true {
@@ -41,27 +46,27 @@ component name="items" {
 
 		baseRules.append("display: grid;");
 		baseRules.append("grid-gap: #gridGap#;");
-		baseRules.append("grid-template-areas: \"title\" \"imageWrap\" \"textWrap\";");
+		baseRules.append("grid-template-areas: ""title"" ""imageWrap"" ""textWrap"";");
 		baseRules.append("grid-template-rows: auto;");
 		baseRules.append("grid-template-columns: 1fr;");
 
 		if (hTop == "0") {
-			baseRules[3] = "grid-template-areas: \"imageWrap\" \"title\" \"textWrap\";";
+			baseRules[3] = "grid-template-areas: ""imageWrap"" ""title"" ""textWrap"";";
 		}
 
 		if (showImage == "0") {
-			baseRules[3] = "grid-template-areas: \"title\" \"textWrap\";";
+			baseRules[3] = "grid-template-areas: ""title"" ""textWrap"";";
 			baseRules.append("grid-template-rows: min-content auto;");
 			imageWrapRules.append("display: none;");
 		}
 
 		if (showTitle == "0") {
 			if (imageAlign == "left") {
-				baseRules[3] = "grid-template-areas: \"imageWrap textWrap\";";
+				baseRules[3] = "grid-template-areas: ""imageWrap textWrap"";";
 			} else if (imageAlign == "right") {
-				baseRules[3] = "grid-template-areas: \"textWrap imageWrap\";";
+				baseRules[3] = "grid-template-areas: ""textWrap imageWrap"";";
 			} else {
-				baseRules[3] = "grid-template-areas: \"imageWrap\" \"textWrap\";";
+				baseRules[3] = "grid-template-areas: ""imageWrap"" ""textWrap"";";
 			}
 			titleRules.append("display: none;");
 		}
@@ -70,9 +75,9 @@ component name="items" {
 			baseRules.append("grid-template-columns: #imageWidth# auto;");
 			baseRules.append("grid-template-rows: min-content 1fr;");
 			if (textTop == "1") {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: \"imageWrap textWrap\" \"title textWrap\";" : "grid-template-areas: \"title textWrap\" \"imageWrap textWrap\";";
+				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""imageWrap textWrap"" ""title textWrap"";" : "grid-template-areas: ""title textWrap"" ""imageWrap textWrap"";";
 			} else {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: \"imageWrap title\" \"imageWrap textWrap\";" : "grid-template-areas: \"title title\" \"imageWrap textWrap\";";
+				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""imageWrap title"" ""imageWrap textWrap"";" : "grid-template-areas: ""title title"" ""imageWrap textWrap"";";
 			}
 		}
 
@@ -80,9 +85,9 @@ component name="items" {
 			baseRules.append("grid-template-columns: auto #imageWidth#;");
 			baseRules.append("grid-template-rows: min-content 1fr;");
 			if (textTop == "1") {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: \"textWrap imageWrap\" \"textWrap title\";" : "grid-template-areas: \"textWrap title\" \"textWrap imageWrap\";";
+				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""textWrap imageWrap"" ""textWrap title"";" : "grid-template-areas: ""textWrap title"" ""textWrap imageWrap"";";
 			} else {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: \"title imageWrap\" \"textWrap imageWrap\";" : "grid-template-areas: \"title title\" \"textWrap imageWrap\";";
+				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""title imageWrap"" ""textWrap imageWrap"";" : "grid-template-areas: ""title title"" ""textWrap imageWrap"";";
 			}
 		}
 
@@ -105,7 +110,7 @@ component name="items" {
 		}
 
 		if (imageSpace == "0") {
-			noImageRules.append("grid-template-areas: \"title\" \"textWrap\";");
+			noImageRules.append("grid-template-areas: ""title"" ""textWrap"";");
 			noImageRules.append("grid-template-rows: min-content auto;");
 			noImageRules.append("grid-template-columns: 1fr;");
 		}
@@ -125,7 +130,7 @@ component name="items" {
 		blocks.append(cssBlock(arguments.selector & " figcaption", ["display: #captionDisplay#;"]));
 		blocks.append(cssBlock(arguments.selector & " .textWrap > p", ["margin-top: 0;"]));
 		blocks.append(cssBlock(arguments.selector & " .imageWrap img", ["max-width: 100%;", "height: auto;"]));
-		blocks.append(cssBlock(arguments.selector & ":after", ["content: \" \";", "display: block;", "height: 0;", "clear: both;", "visibility: hidden;", "overflow: hidden;"]));
+		blocks.append(cssBlock(arguments.selector & ":after", ["content: "" "";", "display: block;", "height: 0;", "clear: both;", "visibility: hidden;", "overflow: hidden;"]));
 
 		if (noImageRules.len()) {
 			blocks.append(cssBlock(arguments.selector & ".noimage", noImageRules));

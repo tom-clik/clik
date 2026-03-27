@@ -1,9 +1,13 @@
 component name="images" {
 
+	public function init(boolean debug=0) {
+		this.newLineChar = arguments.debug?  newLine(): "";
+		this.tabChar = arguments.debug?  chr(9): "";
+		return this;
+	}
+
 	private string function cssBlock(required string selector, required array rules) localmode=true {
-		newLineChar = chr(10);
-		tabChar = chr(9);
-		return arguments.selector & " {" & newLineChar & tabChar & arguments.rules.toList(newLineChar & tabChar) & newLineChar & "}";
+		return arguments.selector & " {" & this.newLineChar & this.tabChar & arguments.rules.toList(this.newLineChar & this.tabChar) & this.newLineChar & "}";
 	}
 
 	public string function css(required string selector, required struct settings) localmode=true {

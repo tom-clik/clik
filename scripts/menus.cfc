@@ -1,15 +1,19 @@
 component name="menus" {
 
+	public function init(boolean debug=0) {
+		this.newLineChar = arguments.debug?  newLine(): "";
+		this.tabChar = arguments.debug?  chr(9): "";
+		return this;
+	}
+
 	private string function cssBlock(required string selector, required array rules) localmode=true {
-		newLineChar = chr(10);
-		tabChar = chr(9);
-		return arguments.selector & " {" & newLineChar & tabChar & arguments.rules.toList(newLineChar & tabChar) & newLineChar & "}";
+		return arguments.selector & " {" & this.newLineChar & this.tabChar & arguments.rules.toList(this.newLineChar & this.tabChar) & this.newLineChar & "}";
 	}
 
 	public string function css(required string selector, required struct settings) localmode=true {
 		style = duplicate(arguments.settings);
 		structAppend(style, {
-			"link-color" = "#000",
+			"link-color" = "##000",
 			"menu-mode" = "flex",
 			"menu-borders" = "normal",
 			"menu-orientation" = "horizontal",
@@ -18,7 +22,7 @@ component name="menus" {
 			"menu-submenu-show" = "hide",
 			"menu-stretch" = "1",
 			"menu-align" = "center",
-			"menu-border-color" = "#000",
+			"menu-border-color" = "##000",
 			"menu-background" = "transparent",
 			"menu-gap" = "4px",
 			"menu-item-padding" = "0 8px",

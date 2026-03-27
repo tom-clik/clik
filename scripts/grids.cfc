@@ -1,4 +1,10 @@
-component name="grids" {
+component name="grids" extends="baseScript" {
+
+	public function init(boolean debug=0) {
+		super.init(arguments.debug);
+		this.panels = ["main"={},"items"={"selector"=" > *"},"wide"={"selector"=" > .wide"}];
+		return this;
+	}
 
 	public string function css(required string selector, required struct settings) localmode=true {
 		css = {
@@ -6,8 +12,7 @@ component name="grids" {
 			items = []
 		};
 		cssBlocks = [];
-		newLineChar = newLine();
-		tabChar = chr(9);
+		
 		masonryWideRule = "";
 
 		style = duplicate(settings);
@@ -25,104 +30,74 @@ component name="grids" {
 			"align-items" = "normal",
 			"flex-stretch" = "1",
 			"flex-wrap" = "wrap",
-			"grid-max-height" = "auto"
+			"grid-height" = "auto"
 		}, false);
 
-		mode = lCase(trim(style["grid-mode"]));
-		gridGap = style["grid-gap"];
-		gridWidth = style["grid-width"];
-		gridColumns = style["grid-columns"];
-		gridTemplateRows = style["grid-template-rows"];
-		gridTemplateColumns = style["grid-template-columns"];
-		gridTemplateAreas = style["grid-template-areas"];
-		flexDirection = style["flex-direction"];
-		justifyContent = style["justify-content"];
-		alignContent = style["align-content"];
-		alignItems = style["align-items"];
-		flexStretch = style["flex-stretch"];
-		flexWrap = style["flex-wrap"];
-		gridMaxHeight = style["grid-max-height"];
+		mode = settings["grid-mode"];
 
-		css.main.append("display: grid;");
-		css.main.append("gap: #gridGap#;");
-		css.main.append("align-content: #alignContent#;");
-		css.main.append("align-items: #alignItems#;");
-		css.main.append("justify-content: #justifyContent#;");
-		css.main.append("grid-template-columns: #gridTemplateColumns#;");
-		css.main.append("grid-template-rows: #gridTemplateRows#;");
-
-		css.items.append("height: #gridMaxHeight#;");
-		css.items.append("flex-grow: #flexStretch#;");
+		outputs = getPanelsStruct();
 
 		switch (mode) {
 			case "none":
-				css.main.append("display: block;");
+				outputs.main["display"] = "block"
 				break;
 
 			case "masonry":
-				css.main.append("display: block;");
-				css.items.append("width: #gridWidth#;");
-				css.items.append("padding-right: #gridGap#;");
-				css.items.append("margin-bottom: #gridGap#;");
-				masonryWideRule = arguments.selector & " > .wide {" & newLineChar & tabChar & "width: calc(#gridWidth# * 2);" & newLineChar & "}";
+				outputs.main["display"] = "block"
+				outputs.items["width"] = style["grid-width"];
+				outputs.items["padding-right"] = style["grid-gap"];
+				outputs.items["margin-bottom"] = style["grid-gap"];
+				outputs.wide["width"] = "calc(#style["grid-width"]# * 2)";
 				break;
 
 			case "fit":
-				css.main.append("grid-template-columns: repeat(auto-fit, minmax(#gridWidth#, 1fr));");
+				outputs.main["grid-template-columns"] = "repeat(auto-fit, minmax(#style["grid-width"]#, 1fr))";
 				break;
 
 			case "fill":
-				css.main.append("grid-template-columns: repeat(auto-fill, minmax(#gridWidth#, 1fr));");
+				outputs.main["grid-template-columns"] = "repeat(auto-fill, minmax(#style["grid-width"]#, 1fr))";
 				break;
 
 			case "flex":
-				css.main.append("display: flex;");
-				css.main.append("flex-direction: #flexDirection#;");
-				css.main.append("flex-wrap: #flexWrap#;");
+				outputs.main["display"] = "flex";
 				break;
 
 			case "fixed":
-				css.main.append("grid-template-columns: repeat(#gridColumns#, 1fr);");
+				outputs.main["grid-template-columns"] = "repeat(#style["grid-columns"]#, 1fr)";
 				break;
 
 			case "fixedwidth":
-				css.main.append("grid-template-columns: repeat(auto-fit, #gridWidth#);");
+				outputs.main["grid-template-columns"] = "repeat(auto-fit, #style["grid-width"]#)";
 				break;
 
 			case "rows":
-				css.main.append("grid-template-columns: 1fr;");
+				outputs.main["grid-template-columns"] = "1fr";
 				break;
 
 			case "named":
-				css.main.append("grid-template-areas: #gridTemplateAreas#;");
+				outputs.main["grid-template-areas"] = style["grid-template-areas"];
+
 				break;
 		}
 
-		if (mode != "named") {
-			css.items.append("grid-area: unset !important;");
+		switch (mode) {
+			case "none":
+			break;
+			case "flex":
+				addDefaults(outputs.main, ["grid-gap","align-content","align-items","justify-content","flex-direction","flex-wrap"],style);
+				addDefaults(outputs.items, ["flex-grow"],style);
+			break;
+			default:
+				addDefaults(outputs.main, ["grid-template-columns","grid-template-rows"],style);
+				addDefaults(outputs.items, ["height"],style);
+				if (mode != "named") {
+					outputs.items["grid-area"] = "unset !important";
+				}
 		}
 
-		if (css.main.len()) {
-			cssBlocks.append(
-				arguments.selector & " {" &
-				newLineChar & tabChar & css.main.toList(newLineChar & tabChar) &
-				newLineChar & "}"
-			);
-		}
 
-		if (css.items.len()) {
-			cssBlocks.append(
-				arguments.selector & " > * {" &
-				newLineChar & tabChar & css.items.toList(newLineChar & tabChar) &
-				newLineChar & "}"
-			);
-		}
+		return dumpSettings(style) & outputSettings(arguments.selector, outputs);
 
-		if (len(masonryWideRule)) {
-			cssBlocks.append(masonryWideRule);
-		}
-
-		return cssBlocks.toList(newLineChar & newLineChar);
 	}
 
 }

@@ -277,25 +277,13 @@ Just trying out the new system with a simple style
 		// Native launcher
 		StyleSheetSwitcherNative.init({
 			jsonUrl: "../assets/js/stylesheet-switcher.sample.json",
-			panelTitle: "Styles (Native)",
-			launcherLabel: "N",
+			panelTitle: "Styles",
 			variantClass: "native",
 			storageKey: "clik-style-choice",
 			stylesheetLinkId: "clik-style-link",
 			replaceLinkSelector: "#page-scheme-stylesheet",
+			previewZoomWidth: 520,
 			launcherTop: 16,
-			launcherRight: 16
-		});
-
-		// jQuery plugin launcher
-		$("body").styleSheetSwitcher({
-			jsonUrl: "../assets/js/stylesheet-switcher.sample.json",
-			panelTitle: "Styles (jQuery)",
-			launcherLabel: "J",
-			storageKey: "clik-style-choice",
-			stylesheetLinkId: "clik-style-link",
-			replaceLinkSelector: "#page-scheme-stylesheet",
-			launcherTop: 70,
 			launcherRight: 16
 		});
 

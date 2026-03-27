@@ -222,7 +222,7 @@
     });
   }
 
-  window.StyleSheetSwitcherNative = {
+  window.StyleSheetSwitcher = {
     init: function (config) { return start(config); }
   };
 })(window, document);

@@ -20,6 +20,48 @@
       "description": "Switches to columns_samples scheme with alternate accents.",
       "href": "../assets/css/schemes/columns_samples.css",
       "previewImage": "images/sample_wtf.png"
+    },
+    {
+      "id": "cms-default1",
+      "title": "CMS Default",
+      "description": "Uses the existing columns_cms scheme.",
+      "href": "../assets/css/schemes/columns_cms.css",
+      "previewImage": "images/sample_cms.png"
+    },
+    {
+      "id": "columns-demo1",
+      "title": "Columns Demo Scheme",
+      "description": "Switches to the columns_demo scheme for comparison.",
+      "href": "../assets/css/schemes/columns_demo.css",
+      "previewImage": "images/sample_demo.png"
+    },
+    {
+      "id": "columns-samples1",
+      "title": "Columns Samples Scheme",
+      "description": "Switches to columns_samples scheme with alternate accents.",
+      "href": "../assets/css/schemes/columns_samples.css",
+      "previewImage": "images/sample_wtf.png"
+    },
+    {
+      "id": "cms-default2",
+      "title": "CMS Default",
+      "description": "Uses the existing columns_cms scheme.",
+      "href": "../assets/css/schemes/columns_cms.css",
+      "previewImage": "images/sample_cms.png"
+    },
+    {
+      "id": "columns-demo2",
+      "title": "Columns Demo Scheme",
+      "description": "Switches to the columns_demo scheme for comparison.",
+      "href": "../assets/css/schemes/columns_demo.css",
+      "previewImage": "images/sample_demo.png"
+    },
+    {
+      "id": "columns-samples2",
+      "title": "Columns Samples Scheme",
+      "description": "Switches to columns_samples scheme with alternate accents.",
+      "href": "../assets/css/schemes/columns_samples.css",
+      "previewImage": "images/sample_wtf.png"
     }
   ]
 }

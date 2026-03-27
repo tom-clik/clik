@@ -12,7 +12,6 @@
     variantClass: '',
     stylesheetLinkId: 'clik-dynamic-stylesheet',
     replaceLinkSelector: '',
-    previewZoomWidth: 420,
     closeOnSelect: true
   };
 
@@ -32,7 +31,7 @@
       '.clik-style-list .clik-desc{font-size:12px;color:#666;display:block;margin-top:3px;}' +
       '.clik-style-preview{border-left:1px solid #e5e5e5;padding:10px;background:#fcfcfc;overflow:auto;}' +
       '.clik-style-preview img{width:100%;height:auto;border-radius:4px;display:block;margin-top:8px;}' +
-      '.clik-style-preview-zoom{position:fixed;z-index:10000;display:none;background:#fff;padding:8px;border-radius:8px;box-shadow:0 18px 45px rgba(0,0,0,.35);}' +
+      '.clik-style-preview-zoom{position:fixed;z-index:10000;display:none;background:#fff;padding:8px;border-radius:8px;box-shadow:0 18px 45px rgba(0,0,0,.35);max-height:calc(100vh - 16px);overflow:auto;}' +
       '.clik-style-preview-zoom img{display:block;width:100%;height:auto;border-radius:4px;}' +
       '.clik-style-close{border:none;background:transparent;color:#fff;font-size:20px;cursor:pointer;line-height:1;}' +
       '.clik-style-launcher.native{background:#222;}';
@@ -161,17 +160,33 @@
     panel.style.display = 'none';
   }
 
-  function bindZoomPreview(ui, config) {
+  function bindZoomPreview(ui) {
+    function positionZoomPanel(panel, eventY) {
+      var viewportPadding = 8;
+      var modal = document.querySelector('.clik-style-modal');
+      var modalLeft = modal ? modal.getBoundingClientRect().left : window.innerWidth;
+      var availableWidth = modalLeft - (viewportPadding * 2);
+      var panelWidth = Math.max(220, availableWidth);
+
+      panel.style.left = viewportPadding + 'px';
+      panel.style.width = panelWidth + 'px';
+
+      var initialTop = Math.max(viewportPadding, eventY - 24);
+      panel.style.top = initialTop + 'px';
+
+      var panelRect = panel.getBoundingClientRect();
+      var maxTop = Math.max(viewportPadding, window.innerHeight - panelRect.height - viewportPadding);
+      panel.style.top = Math.min(initialTop, maxTop) + 'px';
+    }
+
     ui.preview.addEventListener('mouseover', function (e) {
       if (e.target.tagName !== 'IMG') return;
       var panel = getZoomPanel();
       var img = panel.querySelector('img');
       img.src = e.target.src;
       img.alt = e.target.alt || 'Expanded preview';
-      panel.style.width = config.previewZoomWidth + 'px';
-      panel.style.left = Math.max(8, e.clientX - config.previewZoomWidth - 16) + 'px';
-      panel.style.top = Math.max(8, e.clientY - 24) + 'px';
       panel.style.display = 'block';
+      positionZoomPanel(panel, e.clientY);
     });
 
     ui.preview.addEventListener('mouseout', function (e) {
@@ -215,7 +230,7 @@
     if (saved) applyStylesheet(merged, saved);
 
     var ui = buildUI(merged);
-    bindZoomPreview(ui, merged);
+    bindZoomPreview(ui);
     return fetchStyles(merged).then(function (styles) {
       renderStyles(ui, merged, styles || []);
       return { config: merged, styles: styles || [] };

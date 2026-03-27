@@ -1,16 +1,16 @@
 component name="grids" {
 
 	public string function css(required string selector, required struct settings) localmode=true {
-		var css = {
+		css = {
 			main = [],
 			items = []
 		};
-		var cssBlocks = [];
-		var newLineChar = chr(10);
-		var tabChar = chr(9);
-		var masonryWideRule = "";
+		cssBlocks = [];
+		newLineChar = newLine();
+		tabChar = chr(9);
+		masonryWideRule = "";
 
-		var style = duplicate(settings);
+		style = duplicate(settings);
 		structAppend(style, {
 			"grid-mode" = "fit",
 			"grid-gap" = "0px",
@@ -28,20 +28,20 @@ component name="grids" {
 			"grid-max-height" = "auto"
 		}, false);
 
-		var mode = lCase(trim(style["grid-mode"]));
-		var gridGap = style["grid-gap"];
-		var gridWidth = style["grid-width"];
-		var gridColumns = style["grid-columns"];
-		var gridTemplateRows = style["grid-template-rows"];
-		var gridTemplateColumns = style["grid-template-columns"];
-		var gridTemplateAreas = style["grid-template-areas"];
-		var flexDirection = style["flex-direction"];
-		var justifyContent = style["justify-content"];
-		var alignContent = style["align-content"];
-		var alignItems = style["align-items"];
-		var flexStretch = style["flex-stretch"];
-		var flexWrap = style["flex-wrap"];
-		var gridMaxHeight = style["grid-max-height"];
+		mode = lCase(trim(style["grid-mode"]));
+		gridGap = style["grid-gap"];
+		gridWidth = style["grid-width"];
+		gridColumns = style["grid-columns"];
+		gridTemplateRows = style["grid-template-rows"];
+		gridTemplateColumns = style["grid-template-columns"];
+		gridTemplateAreas = style["grid-template-areas"];
+		flexDirection = style["flex-direction"];
+		justifyContent = style["justify-content"];
+		alignContent = style["align-content"];
+		alignItems = style["align-items"];
+		flexStretch = style["flex-stretch"];
+		flexWrap = style["flex-wrap"];
+		gridMaxHeight = style["grid-max-height"];
 
 		css.main.append("display: grid;");
 		css.main.append("gap: #gridGap#;");
@@ -64,7 +64,7 @@ component name="grids" {
 				css.items.append("width: #gridWidth#;");
 				css.items.append("padding-right: #gridGap#;");
 				css.items.append("margin-bottom: #gridGap#;");
-				masonryWideRule = selector & " > .wide {" & newLineChar & tabChar & "width: calc(#gridWidth# * 2);" & newLineChar & "}";
+				masonryWideRule = arguments.selector & " > .wide {" & newLineChar & tabChar & "width: calc(#gridWidth# * 2);" & newLineChar & "}";
 				break;
 
 			case "fit":
@@ -104,7 +104,7 @@ component name="grids" {
 
 		if (css.main.len()) {
 			cssBlocks.append(
-				selector & " {" &
+				arguments.selector & " {" &
 				newLineChar & tabChar & css.main.toList(newLineChar & tabChar) &
 				newLineChar & "}"
 			);
@@ -112,7 +112,7 @@ component name="grids" {
 
 		if (css.items.len()) {
 			cssBlocks.append(
-				selector & " > * {" &
+				arguments.selector & " > * {" &
 				newLineChar & tabChar & css.items.toList(newLineChar & tabChar) &
 				newLineChar & "}"
 			);

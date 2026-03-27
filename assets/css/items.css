@@ -67,7 +67,7 @@ Note that the settings will inherit from a parent. You can apply the settings to
 	--item-gridgap: 10px;	
 }
 
-.item {
+.item:has(> div.itemInner) {
 	container-name:item;
 }
 
@@ -95,7 +95,7 @@ Note that the settings will inherit from a parent. You can apply the settings to
 	margin-top:0;
 }
 
-.itemInner {
+.item:not(:has(> div.itemInner)), .itemInner {
 	display: grid;
 	grid-template-areas: "title" "imageWrap"  "textWrap";
 	grid-gap: var(--item-gridgap);

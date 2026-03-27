@@ -113,13 +113,12 @@ HTML
 }
 
 .grid {
-	container-name:grid;
-	display: grid; /* need to get inner to expand, nothing to do with the grid itself */
-	grid-template-rows: 1fr;
+	display: grid;
 }
 
-.grid.list {
-	--grid-mode: none;
+.grid:has(.gridInner) {
+	container-name:grid;
+	grid-template-rows: 1fr; /* need to get inner to expand, nothing to do with the grid itself */
 }
 
 .grid > .gridInner {
@@ -237,6 +236,7 @@ but we need them to apply to the "inner" div */
 		grid-template-areas: var(--grid-template-areas);
 	}
 }
+
 /* Setting a name seems to cause issues when in other modes*/
 @container grid ( not style(--grid-mode:named) ) {
 	.gridInner > * {

@@ -2,33 +2,14 @@
 
 # Styling for text items
 
-Getting the inheritance right for this is a bit of a nightmare.
+Basically two ways of working
 
-In the end, I went for the maybe inelegant solution of having title fonts and headings fonts as separate entities.
+1. Embrace the idea of title-font and heading font styles
 
-Otherwise there's just too much fiddling around.
+2. Apply a class to all your p and h tags and manually assign everything.
 
-## Usage
+Best not to mix the two.
 
-Define standard vars as so
-
---text-color:xxx;
---text-font: xxx;
---font-size:80%;
-
-Note that just defining a color or font with this name will take care of this.
-
-To set title or heading styling, redfined the VARs. DON'T set the values explicity
-
-E.g.
-
-.scheme-crosshead {
-	--heading-margin:0 0 1em  0;
-	--heading-font: var(--title-font);
-	--heading-font-weight:300;
-	--heading-font-align:center;
-	--heading-color:teal;
-}
 
 */
 :root {
@@ -92,7 +73,7 @@ a, a:hover, input.button, input.button:hover {
 	color: var(--text-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+:is(h1, h2, h3, h4, h5, h6) {
 	margin: var(--heading-margin);
 	font-family:  var(--heading-font);
 	font-weight:  var(--heading-font-weight);
@@ -101,29 +82,17 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: var(--heading-font-size);
 }
 
-
-
-/* Standard Class styling */
-
-/* 1. Headings within text items */
-
-.textWrap, .cs-text {
-	--heading-font: var(--title-font);
-	--heading-margin: 0 0 0.2em 0;
-	--heading-font-weight: bold;
-}
-
-.textWrap h1, .cs-text  h1 {
+h1:not([class]) {
 	--heading-font-size: 140%;
 }
-.textWrap h2, .cs-text  h2 {
+h2:not([class]) {
 	--heading-font-size: 120%;
 }
-.textWrap h3, .cs-text  h3 {
+h3:not([class]) {
 	--heading-font-size: 110%;
 }
-.textWrap h4, .cs-text  h4, .textWrap h5, .cs-text  h5, .textWrap h6, .cs-text  h6 {
-	--heading-font-size: 140;
+h4:not([class]), h5:not([class]), h6:not([class]) {
+	--heading-font-size: 100%;
 }
 
 

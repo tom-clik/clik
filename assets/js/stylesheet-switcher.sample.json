@@ -5,21 +5,21 @@
       "title": "CMS Default",
       "description": "Uses the existing columns_cms scheme.",
       "href": "../assets/css/schemes/columns_cms.css",
-      "previewImage": "../assets/images/menu.svg"
+      "previewImage": "images/sample_cms.png"
     },
     {
       "id": "columns-demo",
       "title": "Columns Demo Scheme",
       "description": "Switches to the columns_demo scheme for comparison.",
       "href": "../assets/css/schemes/columns_demo.css",
-      "previewImage": "../assets/images/thumbnails.svg"
+      "previewImage": "images/sample_demo.png"
     },
     {
       "id": "columns-samples",
       "title": "Columns Samples Scheme",
       "description": "Switches to columns_samples scheme with alternate accents.",
       "href": "../assets/css/schemes/columns_samples.css",
-      "previewImage": "../assets/images/gear.svg"
+      "previewImage": "images/sample_wtf.png"
     }
   ]
 }

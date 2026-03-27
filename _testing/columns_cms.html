@@ -219,6 +219,7 @@ Just trying out the new system with a simple style
 <script src="../assets/js/jquery.animateAuto.js"></script>
 <script src="../assets/js/jquery.autoButton.js"></script>
 <script src="../assets/js/jquery.modal.js"></script>
+<script src="../assets/js/stylesheet-switcher.js"></script>
 
 <script type="text/javascript">
 
@@ -271,6 +272,29 @@ Just trying out the new system with a simple style
 			$body.removeClass(id + "-open").addClass(id + "-close").css(opts);
 			$button = $("#" + id + "button");
 			$button.trigger("close");
+		});
+
+		// Native launcher
+		StyleSheetSwitcherNative.init({
+			jsonUrl: "../assets/js/stylesheet-switcher.sample.json",
+			panelTitle: "Styles (Native)",
+			launcherLabel: "N",
+			variantClass: "native",
+			storageKey: "clik-style-choice",
+			stylesheetLinkId: "clik-style-link",
+			launcherTop: 16,
+			launcherRight: 16
+		});
+
+		// jQuery plugin launcher
+		$("body").styleSheetSwitcher({
+			jsonUrl: "../assets/js/stylesheet-switcher.sample.json",
+			panelTitle: "Styles (jQuery)",
+			launcherLabel: "J",
+			storageKey: "clik-style-choice",
+			stylesheetLinkId: "clik-style-link",
+			launcherTop: 70,
+			launcherRight: 16
 		});
 
 	

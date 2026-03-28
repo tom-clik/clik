@@ -147,6 +147,7 @@ component name="items" extends="basescript" {
 			}
 
 		}
+		
 		return outputStyles(arguments.selector, outputs) & this.newLineChar & otherSettings(arguments.selector,otherstyles);
 
 	}

@@ -1,0 +1,156 @@
+{
+    "testfill":
+    {
+        "description": "Fill",
+        "styles":
+        {
+            "grid-mode": "fill"
+        }
+    },
+    "testfit":
+    {
+        "description": "Fit",
+        "styles":
+        {
+            "grid-mode": "fit"
+        }
+    },
+    "testfix":
+    {
+        "description": "Fixed columns",
+        "styles":
+        {
+            "grid-mode": "fixed",
+            "grid-columns": "3",
+            "mid":
+            {
+                "grid-columns": "2"
+            },
+            "mobile":
+            {
+                "grid-mode": "none"
+            }
+        }
+    },
+    "testfixedwidth":
+    {
+        "description": "Fixed width",
+        "styles":
+        {
+            "grid-mode": "fixedwidth",
+            "mid":
+            {
+                "grid-width": "100px"
+            }
+        }
+    },
+    "testcolumns":
+    {
+        "description": "Set column widths",
+        "styles":
+        {
+            "grid-mode": "columns",
+            "grid-template-columns": "220px auto 260px",
+            "mid":
+            {
+                "grid-template-columns": "120px auto 160px"
+            },
+            "mobile":
+            {
+                "grid-template-columns": "120px auto"
+            }
+        }
+    },
+    "testrows":
+    {
+        "description": "Set row heights",
+        "rows": 3,
+        "styles":
+        {
+            "height": "400px",
+            "grid-mode": "rows",
+            "grid-template-rows": "40px auto 40px"
+        }
+    },
+    "testnamed":
+    {
+        "description": "Test named",
+        "rows": 4,
+        "styles":
+        {
+            "height": "400px",
+            "grid-mode": "named",
+            "grid-template-areas": "\"header header\" \"left right\" \"footer footer\"",
+            "grid-template-columns": "200px auto",
+            "grid-template-rows": "40px auto 40px",
+            "mid":
+            {
+                "height": "280px",
+                "grid-template-areas": "\"header header\" \"right right\" \"left footer\"",
+                "grid-template-columns": "200px auto",
+                "grid-template-rows": "20px auto 40px"
+            }
+        }
+    },
+    "testflexheight":
+    {
+        "description": "Test flex height",
+        "styles":
+        {
+            "grid-mode": "flex",
+            "height": "250px",
+            "background-color": "#8c8c8c",
+            "description": "",
+            "justify-content": "end",
+            "align-content": "space between",
+            "mid":
+            {
+                "height": "auto"
+            }
+        }
+    },
+    "testflexnowrap":
+    {
+        "description": "Flex no Wrap",
+        "styles":
+        {
+            "grid-mode": "flex",
+            "flex-wrap": "nowrap",
+            "align-items": "stretch"
+        }
+    },
+    "testflexstretch":
+    {
+        "description": "Flex stretch",
+        "rows": 5,
+        "styles":
+        {
+            "grid-mode": "flex",
+            "flex-direction": "row-reverse",
+            "flex-stretch": "1"
+        }
+    },
+    "testflex":
+    {
+        "description": "Flex no stretch",
+        "rows": 5,
+        "styles":
+        {
+            "flex-stretch": "0",
+            "grid-mode": "flex",
+            "align-items": "center"
+        }
+    },
+    "testflexcolsstretch":
+    {
+        "description": "Flex cols stretch",
+        "rows": 5,
+        "styles":
+        {
+            "height": "300px",
+            "grid-mode": "flex",
+            "flex-stretch": "1",
+            "flex-direction": "column"
+        }
+    }
+}

@@ -1,0 +1,63 @@
+/* 
+
+Style "items" - DIVS with a title, an image and a text element
+
+*/
+
+:root {
+	--caption-display:none;
+	--image-width: 40%;
+	--item-gridgap: 10px;
+	--image-wrap-display: block;/* reserved for system */
+}
+
+.item {
+	display: grid;
+	grid-template-areas: "title" "imageWrap"  "textWrap";
+	grid-gap: var(--item-gridgap);
+	grid-template-rows: auto;
+	grid-template-columns:   1fr;
+}
+
+.imageWrap img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Wrap title is an additional duplicate title placed into the textWrap if you need htop=0 with wrapping */
+.wraptitle {
+	display: none;
+}
+
+.item .title {
+	grid-area: title;
+}
+.item .textWrap {
+	grid-area: textWrap;
+}
+.item .imageWrap {
+	grid-area: imageWrap;
+	display: var(--image-wrap-display);
+}
+
+.textWrap > p {
+	margin-top:0;
+}
+
+.item figcaption {
+	display: var(--caption-display);
+}
+
+.noimage figure {
+	display: none;
+}
+
+.item:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  overflow: hidden;
+}
+

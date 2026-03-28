@@ -1,0 +1,169 @@
+/* MENUS
+
+Static classes for menus
+
+These are the static styles used with Clik generated styles
+r
+*/
+
+:root {
+	--link-color: #000;
+	--menu-border-color:var(--link-color);
+	--menu-background: transparent;
+	--menu-gap: 4px;/* Gap between items */
+	--menu-stretch: 1; /* 1|0 */
+	--menu-item-padding: 0 8px;
+	--menu-item-border:0px;/* item border width MUST be single value for boxes or dividers */
+	--menu-item-width: 140px; /* min width of menu items in grid layou */
+	--menu-icon-display: none;/* none or block */
+	--menu-label-display: block;/* text part of menu item:; none or block */
+	--menu-icon-width:32px;/* normal menu icons */
+	--menu-icon-height:32px;
+	--menu-icon-valign: middle;/* WIP */
+	--menu-icon-gap: 8px;/* gap between label and icon */
+	--menu-icon-stretch: 1;/* stretch labels to fill remaining space */
+	--menu-icon-align: row; /* flex direction for icon alignment */
+	--menu-openicon-width:16px;/* "openicon" is the automatic icon applied for sub menus. Needs work */
+	--menu-openicon-height:16px;
+	--menu-openicon-adjust: -4px;
+	--menu-submenu-position: absolute;
+	--menu-submenualign: bottom-left;
+	--menu-submenu-show:hide;
+	--menu-text-align: center;/* alignment of text in menu items */
+	--menu-anim-time: 0.3s;
+	--menu-item-justify: center; /* item aligment start|center|end. Also see menu-text-align which usually needs setting as well */
+	--menu-item-align: center; /* cross axis aligment, e.g. vertical when menu is horizontal */
+	--sub-menu-adjust:0px;/* add to positioning of sub menus */
+}
+
+.menu {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	text-indent: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(var(--menu-item-width), 1fr));
+	gap: var(--menu-gap);
+	justify-content: var(--menu-item-justify);
+	align-items: var(--menu-item-align);
+	margin: 0 auto;
+	--menu-item-border-width: var(--menu-item-border); /* reserved for system. Used with e.g. boxes and dividers schemes */
+	/* Individual v and h settings for sub menu adjustments */
+	--sub-menu-adjust-v: var(--sub-menu-adjust);
+	--sub-menu-adjust-h: var(--sub-menu-adjust);
+}
+
+.menu li {
+	position: relative;
+	flex-grow: var(--menu-stretch);
+}
+
+
+.menu a, .menu a:hover {
+	white-space: nowrap;
+	color: var(--link-color);
+	display: flex;
+	flex-grow: 1;
+	flex-direction: var(--menu-icon-align);
+	align-items: center;
+	justify-content: var(--menu-item-justify); /* This is the icon, label etc  */
+	gap: var(--menu-icon-gap);
+	text-decoration: none;
+	padding: var(--menu-item-padding);
+	border-width: var(--menu-item-border-width);
+	border-style: solid;
+	border-color: var(--menu-border-color);
+	background-color: var(--menu-background);
+	/* watch browser agent default. Can't apply to ul */
+	text-align: var(--menu-text-align);
+	transition: background-color var(--menu-anim-time) ease-in-out, border-color var(--menu-anim-time) ease-in-out, color .25s var(--menu-anim-time) ease-in-out;
+}
+
+/* Don't use flex mechanism if we're using access keys */
+.menu a[accesskey] {
+	display: inline-block;
+}
+
+/* Per class behaviour applied via JS. leave for now. */
+.menu.open {
+	height: auto;
+}
+
+/* Submenu basics */
+.submenu {
+	display: none;
+	position: var(--menu-submenu-position);
+	top: 0;
+	left: 0;
+	z-index: 100;
+	min-width: 100%;
+	height: auto;
+	width: max-content;
+}
+
+/* inline horizontal behaviour handled by jquery.menu.js */
+.menu.menu-inline-horizontal > ul > li > .submenu {
+	left: 0;
+	right: auto;
+	min-width: 100%;
+	width: 100%;
+	top: 100%;
+}
+
+/* Mechanism for showing via javascript */
+li.open > .submenu, .submenu.show {
+	display: block;
+}
+
+.submenu > ul > li.open > .submenu {
+	margin-top: 0px;
+}
+
+/* sub menu indicator */
+.menu a > i[class*=icon].openicon {
+	--menu-icon-height: var(--menu-openicon-height);
+	--menu-icon-width: var(--menu-openicon-width);
+	display: block;
+	flex-grow: 0;
+	position: relative;
+	right: var(--menu-openicon-adjust, 0);
+	max-height: 100%;
+	top: 0;
+	fill: var(--link-color);
+	stroke: var(--link-color);
+	transition-property: transform;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+
+/* menu icons
+
+Requires icons.css and navbuttons.css
+
+*/
+.menu a > i[class*=icon] {
+	display: var(--menu-icon-display);
+	width: var(--menu-icon-width);
+	height: var(--menu-icon-height);
+	line-height: var(--menu-icon-height);
+	font-size: var(--menu-icon-height);
+	overflow: hidden;
+}
+
+.menu a span:not(.accessKey) {
+	display: var(--menu-label-display);
+}
+
+.menu span.accessKey {
+	display: inline;
+	text-decoration: underline;
+}
+
+.menu li.open > a .openicon {
+	transform: rotate(90deg);
+}
+
+/* Expand label to fill space */
+.menu a > span:not(.accessKey) {
+	flex-grow: var(--menu-icon-stretch);
+}

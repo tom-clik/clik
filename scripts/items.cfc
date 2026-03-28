@@ -1,143 +1,154 @@
-component name="items" {
+component name="items" extends="basescript" {
 
 	public function init(boolean debug=0) {
-		this.newLineChar = arguments.debug?  newLine(): "";
-		this.tabChar = arguments.debug?  chr(9): "";
+		
+		super.init(arguments.debug);
+
+		this.panels = [
+			{"name":"Main settings","panel":"main", "states"=[{"state"="hover", "selector"=":hover","name":"Hover","description":"Hover state styling"}]},
+			{"name":"Title","panel":"title","selector":" .title", "states"=[{"state"="hover", "selector"=":hover .title","name":"Hover","description":"Hover state styling"}]},
+			{"name":"Image","panel":"image","selector":" figure", "states"=[{"state"="hover", "selector"=":hover figure","name":"Hover","description":"The hover state for menu items"}]},
+			{"name":"Text","panel":"text","selector":" .textWrap", "states"=[{"state"="hover", "selector"=":hover text","name":"Hover","description":"The hover state for menu items"}]},
+			{"name":"No image","panel":"noimage","selector":".noimage","system":1}
+		];
+		this.styleDefs = [
+			"htop":{"title":"title position", "type":"list","options": [
+				{"value":"1","name"="Title before image"},
+				{"value":"0","name"="Title after image"}
+				],
+				"description":"Where to place the title in the item layout",
+				"default"="false"
+			},
+			"texttop":{"title":"Text top", "type":"list","options": [
+				{"value":"1","name"="Text inline with title"},
+				{"value":"0","name"="Text below title"}
+				],
+				"description":"Align the top of the text with the title (only applies to left or right align)",
+				"default"="0"
+			},
+			"image-align":{"title":"Image alignment", "type":"halign","default":"center"},
+			"wrap":{"title":"Wrap text", "type":"boolean","default":"0"},
+			"item-gridgap":{"title":"Image margin", "type":"dimension","description":"Gap between image and text when aligned left or right. Use margins on the panels for other instances","default":"10px","setting":1},
+			"image-width":{"title":"Image width", "type":"dimension","default":"40%","setting":1},
+			"titletag":{"title":"", "type":"list","options": [
+				{"value":"h1"},
+				{"value":"h2"},
+				{"value":"h3"},
+				{"value":"h4"},
+				{"value":"h5"},
+				{"value":"h6"}
+			],"default":"h3","hidden"=1},
+			"show-title":{"title":"Show title", "type":"boolean","default"="1"},
+			"show-image":{"title":"Show image", "type":"boolean","default"="1"},
+			"imagespace":{"title":"Always show image space", "type":"boolean","default"="0"},
+			"caption-display":{"title":"Show caption", "type":"displayblock","default"="none","setting":1}
+		];
+
+		updateDefaults();
+
 		return this;
 	}
 
-	private string function cssBlock(required string selector, required array rules) localmode=true {
+	public string function _css(required string selector, required struct settings) localmode=true {
 		
-		return arguments.selector & " {" & this.newLineChar & this.tabChar & arguments.rules.toList(this.newLineChar & this.tabChar) & this.newLineChar & "}";
-	}
-
-	public string function css(required string selector, required struct settings) localmode=true {
 		style = duplicate(arguments.settings);
-		structAppend(style, {
-			"htop" = "1",
-			"texttop" = "0",
-			"imagespace" = "0",
-			"image-align" = "center",
-			"wrap" = "0",
-			"show-title" = "1",
-			"show-image" = "1",
-			"caption-display" = "none",
-			"image-width" = "40%",
-			"item-gridgap" = "10px"
-		}, false);
+		structAppend(style, this.defaultStyles, false);
+		outputs = getPanelsStruct();
 
-		blocks = [];
-		baseRules = [];
-		imageWrapRules = [];
-		clearRules = [];
-		noImageRules = [];
-		titleRules = [];
+		otherstyles = [];
 
-		hTop = trim(style["htop"]);
-		textTop = trim(style["texttop"]);
-		imageAlign = lCase(trim(style["image-align"]));
-		wrapMode = trim(style["wrap"]);
-		showTitle = trim(style["show-title"]);
-		showImage = trim(style["show-image"]);
-		imageSpace = trim(style["imagespace"]);
-		imageWidth = style["image-width"];
-		gridGap = style["item-gridgap"];
-		captionDisplay = style["caption-display"];
-
-		baseRules.append("display: grid;");
-		baseRules.append("grid-gap: #gridGap#;");
-		baseRules.append("grid-template-areas: ""title"" ""imageWrap"" ""textWrap"";");
-		baseRules.append("grid-template-rows: auto;");
-		baseRules.append("grid-template-columns: 1fr;");
-
-		if (hTop == "0") {
-			baseRules[3] = "grid-template-areas: ""imageWrap"" ""title"" ""textWrap"";";
-		}
-
-		if (showImage == "0") {
-			baseRules[3] = "grid-template-areas: ""title"" ""textWrap"";";
-			baseRules.append("grid-template-rows: min-content auto;");
-			imageWrapRules.append("display: none;");
-		}
-
-		if (showTitle == "0") {
-			if (imageAlign == "left") {
-				baseRules[3] = "grid-template-areas: ""imageWrap textWrap"";";
-			} else if (imageAlign == "right") {
-				baseRules[3] = "grid-template-areas: ""textWrap imageWrap"";";
-			} else {
-				baseRules[3] = "grid-template-areas: ""imageWrap"" ""textWrap"";";
+		if (! style["show-image"]) {
+			if (!style["show-title"]) {
+				outputs.main["display"] =   "block";
+				outputs.title["display"] =   "none";
+				outputs.image["display"] =   "none";
 			}
-			titleRules.append("display: none;");
-		}
-
-		if (imageAlign == "left") {
-			baseRules.append("grid-template-columns: #imageWidth# auto;");
-			baseRules.append("grid-template-rows: min-content 1fr;");
-			if (textTop == "1") {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""imageWrap textWrap"" ""title textWrap"";" : "grid-template-areas: ""title textWrap"" ""imageWrap textWrap"";";
-			} else {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""imageWrap title"" ""imageWrap textWrap"";" : "grid-template-areas: ""title title"" ""imageWrap textWrap"";";
+			else {
+				outputs.main["grid-template-areas"] =   """title"" ""textWrap""";
+				outputs.main["grid-template-rows"] =  "min-content auto";
+				outputs.main["grid-template-columns"] =    "1fr";
 			}
 		}
+		else {
 
-		if (imageAlign == "right") {
-			baseRules.append("grid-template-columns: auto #imageWidth#;");
-			baseRules.append("grid-template-rows: min-content 1fr;");
-			if (textTop == "1") {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""textWrap imageWrap"" ""textWrap title"";" : "grid-template-areas: ""textWrap title"" ""textWrap imageWrap"";";
-			} else {
-				baseRules[3] = (hTop == "0") ? "grid-template-areas: ""title imageWrap"" ""textWrap imageWrap"";" : "grid-template-areas: ""title title"" ""textWrap imageWrap"";";
+			if (!style["show-title"]) {
+				outputs.title["display"] =   "none";
+			}
+
+			if (style["image-align"] eq "left") {
+				outputs.main["grid-template-rows"] = "min-content 1fr";
+				outputs.main["grid-template-columns"] = "var(--image-width) auto ";
+				if (!style["show-title"]) {
+					outputs.main["grid-template-areas"] =  """imageWrap  textWrap""";
+				}
+				else {
+					if (style["htop"] ) {
+						outputs.main["grid-template-areas"] =  """title title"" ""imageWrap  textWrap""";
+					}
+					else {
+						outputs.main["grid-template-areas"] =  """imageWrap title"" ""imageWrap textWrap""";
+					}
+				}
+			}
+			else if (style["image-align"] eq "right") {
+				outputs.main["grid-template-columns"] = " auto  var(--image-width)";
+				if (!style["show-title"]) {
+					outputs.main["grid-template-areas"] =  """textWrap  imageWrap""";
+				}
+				else {
+					outputs.main["grid-template-rows"] = "1fr min-content ";
+					if (style["htop"] ) {
+						outputs.main["grid-template-areas"] =  """title title"" ""textWrap imageWrap  """;
+					}
+					else {
+						outputs.main["grid-template-areas"] =  """title imageWrap"" ""textWrap imageWrap""";
+					}
+				}
+			}
+			else {
+				
+				outputs.main["grid-template-columns"] = "1fr";
+				if (!style["show-title"]) {
+					outputs.main["grid-template-areas"] =  """imageWrap"" ""textWrap"" ";
+				}
+				else {
+					if (style["htop"] ) {
+						outputs.main["grid-template-areas"] =  """title"" ""imageWrap"" ""textWrap""";
+					}
+					else {
+						outputs.main["grid-template-areas"] =  """imageWrap"" ""title"" ""textWrap""";
+					}
+				}
+			}
+			/* noimage class needs to be applied to item if there is no image. This is for removing
+			the space in a list of items with the same class */
+			if (! style["imagespace"]) {
+				outputs.noimage["--image-wrap-display"] = "none";
+				outputs.noimage["grid-template-columns"] = "1fr";
 			}
 		}
 
-		if (wrapMode == "1" && (imageAlign == "left" || imageAlign == "right")) {
-			baseRules = ["display: block;"];
-			imageWrapRules.append("width: #imageWidth#;");
-			if (imageAlign == "left") {
-				imageWrapRules.append("float: left;");
-				imageWrapRules.append("margin-right: #gridGap#;");
-				imageWrapRules.append("margin-bottom: #gridGap#;");
-			} else {
-				imageWrapRules.append("float: right;");
-				imageWrapRules.append("margin-left: #gridGap#;");
-				imageWrapRules.append("margin-bottom: #gridGap#;");
+		if (  style["wrap"] ) {
+			
+			outputs.main["display"] ="block";
+			outputs.image["width"] = "--image-width";
+			outputs.noimage["--image-wrap-display"] = "none";
+			outputs.image["margin-bottom"] = "var(--item-gridgap)";
+
+			if ( style["image-align"] eq "left" ) {
+				outputs.image["float"] = "left";
+				outputs.image["margin-right"] = "var(--item-gridgap)";
+				
 			}
-			if (hTop == "0") {
-				blocks.append(cssBlock(arguments.selector & " > .title", ["display: none;"]));
-				blocks.append(cssBlock(arguments.selector & " .wraptitle", ["display: block;"]));
+
+			if ( style["image-align"] eq "right" ) {
+				outputs.image["float"] = "right";
+				outputs.image["margin-left"] = "var(--item-gridgap)";
 			}
-		}
 
-		if (imageSpace == "0") {
-			noImageRules.append("grid-template-areas: ""title"" ""textWrap"";");
-			noImageRules.append("grid-template-rows: min-content auto;");
-			noImageRules.append("grid-template-columns: 1fr;");
 		}
+		return outputStyles(arguments.selector, outputs) & this.newLineChar & otherSettings(arguments.selector,otherstyles);
 
-		blocks.append(cssBlock(arguments.selector, baseRules));
-		blocks.append(cssBlock(arguments.selector & " > .title", ["grid-area: title;"]));
-		blocks.append(cssBlock(arguments.selector & " > .textWrap", ["grid-area: textWrap;"]));
-		if (titleRules.len()) {
-			blocks.append(cssBlock(arguments.selector & " .title", titleRules));
-		}
-
-		imageRules = ["grid-area: imageWrap;"];
-		for (rule in imageWrapRules) {
-			imageRules.append(rule);
-		}
-		blocks.append(cssBlock(arguments.selector & " > .imageWrap", imageRules));
-		blocks.append(cssBlock(arguments.selector & " figcaption", ["display: #captionDisplay#;"]));
-		blocks.append(cssBlock(arguments.selector & " .textWrap > p", ["margin-top: 0;"]));
-		blocks.append(cssBlock(arguments.selector & " .imageWrap img", ["max-width: 100%;", "height: auto;"]));
-		blocks.append(cssBlock(arguments.selector & ":after", ["content: "" "";", "display: block;", "height: 0;", "clear: both;", "visibility: hidden;", "overflow: hidden;"]));
-
-		if (noImageRules.len()) {
-			blocks.append(cssBlock(arguments.selector & ".noimage", noImageRules));
-			blocks.append(cssBlock(arguments.selector & ".noimage > .imageWrap", ["display: none;"]));
-		}
-
-		return blocks.toList(chr(10) & chr(10));
 	}
 
 }

@@ -1,6 +1,6 @@
 <cfscript>
 
-debug = false;
+debug = true;
 
 cssObj.grids = new grids(debug);
 cssObj.images = new images(debug);
@@ -14,5 +14,13 @@ settings = {
 }
 
 writeOutput( htmlCodeFormat( cssObj.grids.css( ".test",  settings )));
+
+settings = {
+	"menu-mode": "flex",
+	"menu-stretch": 1,
+	"menu-borders": "dividers"
+}
+
+writeOutput( htmlCodeFormat( cssObj.menus.css( ".test",  settings )));
 
 </cfscript>

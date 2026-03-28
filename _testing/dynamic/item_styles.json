@@ -1,0 +1,175 @@
+{
+    "1":
+    {
+        "description": "Heading Top",
+        "styles":
+        {
+            "border": "1px solid #ccc",
+            "padding": "8px",
+            "margin-bottom": " 4px",
+            "htop": 1,
+            "image":
+            {
+                "border": "2px solid teal",
+                "padding": "2px",
+                "hover":
+                {
+                    "border": " 2px solid #ff00ff",
+                    "padding": " 2px"
+                }
+            }
+        }
+    },
+    "1a":
+    {
+        "description": "Heading Under",
+        "inherits": "1",
+        "styles":
+        {
+            "htop": 0
+        }
+    },
+    "2":
+    {
+        "description": "Image Left",
+        "inherits": "1",
+        "styles":
+        {
+            "image-align": "left",
+            "mobile":
+            {
+                "image-align": "center"
+            }
+        }
+    },
+    "3":
+    {
+        "description": "Image right",
+        "inherits": "1",
+        "styles":
+        {
+            "image-align": "right",
+            "mobile":
+            {
+                "image-align": "center"
+            }
+        }
+    },
+    "2a":
+    {
+        "description": "Image Left image space",
+        "inherits": "1",
+        "styles":
+        {
+            "image-align": "left",
+            "imagespace": "1"
+        }
+    },
+    "3a":
+    {
+        "description": "Image right image space",
+        "inherits": "1",
+        "styles":
+        {
+            "image-align": "right",
+            "imagespace": "1"
+        }
+    },
+    "4":
+    {
+        "description": "Heading Under Image Left",
+        "styles":
+        {
+            "htop": "0",
+            "image-align": "left",
+            "title":
+            {
+                "border-top": "4px solid black",
+                "padding-top": "4px",
+                "text-transform": "uppercase",
+                "font-weight": "bold",
+                "font-size": "32px"
+            },
+            "mid": {
+            	"image-align": "center"
+            }
+        }
+    },
+    "4a":
+    {
+        "description": "Heading Under Image Left  image space",
+        "inherits": "4",
+        "styles":
+        {
+            "imagespace": "1"
+        }
+    },
+    "5":
+    {
+        "description": "Heading Under Image right",
+        "inherits": "4",
+        "styles":
+        {
+            "image-align": "right",
+        }
+    },
+    "5a":
+    {
+        "description": "Heading Under Image right  image space",
+        "inherits": "5",
+        "styles":
+        {
+            "imagespace": "1"
+        }
+    },
+    "6":
+    {
+        "description": "No heading",
+        "inherits": "1",
+        "styles":
+        {
+            "show-title": "0"
+        }
+    },
+    "7":
+    {
+        "description": "No heading left",
+        "inherits": "1",
+        "styles":
+        {
+            "show-title": "0",
+            "image-align": "left"
+        }
+    },
+    "8":
+    {
+        "description": "No heading right",
+        "inherits": "1",
+        "styles":
+        {
+            "show-title": "0",
+            "image-align": "right"
+        }
+    },
+    "9":
+    {
+        "description": "Wrap left",
+        "inherits": "1",
+        "styles":
+        {
+            "wrap": "1",
+            "image-align": "left"
+        }
+    },
+    "10":
+    {
+        "description": "Wrap right",
+        "inherits": "1",
+        "styles":
+        {
+            "wrap": "1",
+            "image-align": "right",
+            "image-width": "60%"
+        }
+    }
+}

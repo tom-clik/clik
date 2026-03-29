@@ -90,6 +90,24 @@
 	--pulldown: 1;
 	top:0;
 	right:0;
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		opacity calc(var(--animate) * var(--animationTime) * 1ms) ease-in,
+		visibility 0s linear calc(var(--animate) * var(--animationTime) * 1ms);
+}
+
+.modal.pulldown.open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition-delay: 0s, 0s;
+}
+
+.modal.pulldown .wrapper {
+	height: auto;
 }
 
 .modal  .wrapper {
@@ -97,6 +115,7 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wireframe Layout Sample</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f3f3;
+      color: #444;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 16px;
+      border: 2px solid #bdbdbd;
+      background: #efefef;
+    }
+
+    .label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #666;
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    .box {
+      border: 2px solid #bdbdbd;
+      background: #f8f8f8;
+      padding: 14px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header .title-line {
+      height: 22px;
+      width: 220px;
+      margin: 8px auto 0;
+      background: #cfcfcf;
+      border-radius: 4px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 16px;
+    }
+
+    .main {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero .big-line {
+      height: 24px;
+      width: 45%;
+      background: #cfcfcf;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .hero .small-line {
+      height: 12px;
+      background: #d7d7d7;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr 1fr;
+      gap: 16px;
+    }
+
+    .menu-item {
+      height: 12px;
+      background: #d3d3d3;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .menu-item:nth-child(2) { width: 85%; }
+    .menu-item:nth-child(3) { width: 70%; }
+    .menu-item:nth-child(4) { width: 90%; }
+    .menu-item:nth-child(5) { width: 60%; }
+    .menu-item:nth-child(6) { width: 78%; }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .photo {
+      aspect-ratio: 4 / 3;
+      border: 2px solid #bcbcbc;
+      position: relative;
+      background: #ededed;
+    }
+
+    .photo::before,
+    .photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 49%, #bcbcbc 50%, transparent 51%);
+    }
+
+    .photo::after {
+      background: linear-gradient(-45deg, transparent 49%, #bcbcbc 50%, transparent 51%);
+    }
+
+    .list-item {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #d2d2d2;
+    }
+
+    .skeleton-line {
+      height: 10px;
+      background: #d3d3d3;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .w-100 { width: 100%; }
+    .w-95 { width: 95%; }
+    .w-90 { width: 90%; }
+    .w-80 { width: 80%; }
+    .w-70 { width: 70%; }
+    .w-60 { width: 60%; }
+    .w-50 { width: 50%; }
+    .w-40 { width: 40%; }
+
+    .field {
+      height: 36px;
+      border: 2px solid #c4c4c4;
+      background: #efefef;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .button {
+      height: 38px;
+      width: 45%;
+      background: #d0d0d0;
+      border: 2px solid #bdbdbd;
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+
+    .article-detail {
+      display: grid;
+      grid-template-columns: 1.2fr 180px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .image-detail .large-photo {
+      aspect-ratio: 4 / 3;
+      border: 2px solid #bcbcbc;
+      position: relative;
+      background: #ededed;
+      margin-bottom: 12px;
+    }
+
+    .image-detail .large-photo::before,
+    .image-detail .large-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    .image-detail .large-photo::before {
+      background: linear-gradient(45deg, transparent 49%, #bcbcbc 50%, transparent 51%);
+    }
+
+    .image-detail .large-photo::after {
+      background: linear-gradient(-45deg, transparent 49%, #bcbcbc 50%, transparent 51%);
+    }
+
+    .fake-text {
+      color: transparent;
+      user-select: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        #d3d3d3 0,
+        #d3d3d3 10px,
+        transparent 10px,
+        transparent 22px
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    @media (max-width: 980px) {
+      .layout,
+      .grid-2,
+      .grid-3,
+      .article-detail {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="box header">
+      <p class="label">Header</p>
+      <div class="title-line"></div>
+    </section>
+
+    <section class="layout box">
+      <aside class="box nav">
+        <p class="label">Menu</p>
+        <div class="menu-item w-100"></div>
+        <div class="menu-item"></div>
+        <div class="menu-item"></div>
+        <div class="menu-item"></div>
+        <div class="menu-item"></div>
+        <div class="menu-item"></div>
+      </aside>
+
+      <main class="main">
+        <section class="box hero">
+          <p class="label">Page Title</p>
+          <div class="big-line"></div>
+          <div class="small-line w-100"></div>
+          <div class="small-line w-80"></div>
+        </section>
+
+        <section class="grid-2">
+          <div class="box">
+            <p class="label">Photo Grid</p>
+            <div class="photo-grid">
+              <div class="photo"></div>
+              <div class="photo"></div>
+              <div class="photo"></div>
+              <div class="photo"></div>
+            </div>
+          </div>
+
+          <div class="box">
+            <p class="label">Article List</p>
+            <div class="list-item">
+              <div class="skeleton-line w-50"></div>
+              <div class="skeleton-line w-100"></div>
+              <div class="skeleton-line w-90"></div>
+            </div>
+            <div class="list-item">
+              <div class="skeleton-line w-60"></div>
+              <div class="skeleton-line w-95"></div>
+              <div class="skeleton-line w-70"></div>
+            </div>
+            <div class="list-item">
+              <div class="skeleton-line w-40"></div>
+              <div class="skeleton-line w-100"></div>
+              <div class="skeleton-line w-80"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid-3">
+          <div class="box">
+            <p class="label">Form</p>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="button"></div>
+          </div>
+
+          <div class="box">
+            <p class="label">Article Detail</p>
+            <div class="article-detail">
+              <div>
+                <div class="skeleton-line w-60" style="height: 16px; margin-bottom: 14px;"></div>
+                <p class="fake-text">
+                  Placeholder copy for an article detail block. This text is present in the markup,
+                  but CSS makes it appear as grey text lines instead of readable content.
+                </p>
+              </div>
+              <div class="photo"></div>
+            </div>
+          </div>
+
+          <div class="box image-detail">
+            <p class="label">Image Detail</p>
+            <div class="large-photo"></div>
+            <div class="skeleton-line w-70"></div>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <div class="footer-note">Uses three wireframe techniques: block lines, image placeholders, and CSS-styled hidden text.</div>
+  </div>
+</body>
+</html>

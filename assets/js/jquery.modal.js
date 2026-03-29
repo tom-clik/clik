@@ -124,8 +124,12 @@
 					}
 					// content assumed to be a vertical menu in flex mode
 					else if (plugin.settings.width == "auto") {
-						let $li = $element.find("li").first();
-						$element.width($li.outerWidth());
+						const $wrapper = $element.find(".wrapper");
+						const borderLeft = parseFloat($wrapper.css("border-left-width")) || 0;
+						const borderRight = parseFloat($wrapper.css("border-right-width")) || 0;
+						const borderWidth = borderLeft + borderRight;
+						const contentWidth = Math.ceil($content.get(0)?.scrollWidth || 0);
+						$element.width(contentWidth + borderWidth);
 					}
 					$element.css({ top: 0, left: 0 }).position({
 						my: plugin.settings.positionMy,

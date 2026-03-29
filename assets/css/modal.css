@@ -94,11 +94,8 @@
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
-	transform-origin: top right;
-	transform: scaleY(0.92);
 	transition:
 		opacity calc(var(--animate) * var(--animationTime) * 1ms) ease-in,
-		transform calc(var(--animate) * var(--animationTime) * 1ms) ease-in,
 		visibility 0s linear calc(var(--animate) * var(--animationTime) * 1ms);
 }
 
@@ -106,8 +103,7 @@
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
-	transform: scaleY(1);
-	transition-delay: 0s, 0s, 0s;
+	transition-delay: 0s, 0s;
 }
 
 .modal.pulldown .wrapper {

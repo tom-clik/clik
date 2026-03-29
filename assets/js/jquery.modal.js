@@ -116,7 +116,7 @@
 
 				let $parent = $('#' + parent);
 				
-				$element.addClass("open").css({visibility: "hidden"});
+				$element.css({visibility: "hidden"});
 
 				if ($parent.length) {
 					if (plugin.settings.width == "parent") {
@@ -138,7 +138,7 @@
 					});
 				}
 
-				$element.css({visibility: "visible"});
+				$element.addClass("open").css({visibility: "visible"});
 				
 			}
 

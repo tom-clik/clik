@@ -110,6 +110,10 @@
 	transition-delay: 0s, 0s, 0s;
 }
 
+.modal.pulldown .wrapper {
+	height: auto;
+}
+
 .modal  .wrapper {
 	overflow: hidden;
 	position: relative;

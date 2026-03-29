@@ -94,8 +94,7 @@
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
-	transform-origin: top right;
-	transform: scaleY(0.92);
+	transform: translateY(-6px);
 	transition:
 		opacity calc(var(--animate) * var(--animationTime) * 1ms) ease-in,
 		transform calc(var(--animate) * var(--animationTime) * 1ms) ease-in,
@@ -106,7 +105,7 @@
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
-	transform: scaleY(1);
+	transform: translateY(0);
 	transition-delay: 0s, 0s, 0s;
 }
 

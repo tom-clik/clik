@@ -1,0 +1,17 @@
+{
+    "normal":
+    {
+        "description": "Normal",
+        "styles":
+        {
+            "tab-open-background": "#5ed4e3",
+            "mid": {
+                "vertical": true
+            },
+            "mobile": {
+                "accordion": true
+            }
+        }
+    }
+    
+}

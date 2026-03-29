@@ -43,7 +43,7 @@ $.fn.tabs = function(ops) {
  	
  	var defaults = {
 			vertical: false, // tab hedings in vertical list
-			accordian: false, // use accordion mode (vertical ignored)
+			accordion: false, // use accordion mode (vertical ignored)
 			resize: "resize", // window event to trigger resize. use e.g. throttledresize
 			fixedheight:true,// height is always maximum size
 			fitheight:false,// tbc...not working
@@ -56,7 +56,7 @@ $.fn.tabs = function(ops) {
 
     	var $tabs = $(this);
     	var vertical = options.vertical || $tabs.hasClass("vertical");
-    	var accordian = options.accordian || $tabs.hasClass("accordian");
+    	var accordion = options.accordion || $tabs.hasClass("accordion");
     	
     	$tabs.on("resize",function() {
     		console.log("Resizing ", $tabs.attr("id"));
@@ -69,7 +69,7 @@ $.fn.tabs = function(ops) {
     	});
 
     	function setHeight($tab) {
-    		if (accordian) return;
+    		if (accordion) return;
     		let t_height = vertical ? 0 : $tabs.outerHeight(); // add height of tab panel if horizontal
     		console.log("tab panel height: " + t_height);
     		if (options.fitheight) {
@@ -108,7 +108,7 @@ $.fn.tabs = function(ops) {
 			if ($tab) {
 				console.log("opening " + $tab.attr("id"));
 				
-				if (accordian){
+				if (accordion){
 					let open = $tab.hasClass("state_open");
 					if (open && ! options.allowClosed) {
 						console.log("Can't close: not allowed");	

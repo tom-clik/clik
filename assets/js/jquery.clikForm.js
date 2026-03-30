@@ -74,8 +74,9 @@ $.validator.addMethod("code", function(value, element) {
 		if (!$field.length) {
 			return;
 		}
-		$field.find("> .error.clikFormError").remove();
-		$field.closest(".fieldrow").removeClass("error").addClass("valid");
+		var $row = $field.closest(".fieldrow");
+		$row.find("> .error.clikFormError").remove();
+		$row.closest(".fieldrow").removeClass("error").addClass("valid");
 	}
 
 	function addFieldError($form, fieldName, message) {
@@ -83,10 +84,11 @@ $.validator.addMethod("code", function(value, element) {
 		if (!$field.length) {
 			return;
 		}
-
-		$field.find("> .error.clikFormError").remove();
-		$field.closest(".fieldrow").removeClass("valid").addClass("error");
-		$field.append("<div class='error clikFormError'>" + message + "</div>");
+		var $row = $field.closest(".fieldrow");
+		$row.find(".error.clikFormError").remove();
+		console.log("Adding field error to ", $row);
+		$row.removeClass("valid").addClass("error");
+		$row.append("<div class='error clikFormError'>" + message + "</div>");
 	}
 
 	function buildApiSubmitOptions($form, options) {
@@ -121,10 +123,8 @@ $.validator.addMethod("code", function(value, element) {
 	function showErrors($form, validator, errorMap, debug) {
 		errorMap = errorMap || {};
 
-		if (debug) {
-			console.log("clikForm showErrors", errorMap);
-		}
-
+		console.log("clikForm showErrors", errorMap);
+		
 		var fieldNames = {};
 		$form.find("input[name], select[name], textarea[name]").each(function() {
 			var $input = $(this);

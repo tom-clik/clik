@@ -318,22 +318,18 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	});
 
 	function getOk(button) {
-		button.form.method = "get";
 		button.form.action = "form_resonse_valid.json";
-	   	
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 
 	function getErrors(button) {
-		button.form.method = "get";
 		button.form.action = "form_resonse_invalid.json";
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 
 	function failError(button) {
-		button.form.method = "get";
 		button.form.action = "gingganggooly.json";
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 </script>
 

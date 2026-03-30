@@ -247,9 +247,11 @@ $.validator.addMethod("code", function(value, element) {
 				submitHandler: function() {
 					var submitOptions = buildApiSubmitOptions($form, options);
 					var completePayload;
+					var requestPromise = ApiHelper.submitJQueryForm($form, submitOptions);
+
 					$form.find(":input").attr("disabled", true).css("opacity", 0.3);
 
-					ApiHelper.submitJQueryForm($form, submitOptions)
+					requestPromise
 						.then(function(result) {
 							var data = result && result.data !== undefined ? result.data : result;
 							completePayload = {

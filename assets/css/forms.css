@@ -1,101 +1,109 @@
+/** Display fields in a row or with the label above the field */
+@property --field-layout {
+	syntax: 'row | column';
+	inherits: false;
+	initial-value: row;
+}
+
+/* Gap between field rows */
+/*@property --field-gap {
+	syntax: '*';
+	inherits: false;
+	initial-value: 0px;
+}*/
+
+/* replace checkbox with images. See notes on how to style this */
+@property --checkbox-replace {
+	syntax: '1 | 0';
+	inherits: false;
+	initial-value: 0;
+}
+
 :root {
 	--border-color:gray;
 	--form-label-width: 160px;
-	--form-label-gap: 20px;
-	--form-row-gap: 0px;
+	--form-label-gap:  5px 20px;
 	--field-checkbox-width:16px;
-	--form-display:grid;
 	--field-border-color: var(--border-color);
 	--form-stripe-background-color: transparent;
 	--row-padding: 4px;
 	--field-padding: 4px;
+	--label-padding:0px;
 	--field-border-width: 1px;
 	--field-border-radius: 0px;
 	--field-background-color: transparent;
 	--field-color: inherit;
 	--error-color:red;
-	--checkbox-field-display: grid;/* turn on uniform replace with 'block' */
-	--checkbox-display: inline-block;/* turn on uniform replace with 'none' */
-	--checkbox-replace-display: none;/* turn on uniform replace with 'inline-block' */
-	--checkbox-label-display: inline-block;/* turn on uniform replace with 'flex' */
+	--checkbox-cols: 3; /* number of cols for checkbox/radio fields */
+	--checkbox-gap: 2px; /* grid gap for checkboxes */
 }
 
-body.media-mid {
-	--form-row-gap: 8px;
-	--form-label-gap: 8px;
+form {
+	container-name: form;
+	--field-layout:inherit;
+	--checkbox-align:inherit;
+	--checkbox-replace:inherit;
 }
 
-div.uniform {
-	--checkbox-field-display: block;/* turn on uniform replace with 'block' */
-	--checkbox-display: none;/* turn on uniform replace with 'none' */
-	--checkbox-replace-display:  inline-block;
-	--checkbox-label-display: flex;
-	--field-checkbox-width:auto;
-}
+/* Setting a name seems to cause issues when in other modes*/
 
-div.fieldrow, div.fieldButtons {
-	display:var(--form-display);
-	grid-template-columns: var(--form-label-width) auto;
-	margin-bottom: var(--form-row-gap);
+div.fieldrow {
+	display: grid;
 	grid-gap: var(--form-label-gap);
-	grid-row-gap:var(--row-padding); /* Only used when errors shown. Unofficial use of row-padding. Not ideal here */
 	padding: var(--row-padding);
-}
-
-div.fieldrow, div.fieldButtons {
-	grid-template-areas: "label field";
-}
-
-body.media-mid div.fieldrow, body.media-mid div.fieldButtons {
 	grid-template-columns: 1fr;
 	grid-template-areas: "label" "field";
 }
 
 div.fieldrow.search {
-	grid-template-columns: var(--form-label-width) 26% auto;
-	grid-template-areas: "label search field";
-}
-
-body.media-mid div.fieldrow.search {
-	grid-template-columns: 33% auto;
-	grid-template-areas: "label label"  "search field";
-}
-
-body.media-mobile div.fieldrow.search {
-	grid-template-columns: 1fr;
 	grid-template-areas: "label" "search" "field";
+}
+
+div.fieldrow.error {
+	grid-template-columns: 1fr;
+	grid-template-areas: "label" "error" "field";
+	--field-border-color: var(--error-color);
+}
+
+
+@container form ( style(--field-layout:row) ) {
+	div.fieldrow, div.fieldrow.error {
+		grid-template-areas: "label field";
+		grid-template-columns: var(--form-label-width) auto;
+	}
+
+	div.fieldrow.search {
+		grid-template-columns: var(--form-label-width) 26% auto;
+		grid-template-areas: "label search field";
+	}
+	div.fieldrow.error {
+		grid-template-areas: "label field" "label error";
+	}
+
 }
 
 div.fieldrow:nth-of-type(2n) {
     background-color: var(--form-stripe-background-color);
 }
 
-div.fieldrow .error {
+div.fieldrow > .error {
 	grid-area:error;
 	color: var(--error-color);
 }
 
-div.fieldrow.error {
-	--field-border-color: var(--error-color);
-	grid-template-areas: "label field" "label error";
-}
-
-.fieldrow > .fieldLabel , .fieldrow > .fieldSpacer {
+div.fieldrow > .fieldLabel {
 	grid-area:label;
 	display: flex;
-	width: 100%;
+	--icon-width:1em;
+	--icon-height:1em;
+	padding:var(--label-padding);
 }
 
-.fieldrow > .fieldLabel label {
+.fieldLabel label {
 	flex-grow: 1;
 }
 
-.fieldLabel  {
-	--icon-width:1em;
-	--icon-height:1em;
-}
-
-.fieldrow > .field, .fieldrow > .buttons {
+.fieldrow > .field {
 	grid-area:field;
 }
 .fieldrow > .field.search {
@@ -103,28 +111,17 @@ div.fieldrow.error {
 }
 
 
-.fieldrow .field + label {
-	text-align: left;	
-}
-
-/** Don't understand this.
- *  Possible vestigial.  
- */
-.field:not(.field_boolean) input, .field select
- {
- 	width: 100%;
-}
-
-.fieldrow :where(input:not([type='checkbox'], [type='radio'], [type='search'])), 
-.fieldrow textarea, .field textarea,
+.fieldrow input:not([type='checkbox'], [type='radio'], [type='search'], [type='submit'], [type='button']), 
+.fieldrow textarea,
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple,
-.select   {
-	padding:var(--field-padding);
+.fieldrow select   {
 	border:var(--field-border-width) solid var(--field-border-color);
 	background-color: var(--field-background-color);
 	border-radius: var(--field-border-radius);
 	color: var(--field-color);
+	padding:var(--field-padding);
+	width: 100%;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -134,57 +131,46 @@ div.fieldrow.error {
     padding:var(--field-padding);
 }
 
-.field_boolean, .buttons {
-	justify-self: flex-start;
-}
-
-div.fieldLabel {
-	padding:4px;
-}
-
 .field.checkbox, .field.radio {
-	display: var(--checkbox-field-display);
-	align-items: center;
-	grid-template-columns: var(--field-checkbox-width) auto ;
-	grid-row-gap: 2px;
-	grid-gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(var(--checkbox-cols), max-content);
+  gap: var(--checkbox-gap);
 }
 
+@container form ( style(--checkbox-replace: 1) ) {
 
-/* checkbox replace 
---checkbox-display: none;
---checkbox-label-display:flex;
---checkbox-replace-display:inline-block;
-*/ 
 
-input[type="checkbox"],  input[type="radio"]  {
-	display:var(--checkbox-display);
-}
+	.field.checkbox input, .field.radio input {
+		display: none;
+	}
 
-input[type="checkbox"] + label, input[type="radio"] + label {
-	display: var(--checkbox-label-display);
-	align-items: center;	
-}
+	input[type="checkbox"] + label, input[type="radio"] + label {
+		display: flex;
+		align-items: center;	
+	}
 
-input[type="checkbox"] + label:before, input[type="radio"] + label:before {
-    display:var(--checkbox-replace-display);
-    width:18px;
-    height:18px;
-    margin:-1px 4px 0px 0;
-    padding:0 0 4px 0;
-    vertical-align:middle;
-    cursor:pointer;
-    content:"";
-    background:url(../images/forms/square.svg) left center no-repeat;
-    background-size: contain;
-}
+	input[type="checkbox"] + label:before, input[type="radio"] + label:before {
+	    flex-grow: 0;
+	    display:inline-block;
+	    width:18px;
+	    height:18px;
+	    margin:-1px 4px 0px 0;
+	    padding:0 0 4px 0;
+	    vertical-align:middle;
+	    cursor:pointer;
+	    content:"";
+	    background:url(../images/forms/square.svg) left center no-repeat;
+	    background-size: contain;
+	}
 
-input[type="checkbox"]:checked + label:before {
-  	background-image:url(../images/forms/square-check.svg);
-}
-input[type="radio"] + label:before {
-	background-image:url(../images/forms/circle.svg);
-}
-input[type="radio"]:checked + label:before {
-	background-image:url(../images/forms/circle-check.svg);
+	input[type="checkbox"]:checked + label:before {
+	  	background-image:url(../images/forms/square-check.svg);
+	}
+	input[type="radio"] + label:before {
+		background-image:url(../images/forms/circle.svg);
+	}
+	input[type="radio"]:checked + label:before {
+		background-image:url(../images/forms/circle-check.svg);
+	}
+
 }

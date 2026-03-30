@@ -21,21 +21,28 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	<link rel="stylesheet" href="../assets/css/fonts/google_icons.css">
 	<link rel="stylesheet" href="../assets/css/fonts/fonts_local.css">
 	<link rel="stylesheet" href="../assets/css/grids.css">
-
 	<link rel="stylesheet" href="../assets/css/forms.css">
 	<link rel="stylesheet" href="../assets/css/navbuttons.css">
 	<meta charset="UTF-8">
 	<style>
 
 	#testform {
-		max-width: 800px;
+		max-width: 600px;
 		margin:80px auto;
 		border:1px solid var(--border-color);
 		--field-background-color: white;
 		--field-border-color: #aaa;
 		--input-padding: 8px;
+		--checkbox-replace: 1;
+		--checkbox-align: horizontal;
 	}
-	.fieldButtons .button {
+	@media screen and (max-width: 800px) {
+		#testform  {
+			--field-layout:column;
+		}
+	}
+
+	#testform .buttons .button {
 		border-color:var(--border-color);
 		border-width:1px;
 		border-style:solid;
@@ -43,13 +50,14 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 		padding: 4px 8px;
 	}
 
-	.fieldButtons .button:hover {
+	#testform .buttons .button:hover {
 		background-color:  #efefef;
 	}
 
 	#testform .fieldrow:nth-child(even) {
 		background-color: #efefef;
 	}
+
 	form {
 		--error-color: #dc2626
 	}
@@ -57,6 +65,48 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 		--field-background-color: #fdecea;
 	}
 	
+	.field4 {
+		--checkbox-cols: 2; /* number of cols for checkbox/radio fields */
+		--checkbox-gap: 12px;
+	}
+
+
+	/* To redefine the checkbox replacements, you have to redefine the styling for all for settings. Normally would be applying an icon font or something. This example redfeins a background color. You would still need to undefine the background image
+	like this if you wanted an icon font. */
+
+	/* Base style for both checkbox & radio */
+	.field4 input[type="checkbox"] + label:before,
+	.field4 input[type="radio"] + label:before {
+	    background: #ff00ff;
+	    background-image: none;
+	}
+
+	/* Checked state for both */
+	.field4 input[type="checkbox"]:checked + label:before,
+	.field4 input[type="radio"]:checked + label:before {
+		  background-image: none;
+	    background: #ffff00;
+	}
+
+	.field6 input[type="checkbox"] + label:before,
+	.field6 input[type="radio"] + label:before {
+		color: teal;
+		background-image: none;
+		font: var(--icon-font);
+		content: "check_box_outline_blank";
+	}
+
+	.field6 input[type="radio"] + label:before {
+		content: "radio_button_unchecked";
+	}
+
+	.field6 input[type="radio"]:checked + label:before {
+		content: "radio_button_checked";
+	}
+
+	.field6 input[type="checkbox"]:checked + label:before {
+		content: "check_box";
+	}
 
 	</style>
 </head>
@@ -122,12 +172,16 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				</div>
 				<div class="field checkbox">
 					<input type="radio" name="field3" id="field3_1"  value="1"><label for="field3_1">field3_1</label>
-					<input type="radio" name="field3" id="field3_2"  value="2"><label for="field3_2">field3_2</label>
+					<input type="radio" name="field3" id="field3_2"  value="2"><label for="field3_2">field3_2aut irure </label>
 					<input type="radio" name="field3" id="field3_3"  value="3"><label for="field3_3">field3_3</label>
 					<input type="radio" name="field3" id="field3_4"  value="4"><label for="field3_4">field3_4</label>
+					<input type="radio" name="field3" id="field3_5"  value="1"><label for="field3_5">field3_1lorem rem</label>
+					<input type="radio" name="field3" id="field3_6"  value="2"><label for="field3_6">field3_2 in volup</label>
+					<input type="radio" name="field3" id="field3_7"  value="3"><label for="field3_7">field3_3 u fug</label>
+					<input type="radio" name="field3" id="field3_8"  value="4"><label for="field3_8">field3_4 runt mo</label>
 				</div>
 			</div>
-			<div class="fieldrow">
+			<div class="fieldrow field4">
 				<div class="fieldLabel">
 				<label>
 					
@@ -164,7 +218,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				</div>
 			</div>
 
-			<div class="fieldrow">
+			<div class="fieldrow field6">
 				<div class="fieldLabel">
 				<label>
 					&nbsp;
@@ -189,13 +243,8 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				</div>
 			</div>
 
-			<div class="fieldButtons">
-				<div class="fieldSpace">
-				<label>
-					
-					&nbsp;
-
-				</label>
+			<div class="fieldrow buttons">
+				<div class="fieldLabel">
 				</div>
 				<div>
 					<div class="button">
@@ -220,32 +269,6 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 <script src="../assets/js/jquery.serializeData.js"></script>
 <script src="../assets/js/jquery.form.js"></script>
 <script src="../assets/js/jquery.clikForm.js"></script>
-
-<!---  	
-	email: {
-		remote: {
-                url: "/ajax/emailDuplicationCheck.php",
-                type: "post",
-                data: { email: function() {
-                    return $("#email").val(); // Add #email ID to your email field
-                }
-        }
-    }, 
-    password_again: {
-    	equalTo: "#password"
-    },
-    parent: {
-    	// can also use an expression for required e.g. foo:checked, #foo:filled
-      	required: function(element) {
-        	return $("#age").val() < 13;
-      	}
-    },
-    age: {
-      range: [13, 23]
-    },
-    number
-
---->
 
 <script type="text/javascript">
 	$(document).ready(function() {

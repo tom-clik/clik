@@ -1437,15 +1437,26 @@ That gives you a consistent API interaction pattern across the whole app.
             const text = message.text ?? message.message ?? "";
             if (!text) return;
 
-            const type = message.type ?? "info";
+            const title = message.title ?? "&nbsp;";
 
-            clik.showAdminMessage({
-                type: type,
-                message: text,
-                showClose: true,
-                placement: this.normalizeMessagePlacement(message.display),
-                hideOnClick: type !== "error"
-            });
+            const type = message.type ?? "info";
+            if ( $.Toast ) {
+                $.Toast(title, text, type, {
+                    has_icon:true,
+                    has_close_btn:true,
+                    fullscreen:false,
+                    timeout:2000,
+                    stack:true,
+                    has_progress:true,
+                    rtl:false,
+                    appendTo: 'body',// use 'body' to auto apply fixed class
+                    position_class: "toast-top-right"
+                });
+            }
+            else {
+                console.warn("Toast library not in place");
+                alert(text);
+            }
         }
 
         

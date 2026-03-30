@@ -264,47 +264,52 @@ $.validator.addMethod("code", function(value, element) {
 
 							$form.find(":input").attr("disabled", false).css("opacity", 1);
 
+							console.log(data);
+
 							if (data === true || (data && data.OK)) {
+								console.log(`data ok`);
+
 								runOptionHandler(options.on_success, completePayload);
 
-							if (data !== true && data.NEXTPAGE) {
-								$cs.html("<div class='loading'></div>");
-								window.location.href = data.NEXTPAGE;
-							}
-							else {
-								var msg = (data && data.MESSAGE) || options.message;
-								if (options.show_success_message && window.ApiHelper && typeof ApiHelper.showMessage === "function") {
-									ApiHelper.showMessage({
-										type: "success",
-										text: msg,
-										display: "bar"
-									});
+								if (data !== true && data.NEXTPAGE) {
+									$cs.html("<div class='loading'></div>");
+									window.location.href = data.NEXTPAGE;
 								}
 								else {
-									$cs.html(msg);
+									var msg = (data && data.MESSAGE) || options.message;
+									if (options.show_success_message && window.ApiHelper && typeof ApiHelper.showMessage === "function") {
+										ApiHelper.showMessage({
+											type: "success",
+											text: msg,
+											display: "bar"
+										});
+									}
+									else {
+										$cs.html(msg);
+									}
 								}
 							}
-							}
 							else {
+								
 								runOptionHandler(options.on_error, completePayload);
 
-							$cs.find(">.error").remove();
-							var topMessage = (data && data.MESSAGE) ? data.MESSAGE : options.error_message;
+								$cs.find(">.error").remove();
+								var topMessage = (data && data.MESSAGE) ? data.MESSAGE : options.error_message;
 
-							if (data && data["g-recaptcha-response"] !== undefined && data["g-recaptcha-response"] !== "") {
-								$form.find("#recaptcha_widget_" + data["g-recaptcha-response"])
-									.find(">.validateError").remove().end()
-									.append("<div class='validateError'><p> " + data[data["g-recaptcha-response"]] + "</p></div>");
-							}
+								if (data && data["g-recaptcha-response"] !== undefined && data["g-recaptcha-response"] !== "") {
+									$form.find("#recaptcha_widget_" + data["g-recaptcha-response"])
+										.find(">.validateError").remove().end()
+										.append("<div class='validateError'><p> " + data[data["g-recaptcha-response"]] + "</p></div>");
+								}
 
-							$cs.prepend("<div class='error'>" + topMessage + "</div>");
-							showErrors($form, validator, data, options.debug);
+								$cs.prepend("<div class='error'>" + topMessage + "</div>");
+								showErrors($form, validator, data, options.debug);
 
-							if ("grecaptcha" in window) {
-								grecaptcha.reset();
-							}
+								if ("grecaptcha" in window) {
+									grecaptcha.reset();
+								}
 
-							$cs.find(":input:disabled").attr("disabled", false).css("opacity", 1);
+								$cs.find(":input:disabled").attr("disabled", false).css("opacity", 1);
 							}
 						})
 						.catch(function(error) {
@@ -314,15 +319,15 @@ $.validator.addMethod("code", function(value, element) {
 								error: error,
 								options: options
 							};
+							
 							runOptionHandler(options.on_error, completePayload);
 
 							var msg = options.error_message;
 							$cs.html(msg);
 							$form.find(":input").attr("disabled", false).css("opacity", 1);
 
-							if (options.debug) {
-								console.error("clikForm submission failed", error);
-							}
+							console.error("clikForm submission failed", error);
+							
 						})
 						.finally(function() {
 							runOptionHandler(options.on_complete, completePayload || {

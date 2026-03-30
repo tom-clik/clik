@@ -1,4 +1,9 @@
 /*!
+ * @deprecated This plugin is retained for legacy compatibility only.
+ * New code should use ApiHelper.submitForm/submitJQueryForm instead.
+ */
+
+/*!
  * jQuery Form Plugin
  * version: 3.40.0-2013.08.13
  * @requires jQuery v1.5 or later

@@ -23,6 +23,8 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	<link rel="stylesheet" href="../assets/css/grids.css">
 	<link rel="stylesheet" href="../assets/css/forms.css">
 	<link rel="stylesheet" href="../assets/css/navbuttons.css">
+	<link rel="stylesheet" href="../assets/css/toast.css" rel="stylesheet">
+	
 	<meta charset="UTF-8">
 	<style>
 
@@ -35,12 +37,6 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 		--input-padding: 8px;
 		--checkbox-replace: 1;
 		--checkbox-align: horizontal;
-	}
-	@media screen and (max-width: 800px) {
-		#testform  {
-			--field-layout:column;
-		}
-	}
 
 	#testform .buttons .button {
 		border-color:var(--border-color);
@@ -248,7 +244,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				</div>
 				<div>
 					<div class="button">
-						<input type="button" value="Submit"  onclick="getOk(this);">
+						<input type="submit" value="Submit" onclick="setOk(this);">
 					</div>
 					<div class="button">
 						<input type="button" value="Get validation errors" onclick="getErrors(this);">
@@ -267,30 +263,40 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 <script src="../assets/js/jquery.elastic.1.6.11.js"></script>
 <script src="../assets/js/jquery.validate.js"></script>
 <script src="../assets/js/jquery.serializeData.js"></script>
-<script src="../assets/js/jquery.form.js"></script>
+<script src="../assets/js/apiHelper.js"></script>
 <script src="../assets/js/jquery.clikForm.js"></script>
+<script src="../assets/js/toast.js"></script> 
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#testform").clikForm({
 			debug:false,
+			// ApiHelper submission options:
+			// submit_mode: "form" | "json" | "jsonField" | "formPlusJsonField"
+			submit_mode: "jsonField",
+			submit_method: "post",
+			// json_field_name is used by jsonField / formPlusJsonField modes
+			json_field_name: "data",
+			on_complete: function(payload) {
+				console.log("clikForm complete", payload);
+			},
 			rules : {
 				  email: {
 			    	required: true,
 			    	email: true
 			    },
-			    field2: {
+			    field2xxx: {
 			    	required: true,
 			    	minlength: 2,
 			    	maxlength: 3
 			    },
-			    field3: {
+			    field3x: {
 			    	required: true			    	
 			    },
-			    field6: {
+			    field6x: {
 			    	required: true		
 			    },
-			    field7: {
+			    field7x: {
 			    	required: true,
 			    	code: true		
 			    }
@@ -308,20 +314,19 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 		});
 	});
 
-	function getOk(button) {
+	function setOk(button) {
 		button.form.action = "form_resonse_valid.json";
-	   	
-	    $(button.form).submit();
+		button.form.submit();
 	}
 
 	function getErrors(button) {
 		button.form.action = "form_resonse_invalid.json";
-	    $(button.form).submit();
+		button.form.submit();
 	}
 
 	function failError(button) {
 		button.form.action = "gingganggooly.json";
-	    $(button.form).submit();
+		button.form.submit();
 	}
 </script>
 

@@ -267,13 +267,22 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 <script src="../assets/js/jquery.elastic.1.6.11.js"></script>
 <script src="../assets/js/jquery.validate.js"></script>
 <script src="../assets/js/jquery.serializeData.js"></script>
-<script src="../assets/js/jquery.form.js"></script>
+<script src="../assets/js/apiHelper.js"></script>
 <script src="../assets/js/jquery.clikForm.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#testform").clikForm({
 			debug:false,
+			// ApiHelper submission options:
+			// submit_mode: "form" | "json" | "jsonField" | "formPlusJsonField"
+			submit_mode: "form",
+			submit_method: "post",
+			// json_field_name is used by jsonField / formPlusJsonField modes
+			json_field_name: "data",
+			on_complete: function(payload) {
+				console.log("clikForm complete", payload);
+			},
 			rules : {
 				  email: {
 			    	required: true,
@@ -310,18 +319,17 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 
 	function getOk(button) {
 		button.form.action = "form_resonse_valid.json";
-	   	
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 
 	function getErrors(button) {
 		button.form.action = "form_resonse_invalid.json";
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 
 	function failError(button) {
 		button.form.action = "gingganggooly.json";
-	    $(button.form).submit();
+		$(button.form).trigger("submit");
 	}
 </script>
 

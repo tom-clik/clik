@@ -1,0 +1,10 @@
+{
+    "test":
+    {
+        "description": "test form",
+        "styles":
+        {
+            "field-layout": "row"
+        }
+    }
+}

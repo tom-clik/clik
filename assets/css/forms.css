@@ -38,84 +38,82 @@
 	--checkbox-gap: 2px; /* grid gap for checkboxes */
 }
 
-form {
+form.container {
 	container-name: form;
 	--field-layout:inherit;
 	--checkbox-align:inherit;
 	--checkbox-replace:inherit;
 }
 
-/* Setting a name seems to cause issues when in other modes*/
-
-div.fieldrow {
+form:not(.container),  .formInner {
 	display: grid;
 	grid-gap: var(--form-label-gap);
 	padding: var(--row-padding);
 	grid-template-columns: 1fr;
-	grid-template-areas: "label" "field";
 }
 
-div.fieldrow.search {
-	grid-template-areas: "label" "search" "field";
+form:not(.container), .formInner {
+		grid-template-columns:  auto max-content;
 }
 
-div.fieldrow.error {
-	grid-template-columns: 1fr;
-	grid-template-areas: "label" "error" "field";
-	--field-border-color: var(--error-color);
+form .error, form .field {
+	grid-column: 1 / 3;
+} 
+
+form .fieldLabel {
+	grid-column: 1;
+	display: flex;
+	padding:var(--label-padding);
 }
 
+form .fieldIcon {
+	grid-column: 2;
+	--icon-width:1em;
+	--icon-height:1em;
+}
 
 @container form ( style(--field-layout:row) ) {
-	div.fieldrow, div.fieldrow.error {
-		grid-template-areas: "label field";
-		grid-template-columns: var(--form-label-width) auto;
+
+	.formInner {
+		grid-template-columns: minmax(auto, var(--form-label-width)) max-content auto;
 	}
 
-	div.fieldrow.search {
-		grid-template-columns: var(--form-label-width) 26% auto;
-		grid-template-areas: "label search field";
-	}
-	div.fieldrow.error {
-		grid-template-areas: "label field" "label error";
+	form .field {
+		grid-column: 3;
 	}
 
+
+	form .fieldLabel {
+		grid-column: 1;
+	}
+
+
+	form .fieldIcon {
+		grid-column: 2;
+	}
+
+	form .error {
+		grid-column: 3;
+	}
+
+	
+}
+
+form .error {
+	--field-border-color: var(--error-color);
+	color: var(--error-color);
 }
 
 div.fieldrow:nth-of-type(2n) {
     background-color: var(--form-stripe-background-color);
 }
 
-div.fieldrow > .error {
-	grid-area:error;
-	color: var(--error-color);
-}
 
-div.fieldrow > .fieldLabel {
-	grid-area:label;
-	display: flex;
-	--icon-width:1em;
-	--icon-height:1em;
-	padding:var(--label-padding);
-}
-
-.fieldLabel label {
-	flex-grow: 1;
-}
-
-.fieldrow > .field {
-	grid-area:field;
-}
-.fieldrow > .field.search {
-	grid-area:search;
-}
-
-
-.fieldrow input:not([type='checkbox'], [type='radio'], [type='search'], [type='submit'], [type='button']), 
-.fieldrow textarea,
+input:not([type='checkbox'], [type='radio'], [type='search'], [type='submit'], [type='button']), 
+textarea,
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple,
-.fieldrow select   {
+select   {
 	border:var(--field-border-width) solid var(--field-border-color);
 	background-color: var(--field-background-color);
 	border-radius: var(--field-border-radius);

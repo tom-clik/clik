@@ -213,7 +213,12 @@ $.validator.addMethod("code", function(value, element) {
 				formElement.__clikFormSubmitPatched = true;
 				formElement.__clikFormNativeSubmit = formElement.submit;
 				formElement.submit = function() {
-					$(formElement).trigger("submit");
+					var submitEvent = $.Event("submit");
+					$(formElement).triggerHandler(submitEvent);
+
+					if (!submitEvent.isDefaultPrevented()) {
+						formElement.__clikFormNativeSubmit.call(formElement);
+					}
 				};
 			}
 

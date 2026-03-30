@@ -22,7 +22,7 @@
 :root {
 	--border-color:gray;
 	--form-label-width: 160px;
-	--form-label-gap: 20px;
+	--form-label-gap:  5px 20px;
 	--field-checkbox-width:16px;
 	--field-border-color: var(--border-color);
 	--form-stripe-background-color: transparent;
@@ -60,13 +60,14 @@ div.fieldrow.search {
 }
 
 div.fieldrow.error {
-	grid-template-columns: 1fr
-	grid-template-areas: "label" "error" "field";;
+	grid-template-columns: 1fr;
+	grid-template-areas: "label" "error" "field";
+	--field-border-color: var(--error-color);
 }
 
 
 @container form ( style(--field-layout:row) ) {
-	div.fieldrow {
+	div.fieldrow, div.fieldrow.error {
 		grid-template-areas: "label field";
 		grid-template-columns: var(--form-label-width) auto;
 	}
@@ -83,11 +84,6 @@ div.fieldrow.error {
 
 div.fieldrow:nth-of-type(2n) {
     background-color: var(--form-stripe-background-color);
-}
-
-div.fieldrow.error {
-	--field-border-color: var(--error-color);
-	grid-template-areas: "label field" "label error";
 }
 
 div.fieldrow > .error {

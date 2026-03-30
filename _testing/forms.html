@@ -105,27 +105,13 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	}
 
 	.field6 input[type="checkbox"]:checked + label:before {
-		content: "select_check_box";
+		content: "check_box";
 	}
-
-
-
-
-<span class="material-symbols-outlined">
-radio_button_unchecked
-</span>
-
-
-<span class="material-symbols-outlined">
-
-</span>
 
 	</style>
 </head>
 
 <body>
-
-	<i class="icon-favorite"></i>
 
 	<div class="cs-form form" id="testform">
 
@@ -241,7 +227,6 @@ radio_button_unchecked
 				</div>
 				<div class="field checkbox">
 					<input type="checkbox" name="field6" id="field6_1" value="1"><label for="field6_1">field6_1</label>
-					<input type="checkbox" name="field6" id="field6_2" value="1"><label for="field6_2">field6_2</label>
 					<!-- <input type="checkbox" name="field6" id="field6_2" value="2"><label for="field6_2">field6_2</label> -->
 				</div>
 			</div>
@@ -284,32 +269,6 @@ radio_button_unchecked
 <script src="../assets/js/jquery.serializeData.js"></script>
 <script src="../assets/js/jquery.form.js"></script>
 <script src="../assets/js/jquery.clikForm.js"></script>
-
-<!---  	
-	email: {
-		remote: {
-                url: "/ajax/emailDuplicationCheck.php",
-                type: "post",
-                data: { email: function() {
-                    return $("#email").val(); // Add #email ID to your email field
-                }
-        }
-    }, 
-    password_again: {
-    	equalTo: "#password"
-    },
-    parent: {
-    	// can also use an expression for required e.g. foo:checked, #foo:filled
-      	required: function(element) {
-        	return $("#age").val() < 13;
-      	}
-    },
-    age: {
-      range: [13, 23]
-    },
-    number
-
---->
 
 <script type="text/javascript">
 	$(document).ready(function() {

@@ -274,6 +274,15 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	$(document).ready(function() {
 		$("#testform").clikForm({
 			debug:false,
+			// ApiHelper submission options:
+			// submit_mode: "form" | "json" | "jsonField" | "formPlusJsonField"
+			submit_mode: "form",
+			submit_method: "post",
+			// json_field_name is used by jsonField / formPlusJsonField modes
+			json_field_name: "data",
+			on_complete: function(payload) {
+				console.log("clikForm complete", payload);
+			},
 			rules : {
 				  email: {
 			    	required: true,

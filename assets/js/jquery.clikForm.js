@@ -92,14 +92,30 @@ $.validator.addMethod("code", function(value, element) {
 	function buildApiSubmitOptions($form, options) {
 		var submitMode = options.submit_mode || options.submitMode || $form.data("submit-mode") || "form";
 		var jsonFieldName = options.json_field_name || options.jsonFieldName || $form.data("json-field-name") || "data";
+		var submitMethod = options.submit_method || options.submitMethod || options.method || $form.attr("method") || "POST";
 
 		return {
 			submitMode: submitMode,
 			jsonFieldName: jsonFieldName,
-			method: options.method || $form.attr("method") || "POST",
+			method: submitMethod,
 			headers: options.headers || {},
 			url: options.url || $form.attr("action")
 		};
+	}
+
+	function runOptionHandler(handler, payload) {
+		if (!handler) {
+			return;
+		}
+
+		if (typeof handler === "function") {
+			handler(payload);
+			return;
+		}
+
+		if (typeof handler === "string" && window.ApiHelper && typeof ApiHelper.runHandler === "function") {
+			ApiHelper.runHandler(handler, payload);
+		}
 	}
 
 	function showErrors($form, validator, errorMap, debug) {
@@ -151,7 +167,12 @@ $.validator.addMethod("code", function(value, element) {
 	 * @param {string} [ops.message] Success message to show on successful submission
 	 * @param {string} [ops.error_message] Error message to show if submission wasn't successful
 	 * @param {string} [ops.submit_mode] ApiHelper submit mode (`form`, `json`, `jsonField`, `formPlusJsonField`)
+	 * @param {string} [ops.submit_method] HTTP method for ApiHelper request (default `POST`)
 	 * @param {string} [ops.json_field_name] Field name used when submit mode contains JSON field payload
+	 * @param {boolean} [ops.show_success_message] Display success message via ApiHelper.showMessage
+	 * @param {Function|string} [ops.on_success] Callback or ApiHelper handler name called after successful response
+	 * @param {Function|string} [ops.on_error] Callback or ApiHelper handler name called after failed response
+	 * @param {Function|string} [ops.on_complete] Callback or ApiHelper handler name always called when request finishes
 	 * @return {jQuery} Returns `this` for easy chaining
 	 */
 	$.fn.clikForm = function(ops) {
@@ -162,10 +183,15 @@ $.validator.addMethod("code", function(value, element) {
 			messages: {},
 			error_message: "Sorry, a network error occurred",
 			submit_mode: "form",
+			submit_method: "POST",
 			json_field_name: "data",
 			headers: {},
 			method: null,
-			url: null
+			url: null,
+			show_success_message: true,
+			on_success: null,
+			on_error: null,
+			on_complete: null
 		};
 		var options = $.extend({}, defaults, ops);
 
@@ -206,25 +232,46 @@ $.validator.addMethod("code", function(value, element) {
 				ignore: ":hidden:not(.ratingList input)",
 				submitHandler: async function() {
 					var submitOptions = buildApiSubmitOptions($form, options);
+					var completePayload;
 					$form.find(":input").attr("disabled", true).css("opacity", 0.3);
 
 					try {
 						var result = await ApiHelper.submitJQueryForm($form, submitOptions);
 						var data = result && result.data !== undefined ? result.data : result;
+						completePayload = {
+							form: $form,
+							container: $cs,
+							result: result,
+							data: data,
+							options: options
+						};
 
 						$form.find(":input").attr("disabled", false).css("opacity", 1);
 
 						if (data === true || (data && data.OK)) {
+							runOptionHandler(options.on_success, completePayload);
+
 							if (data !== true && data.NEXTPAGE) {
 								$cs.html("<div class='loading'></div>");
 								window.location.href = data.NEXTPAGE;
 							}
 							else {
 								var msg = (data && data.MESSAGE) || options.message;
-								$cs.html(msg);
+								if (options.show_success_message && window.ApiHelper && typeof ApiHelper.showMessage === "function") {
+									ApiHelper.showMessage({
+										type: "success",
+										text: msg,
+										display: "bar"
+									});
+								}
+								else {
+									$cs.html(msg);
+								}
 							}
 						}
 						else {
+							runOptionHandler(options.on_error, completePayload);
+
 							$cs.find(">.error").remove();
 							var topMessage = (data && data.MESSAGE) ? data.MESSAGE : options.error_message;
 
@@ -245,6 +292,14 @@ $.validator.addMethod("code", function(value, element) {
 						}
 					}
 					catch (error) {
+						completePayload = {
+							form: $form,
+							container: $cs,
+							error: error,
+							options: options
+						};
+						runOptionHandler(options.on_error, completePayload);
+
 						var msg = options.error_message;
 						$cs.html(msg);
 						$form.find(":input").attr("disabled", false).css("opacity", 1);
@@ -252,6 +307,13 @@ $.validator.addMethod("code", function(value, element) {
 						if (options.debug) {
 							console.error("clikForm submission failed", error);
 						}
+					}
+					finally {
+						runOptionHandler(options.on_complete, completePayload || {
+							form: $form,
+							container: $cs,
+							options: options
+						});
 					}
 				}
 			});

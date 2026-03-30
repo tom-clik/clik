@@ -244,26 +244,28 @@ $.validator.addMethod("code", function(value, element) {
 					$form.find("#question" + $(element).attr("name")).first().removeClass("error");
 				},
 				ignore: ":hidden:not(.ratingList input)",
-				submitHandler: async function() {
+				submitHandler: function() {
 					var submitOptions = buildApiSubmitOptions($form, options);
 					var completePayload;
+					var requestPromise = ApiHelper.submitJQueryForm($form, submitOptions);
+
 					$form.find(":input").attr("disabled", true).css("opacity", 0.3);
 
-					try {
-						var result = await ApiHelper.submitJQueryForm($form, submitOptions);
-						var data = result && result.data !== undefined ? result.data : result;
-						completePayload = {
-							form: $form,
-							container: $cs,
-							result: result,
-							data: data,
-							options: options
-						};
+					requestPromise
+						.then(function(result) {
+							var data = result && result.data !== undefined ? result.data : result;
+							completePayload = {
+								form: $form,
+								container: $cs,
+								result: result,
+								data: data,
+								options: options
+							};
 
-						$form.find(":input").attr("disabled", false).css("opacity", 1);
+							$form.find(":input").attr("disabled", false).css("opacity", 1);
 
-						if (data === true || (data && data.OK)) {
-							runOptionHandler(options.on_success, completePayload);
+							if (data === true || (data && data.OK)) {
+								runOptionHandler(options.on_success, completePayload);
 
 							if (data !== true && data.NEXTPAGE) {
 								$cs.html("<div class='loading'></div>");
@@ -282,9 +284,9 @@ $.validator.addMethod("code", function(value, element) {
 									$cs.html(msg);
 								}
 							}
-						}
-						else {
-							runOptionHandler(options.on_error, completePayload);
+							}
+							else {
+								runOptionHandler(options.on_error, completePayload);
 
 							$cs.find(">.error").remove();
 							var topMessage = (data && data.MESSAGE) ? data.MESSAGE : options.error_message;
@@ -303,32 +305,34 @@ $.validator.addMethod("code", function(value, element) {
 							}
 
 							$cs.find(":input:disabled").attr("disabled", false).css("opacity", 1);
-						}
-					}
-					catch (error) {
-						completePayload = {
-							form: $form,
-							container: $cs,
-							error: error,
-							options: options
-						};
-						runOptionHandler(options.on_error, completePayload);
+							}
+						})
+						.catch(function(error) {
+							completePayload = {
+								form: $form,
+								container: $cs,
+								error: error,
+								options: options
+							};
+							runOptionHandler(options.on_error, completePayload);
 
-						var msg = options.error_message;
-						$cs.html(msg);
-						$form.find(":input").attr("disabled", false).css("opacity", 1);
+							var msg = options.error_message;
+							$cs.html(msg);
+							$form.find(":input").attr("disabled", false).css("opacity", 1);
 
-						if (options.debug) {
-							console.error("clikForm submission failed", error);
-						}
-					}
-					finally {
-						runOptionHandler(options.on_complete, completePayload || {
-							form: $form,
-							container: $cs,
-							options: options
+							if (options.debug) {
+								console.error("clikForm submission failed", error);
+							}
+						})
+						.finally(function() {
+							runOptionHandler(options.on_complete, completePayload || {
+								form: $form,
+								container: $cs,
+								options: options
+							});
 						});
-					}
+
+					return false;
 				}
 			});
 		});

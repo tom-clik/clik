@@ -165,20 +165,6 @@ component {
 
 	public string function css( required string selector, required struct settings, array media ) {
 		
-		/*
-			this.panels = [
-			{"panel":"main", "name":"Main"},
-			{"panel":"item", "name":"Item", "selector": " li a", "states":[
-				{"state"="hover", "selector"=" li a:hover","name":"Hover","description":"The hover state for menu items"},
-				{"state"="hi", "selector"=" li.hi a","name":"Hilighted","description":"The state for the currently selected menu item"}
-			]},
-			{"panel":"subitem", "name":"Sub menu Item", "selector": " .submenu li a", "states":[
-				{"state"="hover", "selector"=" li a:hover","name":"Hover","description":"The hover state for menu items"},
-				{"state"="hi", "selector"=" li.hi a","name":"Hilighted","description":"The state for the currently selected menu item"}
-			]}
-		];
-		*/
-	
 		if (! arguments.keyExists("media") ) arguments.media = this.defaultMedia;
 		
 		cssBlocks = [];

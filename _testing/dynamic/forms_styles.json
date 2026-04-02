@@ -4,7 +4,15 @@
         "description": "test form",
         "styles":
         {
-            "field-layout": "row"
+            "field-layout": "row",
+            "max-width": "600px",
+            "margin": "80px auto",
+            "border": "11px solid var(--border-color)",
+            "field-background-color": "white",
+            "field-border-color": "#aaa",
+            "input-padding": "8px",
+            "checkbox-replace": "1",
+            "checkbox-align": "horizontal"
         }
     }
 }

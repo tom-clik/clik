@@ -12,10 +12,15 @@ component extends="basescript" {
 		"content"="Undefined content",
 	};
 
-	function init(required content contentObj) {
+	function init(boolean debug=0) {
 		
-		super.init(arguments.contentObj);
-		this.recordsObj = new articlemanager.records();
+		super.init(arguments.debug);
+
+		this.panels = [
+			{"panel":"main", "name":"Main"},
+			{"panel":"form", "name":"Form", "selector": " form"},
+			{"panel":"buttons", "name":"Form", "selector": " .buttons"}
+		];
 
 		variables.static_css = {
 			"forms"=1
@@ -63,41 +68,56 @@ component extends="basescript" {
 			"field-checkbox-width": {"type":"dimension","title":"Style checkbox width","description":"Icon size for replacement icons when using styled checkboxes","default":"16px","setting": 1}
 		];
 
+		updateDefaults();
+
 		return this;
 	}
 
-	public string function html(required struct content) {
+	public string function html(required struct content) localmode=true {
 		if (! StructKeyExists(arguments.content, "data") ) {
 			throw("data not defined for cs form");
 		}
-		var html = [];
-		html.append("<form action=''>");
-		loop collection=arguments.content.data key="local.q" value="local.val" {
+		action = arguments.content.action ? : "";
+		ret = [];
+		ret.append("<form action='#action#'>");
+		loop collection=arguments.content.data key="q" value="val" {
 			
-			// html.append("<div class='fieldrow>");
-			html.append("	<div class='fieldLabel'>");
-			html.append("	<label>");
-			html.append("		#local.val.label#");
-			html.append("	</label>");
-			html.append("	<div class='button'><a><i class='icon-help'></i></a></div>");
-			html.append("	</div>");
-			html.append("	<div class='field #local.val.type# field-#local.q#''>");
-
-			html.append("		" & dspField(local.val, local.q) );
-			html.append("	</div>");
-			// html.append("</div>");
+			ret.append("<div class='fieldrow'>");
+			ret.append("	<div class='fieldLabel'>");
+			ret.append("	<label>");
+			ret.append("		#val.label#");
+			ret.append("	</label>");
+			ret.append("	<div class='button'><a><i class='icon-help'></i></a></div>");
+			ret.append("	</div>");
+			ret.append("	<div class='field #val.type# field-#q#'>");
+			ret.append("		" & dspField(val, q) );
+			ret.append("	</div>");
+			ret.append("</div>");
 		}
 
-		// html.append("<div class='fieldrow'>");
-		html.append("	<div class='field'>");
-		html.append("		<div class='button'>");
-		html.append("			<input type='submit' value='Submit'>");
-		html.append("		</div>");
-		html.append("	</div>");
-		// html.append("</div>");
-		html.append("</form>");
+		if (! content.keyExists("buttons")) {
+			buttons = [{name="submit",value="Submit"}];
+		}
+		else {
+			buttons = content.buttons;
+		}
+
+
+		ret.append("<div class='fieldrow'>");
+		ret.append("	<div class='fieldLabel'></fieldLabel>");
+		ret.append("	<div class='field'>");
+		for (button in buttons) {
+			type = button.type ? : "submit";
+			ret.append("		<div class='button'>");
+			ret.append("			<input type='#type#'  name='#button.name#' value='#button.value#'>");
+			ret.append("		</div>");
+		}
+		ret.append("	</div>");
+		ret.append("</div>");
+		ret.append("</form>");
+
 		
-		return html.toList("");
+		return ret.toList("");
 
 	}
 
@@ -105,25 +125,25 @@ component extends="basescript" {
 		return fileRead("form_html_temp.html");
 	}
 
-	public struct function parseForm(required formdata) {
-		local.form = [=];
-		for ( local.val in arguments.formdata ) {
-			StructAppend(local.val, {"type"="textarea","required"=false,"label"=local.val.name}, false);
-			if ( local.val.required ) {
+	public struct function parseForm(required formdata) localmode=true {
+		form = [=];
+		for ( val in arguments.formdata ) {
+			StructAppend(val, {"type"="textarea","required"=false,"label"=val.name}, false);
+			if ( val.required ) {
 				if ( ! 
-						( local.val.keyExists("message") ) OR
-						( local.val.keyExists("messages") 
-							&& local.val.messages.keyExists("required")
+						( val.keyExists("message") ) OR
+						( val.keyExists("messages") 
+							&& val.messages.keyExists("required")
 						)
 				    ) {
-					 local.val.message = "Please enter a value for #local.val.label#";
+					 val.message = "Please enter a value for #val.label#";
 
 				}
 			}
-			local.form["#local.val.name#"] = local.val;
+			form["#val.name#"] = val;
 		}
 		
-		return local.form;
+		return form;
 
 	}
 
@@ -139,19 +159,19 @@ component extends="basescript" {
 					return "<textarea name='#arguments.name#'></textarea>";
 				break;
 				case "checkbox":case "radio":
-					html = "";
+					ret = "";
 					for (option in options) {
-						html += "<input value='#option.value#' id='#arguments.name#_#option.value#' name='#arguments.name#' type='#arguments.fieldDef.type#'><label for='#arguments.name#_#option.value#'>#option.display#</label>";
+						ret &= "<label for='#arguments.name#_#option.value#'><input value='#option.value#' id='#arguments.name#_#option.value#' name='#arguments.name#' type='#arguments.fieldDef.type#'>#option.display#</label>";
 					}
-					return html;
+					return ret;
 					break;
 				case "list":
-					html = "<select name='#arguments.name#'>";
+					ret = "<select name='#arguments.name#'>";
 					for (option in options) {
-						html += "<option value='#option.value#'>#option.display#</option>";
+						ret &= "<option value='#option.value#'>#option.display#</option>";
 					}
-					html += "</select>";
-					return html;
+					ret &= "</select>";
+					return ret;
 				break;
 				default:
 					return "<input name='#arguments.name#' type='#arguments.fieldDef.type#'>";
@@ -159,7 +179,7 @@ component extends="basescript" {
 
 	}
 	
-	public string function onready(required struct content) {
+	public string function onready(required struct content) localmode=true {
 		
 		var data = {
 			"debug":false,
@@ -167,12 +187,12 @@ component extends="basescript" {
 			"messages" : {}
 		};
 
-		loop collection=arguments.content.data key="local.q" value="local.val" {
-			if ( local.val.required ) {
-				data.rules["#local.q#"]["required"] = true;
+		loop collection=arguments.content.data key="q" value="val" {
+			if ( val.required ) {
+				data.rules["#q#"]["required"] = true;
 			}
-			if ( local.val.keyExists("message" ) ){
-				data.messages["#local.q#"] = local.val.message;
+			if ( val.keyExists("message" ) ){
+				data.messages["#q#"] = val.message;
 			}
 		}
 
@@ -182,4 +202,33 @@ component extends="basescript" {
 	}
 
 	
+	public string function _css(required string selector, required struct settings) localmode=true {
+		
+		style = duplicate(arguments.settings);
+		structAppend(style, this.defaultStyles, false);
+
+		html = [];
+
+		outputs = getPanelsStruct();
+
+		otherstyles = []; //Ad hoc styles to be joined together. Each entry is a struct with key=selector and value = compete style e.g margin:0
+
+	
+		if ( style["field-layout"] eq "row") {
+			outputs.form["display"] ="table";
+			otherstyles.append({".fieldrow":"display: table-row;"});
+			otherstyles.append({".field, .fieldLabel":"display: table-cell;padding: var(--row-padding);vertical-align: top;"});
+			otherstyles.append({".button.fieldIcon":"top:8px;"});
+		}
+		else {
+			outputs.form["display"] ="block";
+			otherstyles.append({".fieldrow":"display: block;"});
+			otherstyles.append({".field, .fieldLabel":"display: block;padding: 0;"});
+			otherstyles.append({".button.fieldIcon":"top:4px;"});
+		}
+
+		return outputStyles(arguments.selector, outputs) & this.newLineChar & otherSettings(arguments.selector,otherstyles);
+
+	}
+
 }

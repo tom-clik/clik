@@ -1,11 +1,11 @@
 <cfscript>
 settingsData = deserializeJSON( fileRead( ExpandPath( "forms_styles.json" ) ) );
 
-itemsObj = new clik.scripts.forms(true);
+formsObj = new clik.scripts.forms(true);
 
 param name="url.test" default="test";
 
-testmenu = "<form action='items.cfm'><select name='test'>";
+testmenu = "<form action='forms.cfm'><select name='test'>";
 loop collection=settingsData key="item" value="val" {
 	selected = "";
 	if (url.test eq item) {
@@ -37,7 +37,10 @@ void function getSettings(code, settings, settingsData) {
 
 }
 
-css = itemsObj.css( "##test",  settings );
+content.data = deserializeJSON(FileRead(ExpandPath("form_data.json")));
+
+css = formsObj.css( "##test",  settings );
+html = formsObj.html(content);
 </cfscript>
 
 <!DOCTYPE html>
@@ -54,7 +57,7 @@ css = itemsObj.css( "##test",  settings );
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	<meta charset="UTF-8">
 	<style>
-		
+		<cfoutput>#css#</cfoutput>
 	</style>
 </head>
 <cfoutput><body class="bodytest-#url.test#"></cfoutput>
@@ -67,61 +70,83 @@ css = itemsObj.css( "##test",  settings );
 <cfoutput>#testmenu#</cfoutput>
 </div>
 
-<div class="list grid">
-	<div class="gridInner">
-		<div class="item">
-			<h3 class="title">Box title</h3>
-
-			<div class="imageWrap">
-				<figure>
-					<img src="//d2033d905cppg6.cloudfront.net/tompeer/images/Graphic_111.jpg">
-					<figcaption>An elephant at sunset</figcaption>
-				</figure>
-			</div>
-			
-			<div class="textWrap">
-				<!-- Wrap title is an additional duplicate title placed into the textWrap if you need htop=0 with wrapping. It can be omitted -->
-				<h3 class="title wraptitle">Box title</h3>
-
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-				<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
-			</div>
-			
-		</div>
-	</div>
+<div class="cs-form form" id="test">
+<cfoutput>
+	#html#
+</cfoutput>
 </div>
 
-	<script src="../../assets/js/jquery-3.4.1.js"></script>
-	<script src="../../assets/js/jquery.throttledresize.js"></script>
-	<script src="../../assets/js/varClass.js"></script>
-	<script src="../../assets/js/removeClassByPrefix.js"></script>
-	
-	<script type="text/javascript">
+<script src="../assets/js/jquery-3.4.1.js"></script>
+<script src="../assets/js/select2.min.js"></script>
+<script src="../assets/js/jquery.elastic.1.6.11.js"></script>
+<script src="../assets/js/jquery.validate.js"></script>
+<script src="../assets/js/jquery.serializeData.js"></script>
+<script src="../assets/js/apiHelper.js"></script>
+<script src="../assets/js/jquery.clikForm.js"></script>
+<script src="../assets/js/toast.js"></script> 
 
-		$(document).ready(function() {
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("##testform").clikForm({
+			debug:false,
+			// ApiHelper submission options:
+			// submit_mode: "form" | "json" | "jsonField" | "formPlusJsonField"
+			submit_mode: "jsonField",
+			submit_method: "post",
+			// json_field_name is used by jsonField / formPlusJsonField modes
+			json_field_name: "data",
+			on_complete: function(payload) {
+				console.log("clikForm complete", payload);
+			},
+			rules : {
+				  email: {
+			    	required: true,
+			    	email: true
+			    },
+			    field2: {
+			    	required: true,
+			    	minlength: 2,
+			    	maxlength: 3
+			    },
+			    field3: {
+			    	required: true			    	
+			    },
+			    field6: {
+			    	required: true		
+			    },
+			    field7: {
+			    	required: true,
+			    	code: true		
+			    }
+			},
+			messages: {
+		        email: {
+		            required: 'Email address is required',
+		            email: 'Please enter a valid email address'
+		        },
+		        field2: 'Please select 2 or 3 items',
+		        field3: "select some values",
+		        field6: "Please tick you agree to our terms and conditions"
+		    }
 
-			// make the items - nothing to do with the styling.
-			var $item = $(".item");
-			var $list = $(".list > .gridInner");
-			for (i=1; i <= 6; i++) {
-				let $newItem = $item.clone();
-				if (i % 3 == 0) {
-					$newItem.find("figure").html("");
-					$newItem.addClass("noimage");
-				}
-				$list.append($newItem);
-			}
-
-			$("#testmenu select").on("change", function( ) {
-				this.form.submit()
-			});
-			
 		});
+	});
 
-		
-	</script>
+	function setOk(button) {
+		button.form.action = "../form_resonse_valid.json";
+		button.form.submit();
+	}
 
+	function getErrors(button) {
+		button.form.action = "../form_resonse_invalid.json";
+		button.form.submit();
+	}
+
+	function failError(button) {
+		button.form.action = "../gingganggooly.json";
+		button.form.submit();
+	}
+</script>
 
 </body>
 </html>

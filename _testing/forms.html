@@ -122,7 +122,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 			<div class="formInner">
 				<input type="hidden" name="hidden_test" value="hidden_test">
 			
-			
+			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
 					
@@ -133,22 +133,23 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				<div class="field">
 					<textarea name="field1" rows="1" class="elastic markitup"></textarea>
 				</div>
-			
-			
+			</div>
+			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
 					Email
 				</label>
+				<div class="button fieldIcon fieldIcon"><a><i class="icon-help"></i></a></div>
 				</div>
-				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
 				<div class="field">
 					<input type="text" name="email">
 				</div>
-			
+			</div>
+			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
 					
-					Label 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit
+					Label 2
 
 					
 				</label>
@@ -162,8 +163,8 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 						<option>Test5</option>
 					</select>
 				</div>
-			
-			
+			</div>
+			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
 					
@@ -171,8 +172,8 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 
 					
 				</label>
-				</div>
 				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
+				</div>
 				<div class="field checkbox">
 					<input type="radio" name="field3" id="field3_1"  value="1"><label for="field3_1">field3_1</label>
 					<input type="radio" name="field3" id="field3_2"  value="2"><label for="field3_2">field3_2aut irure </label>
@@ -183,7 +184,8 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 					<input type="radio" name="field3" id="field3_7"  value="3"><label for="field3_7">field3_3 u fug</label>
 					<input type="radio" name="field3" id="field3_8"  value="4"><label for="field3_8">field3_4 runt mo</label>
 				</div>
-			
+			</div>
+			<div class="fieldrow field4">
 				<div class="fieldLabel">
 				<label>
 					
@@ -191,22 +193,24 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 
 					
 				</label>
-				</div>
 				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
+				</div>
 				<div class="field checkbox">
 					<input type="checkbox" name="field4" id="field4_1"  value="1"><label for="field4_1">field4_1</label>
 					<input type="checkbox" name="field4" id="field4_2"  value="2"><label for="field4_2">field4_2</label>
 					<input type="checkbox" name="field4" id="field4_3"  value="3"><label for="field4_3">field4_3</label>
 				</div>
+			</div>
 			
+			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
 					
 					Label 5
 
 				</label>
-				</div>
 				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
+				</div>
 				<div class="field">
 					<select name="field5">
 						<option></option>
@@ -216,43 +220,47 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 						<option>Test5</option>
 					</select>
 				</div>
-			
+			</div>
+
+			<div class="fieldrow field6">
 				<div class="fieldLabel">
 				<label>
 					&nbsp;
 				</label>
-				</div>
 				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
-				<div class="field checkbox field6">
+				</div>
+				<div class="field checkbox">
 					<input type="checkbox" name="field6" id="field6_1" value="1"><label for="field6_1">field6_1</label>
 					<!-- <input type="checkbox" name="field6" id="field6_2" value="2"><label for="field6_2">field6_2</label> -->
 				</div>
-				
+			</div>
+
+			<div class="fieldrow">
 				<div class="fieldLabel">
 					<label>
 						Label 7
 					</label>
+					<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
 				</div>
-				<div class="button fieldIcon"><a><i class="icon-help"></i></a></div>
 				<div class="field">
 					<input type="text" name="field7" id="field7_1" value="">
 				</div>
-			
+			</div>
 
+			<div class="fieldrow buttons">
 				<div class="fieldLabel">
 				</div>
-				<div class="buttons field">
-					<div class="button fieldIcon">
+				<div class="field">
+					<div class="button">
 						<input type="submit" value="Submit" onclick="setOk(this);">
 					</div>
-					<div class="button fieldIcon">
+					<div class="button">
 						<input type="button" value="Get validation errors" onclick="getErrors(this);">
 					</div>
-					<div class="button fieldIcon">
+					<div class="button">
 						<input type="button" value="Network errors" onclick="failError(this);">
 					</div>
 				</div>
-			
 			</div>
 		</form>
 

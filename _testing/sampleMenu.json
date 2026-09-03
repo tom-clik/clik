@@ -1,4 +1,4 @@
-menuData = [
+[
     {
         "id": "index",
         "link": "{{link.index}}",
@@ -61,7 +61,7 @@ menuData = [
                 "link": "{{link.gallery2.view.4}}",
                 "title": "Gallery2 test 4"
             }
-        ],
+        ]
     },
     {
         "id": "about",
@@ -110,4 +110,4 @@ menuData = [
         "title": "Single article",
         "icon": "fullscreen_exit"
     }
-];
+]

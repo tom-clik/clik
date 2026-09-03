@@ -2,10 +2,8 @@
 
 # Grids
 
-Using classes only for compatibility
-
+Static part of grids mechanism. For use either with class based mark up or Clik system
 */
-
 
 .grid, .flex   {
   box-sizing: border-box;
@@ -13,32 +11,37 @@ Using classes only for compatibility
 
 .grid {
   display: grid;
-  display:grid;
-  grid-gap: 0px;
+  --grid-gap: 0px;
+  grid-gap: var(--grid-gap);
   align-content: normal;
   align-items: normal;
   justify-content: normal;
   grid-template-columns: auto;
   grid-template-rows: auto;
   grid-template-areas: none;
+
   --grid-max-height: auto;
   --grid-width: 180px;
   --grid-columns: 3;
+  --flex-stretch: 0;
+  --flex-direction: row;
+  --flex-wrap: row;
+  flex-direction: var(--flex-direction);
+  flex-wrap: var(--flex-wrap);
 }
 
 .flex {
   display: flex;
-  --flex-stretch: 0;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
 .grid > * {
   height: var(--grid-max-height);
+  flex-grow: var(--flex-stretch);
 }
 
-.flex > * {
-  flex-grow: var(--flex-stretch);
+.grid img {
+  max-width: 100%;
+  height: auto;
 }
 
 .grid.none {

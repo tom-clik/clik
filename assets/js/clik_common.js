@@ -51,9 +51,9 @@ clik = {
 		clik.tabs();
 		clik.autoopen();
 		clik.grids();
-		
+		if(jQuery().fadeInOnScroll) {
 		$('.item.fade-in, .item.fade-in-scroll').fadeInOnScroll();
-		
+		}
 	},
 	/* Legacy function applies name of media to body as class. 
 	Shouldn't be need now we are fully containered up */
@@ -108,6 +108,7 @@ clik = {
 	},
 	tabs: function() {
 		if(jQuery().tabs) {
+			console.log("Running tabs");	
 			$(".cs-tabs").tabs({"resize":clik.resize});
 		}
 	},

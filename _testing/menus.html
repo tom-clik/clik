@@ -242,8 +242,6 @@ Menu Testing
 	<script src="../assets/js/jquery.animateAuto.js"></script>
 	<script src="../assets/js/jquery.menu.js"></script>
 
-	<script src="sampleMenu.js"></script>
-
 	<script type="text/javascript">
 
 		function createMenu(menuData) {
@@ -259,16 +257,31 @@ Menu Testing
 		}
 
 		testStr = getArrayData(tests);
+		menuHTML = null;
+		hash = null;
 
 		$(document).ready(function() {
 
 			// Apply the layout class
-			var hash = window.location.hash || "#1";
+			hash = window.location.hash || "#1";
 			hash = hash.replace("#","");
 			setTest(hash);
 			// / end apply layout class
 			
-			var menuHTML = createMenu(menuData,"menu");
+			let menuData = null;
+			var menuHTML;
+
+			fetch('samplemenu.json')
+			  .then(response => response.json())
+			  .then(data => {
+			  	 console.log(data); // already converted to JS object
+			    setup(data);
+			  })
+			  .catch(error => console.error('Error:', error));
+		});
+
+		function setup(menuData) {
+			menuHTML = createMenu(menuData,"menu");
 
 			testStr = getArrayData(tests);
 
@@ -289,8 +302,7 @@ Menu Testing
 				setTest(test);
 				window.location.hash = test;
 			});
-
-		});
+		}
 
 		function setTest(test) {
 			var $menu = $("#menu");

@@ -1,5 +1,5 @@
 {
-	"menu": {
+	"default": {
 		"description": "",
 		"styles": {
 			"menu-item-padding": "8px",
@@ -34,7 +34,6 @@
 	},
 
 	"horiz": {
-		"inherit": "menu",
 		"description": "",
 		"styles": {
 			"menu-borders": "boxes",
@@ -50,7 +49,6 @@
 	},
 
 	"vert": {
-		"inherit": "menu",
 		"description": "",
 		"styles": {
 			"menu-orientation": "vertical",

@@ -239,7 +239,11 @@ but we need them to apply to the "inner" div */
 
 /* Setting a name seems to cause issues when in other modes*/
 @container grid ( not style(--grid-mode:named) ) {
-	.gridInner > * {
-		grid-area: unset !important;
-	}
+	.gridInner > *:not(.fullWidth) {
+        grid-area: unset !important;
+    }
+
+    .gridInner > .fullWidth {
+        grid-column: 1 / -1;
+    }
 }

@@ -189,8 +189,8 @@
 	</div>
 
 	<div class="test">
-		<div class="test-header">Grid with fixed number of columns</div>
-		<div id="testfix" class="grid"></div>
+		<div class="test-header">Grid with fixed number of columns (7th item full width)</div>
+		<div id="testfix" class="grid" data-fullwidth=7></div>
 	</div>
 
 	<div class="test">
@@ -246,20 +246,28 @@
 		$(document).ready(function() {
 			$(".grid").each( function() {
 				if (! $(this).hasClass("manual") ) {
+					const fullwidth = $(this).data("fullwidth") ? $(this).data("fullwidth"): 0;
+
 					const cols = $(this).data("cols") ? $(this).data("cols") : 12;
-					$(this).html(testgrid(cols));
+					$(this).html(testgrid(cols, fullwidth));
 				}
+
+				
+					
+				
 			});
 		});
 
 		lorem = ["Lorem","ipsum","dolor","sit","amet,","consectetur","adipisicing","elit,","sed","do","eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua."];
 
-		function testgrid(cols) {
+		function testgrid(cols,fullwidth) {
 			var html = "<div class='gridInner'>";
 			text = "";
 			for (let i = 1 ; i <= cols; i++) {
 				text += lorem[i] + " ";
-				html += "<g>" + text + "</g>";
+				fullWidthClass = i == fullwidth ? " class='fullWidth'": "";
+				console.log(fullwidth,fullWidthClass);
+				html += `<g${fullWidthClass}>${text}</g>`;
 			}
 			html += "</div>";
 			return html;

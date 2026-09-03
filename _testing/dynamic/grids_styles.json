@@ -1,4 +1,8 @@
 {
+    "default":
+    {
+        "rows":12
+    },
     "testfill":
     {
         "description": "Fill",

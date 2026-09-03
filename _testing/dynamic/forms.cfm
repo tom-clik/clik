@@ -1,41 +1,16 @@
 <cfscript>
-settingsData = deserializeJSON( fileRead( ExpandPath( "forms_styles.json" ) ) );
-
 formsObj = new clik.scripts.forms(true);
 
-param name="url.test" default="test";
+testObj = new clik._testing.dynamic.dynamicTests("forms");
 
-testmenu = "<form action='forms.cfm'><select name='test'>";
-loop collection=settingsData key="item" value="val" {
-	selected = "";
-	if (url.test eq item) {
-		selected = " selected";
-		title = val.description;
-	}
-	testmenu &= "<option#selected# value='#item#'>#val.description#</option>";
-}
-testmenu &= "</select></form>";
+param name="url.test" default="#testObj.defaultTest()#";
+
+testmenu = testObj.testMenu(url.test);
+title = testObj.testTitle(url.test);
 
 settings = {};
 
-getSettings(url.test, settings, settingsData);
-
-void function getSettings(code, settings, settingsData) {
-	var tmpSettings = arguments.settingsData[arguments.code].styles;
-	recurseCheck = {};
-
-	if ( arguments.settingsData[arguments.code].keyExists("inherits") ) {
-		inherit = arguments.settingsData[arguments.code].inherits;
-		if (recurseCheck.keyExists(inherit)) {
-			throw("Circular inheritance #inherit# for #arguments.code#");
-		}
-		getSettings(inherit, arguments.settings, arguments.settingsData);
-		recurseCheck[inherit] = 1;
-	}
-
-	structAppend(arguments.settings, tmpSettings);
-
-}
+testObj.getSettings(url.test, settings);
 
 content.data = deserializeJSON(FileRead(ExpandPath("form_data.json")));
 

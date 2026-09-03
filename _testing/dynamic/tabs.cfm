@@ -1,41 +1,16 @@
 <cfscript>
-settingsData = deserializeJSON( fileRead( ExpandPath( "tabs_styles.json" ) ) );
-
 tabsObj = new clik.scripts.tabs(true);
 
-param name="url.test" default="normal";
+testObj = new clik._testing.dynamic.dynamicTests("tabs");
 
-testmenu = "<form action='tabs.cfm'><select name='test'>";
-loop collection=settingsData key="tabs" value="val" {
-	selected = "";
-	if (url.test eq tabs) {
-		selected = " selected";
-		title = val.description;
-	}
-	testmenu &= "<option#selected# value='#tabs#'>#val.description#</option>";
-}
-testmenu &= "</select></form>";
+param name="url.test" default="#testObj.defaultTest()#";
+
+testmenu = testObj.testMenu(url.test);
+title = testObj.testTitle(url.test);
 
 settings = {};
 
-getSettings(url.test, settings, settingsData);
-
-void function getSettings(code, settings, settingsData) {
-	var tmpSettings = arguments.settingsData[arguments.code].styles;
-	recurseCheck = {};
-
-	if ( arguments.settingsData[arguments.code].keyExists("inherits") ) {
-		inherit = arguments.settingsData[arguments.code].inherits;
-		if (recurseCheck.keyExists(inherit)) {
-			throw("Circular inheritance #inherit# for #arguments.code#");
-		}
-		getSettings(inherit, arguments.settings, arguments.settingsData);
-		recurseCheck[inherit] = 1;
-	}
-
-	structAppend(arguments.settings, tmpSettings);
-
-}
+testObj.getSettings(url.test, settings);
 
 css = tabsObj.css( "##test",  settings );
 </cfscript>

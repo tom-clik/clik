@@ -9,7 +9,20 @@
                 "vertical": true
             },
             "mobile": {
-                "accordion": true
+                "accordion": true,
+                "tab-width": "auto"
+            }
+        }
+    },
+    "accordion":
+    {
+        "description": "Mid accordion",
+        "styles":
+        {
+            "tab-open-background": "#5ed4e3",
+            "mid": {
+                "accordion": true,
+                "tab-width": "auto"
             }
         }
     }

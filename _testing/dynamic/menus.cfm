@@ -3,27 +3,16 @@
 debug = true;
 
 menusObj = new clik.scripts.menus(debug);
+testObj = new clik._testing.dynamic.dynamicTests("menus");
 
-settingsData = deserializeJSON( fileRead( ExpandPath( "menus_styles.json" ) ) );
+param name="url.test" default="#testObj.defaultTest()#";
 
-settings = settingsData.menu;
-getSettings("flex_reverse", settings, settingsData);
+testmenu = testObj.testMenu(url.test);
+title = testObj.testTitle(url.test);
 
-void function getSettings(code, settings, settingsData) {
-	var tmpSettings = arguments.settingsData[arguments.code];
-	recurseCheck = {};
+settings = {};
 
-	if ( tmpSettings.keyExists("inherit") ) {
-		if (recurseCheck.keyExists(tmpSettings.inherit)) {
-			throw("Circular inheritance #tmpSettings.inherit# for #arguments.code#");
-		}
-		getSettings(tmpSettings.inherit, arguments.settings, arguments.settingsData);
-		recurseCheck[tmpSettings.inherit] = 1;
-	}
-
-	structAppend(arguments.settings, tmpSettings);
-
-}
+testObj.getSettings(url.test, settings);
 
 menuData = deserializeJSON( fileRead( ExpandPath( "../sampleMenu.json" ) ) );
 html = menusObj.menuHTML(menuData);
@@ -52,7 +41,15 @@ css = menusObj.css( "##menu ul",  settings );
 		<cfoutput>#css#</cfoutput>
 	</style>
 </head>
-<body>
+<cfoutput><body class="bodytest-#url.test#"></cfoutput>
+
+<div class="cs-title">
+<cfoutput>#title#</cfoutput>
+</div>
+
+<div id="testmenu">
+<cfoutput>#testmenu#</cfoutput>
+</div>
 
 <div id="menu">
 	<cfoutput>#html#</cfoutput>
@@ -66,6 +63,9 @@ css = menusObj.css( "##menu ul",  settings );
 <script>
 $(document).ready(function() {
 	$("#menu").menu();
+	$("#testmenu select").on("change", function( ) {
+		this.form.submit()
+	});
 });
 </script>
 </body>

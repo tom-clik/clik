@@ -23,7 +23,7 @@
     "1a":
     {
         "description": "Heading Under",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "htop": 0
@@ -32,7 +32,7 @@
     "2":
     {
         "description": "Image Left",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "image-align": "left",
@@ -45,7 +45,7 @@
     "3":
     {
         "description": "Image right",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "image-align": "right",
@@ -58,7 +58,7 @@
     "2a":
     {
         "description": "Image Left image space",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "image-align": "left",
@@ -68,7 +68,7 @@
     "3a":
     {
         "description": "Image right image space",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "image-align": "right",
@@ -98,7 +98,7 @@
     "4a":
     {
         "description": "Heading Under Image Left  image space",
-        "inherits": "4",
+        "inherit": "4",
         "styles":
         {
             "imagespace": "1"
@@ -107,7 +107,7 @@
     "5":
     {
         "description": "Heading Under Image right",
-        "inherits": "4",
+        "inherit": "4",
         "styles":
         {
             "image-align": "right",
@@ -116,7 +116,7 @@
     "5a":
     {
         "description": "Heading Under Image right  image space",
-        "inherits": "5",
+        "inherit": "5",
         "styles":
         {
             "imagespace": "1"
@@ -125,7 +125,7 @@
     "6":
     {
         "description": "No heading",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "show-title": "0"
@@ -134,7 +134,7 @@
     "7":
     {
         "description": "No heading left",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "show-title": "0",
@@ -144,7 +144,7 @@
     "8":
     {
         "description": "No heading right",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "show-title": "0",
@@ -154,7 +154,7 @@
     "9":
     {
         "description": "Wrap left",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "wrap": "1",
@@ -164,7 +164,7 @@
     "10":
     {
         "description": "Wrap right",
-        "inherits": "1",
+        "inherit": "1",
         "styles":
         {
             "wrap": "1",

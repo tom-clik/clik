@@ -1,44 +1,19 @@
 <cfscript>
-settingsData = deserializeJSON( fileRead( ExpandPath( "grid_styles.json" ) ) );
 
 gridsObj = new clik.scripts.grids(true);
 
-param name="url.test" default="testfill";
+testObj = new clik._testing.dynamic.dynamicTests("grids");
 
-testmenu = "<form action='grids.cfm'><select name='test'>";
-loop collection=settingsData key="item" value="val" {
-	selected = "";
-	if (url.test eq item) {
-		testObj = val;
-		selected = " selected";
-	}
-	testmenu &= "<option#selected# value='#item#'>#val.description#</option>";
-}
-testmenu &= "</select></form>";
+param name="url.test" default="#testObj.defaultTest()#";
 
-Structappend(testObj,{"rows":12},false);
+testmenu = testObj.testMenu(url.test);
+title = testObj.testTitle(url.test);
 
-title = testObj.description;
 settings = {};
 
-getSettings(url.test, settings, settingsData);
+testObj.getSettings(url.test, settings);
 
-void function getSettings(code, settings, settingsData) {
-	var tmpSettings = arguments.settingsData[arguments.code].styles;
-	recurseCheck = {};
-
-	if ( arguments.settingsData[arguments.code].keyExists("inherits") ) {
-		inherit = arguments.settingsData[arguments.code].inherits;
-		if (recurseCheck.keyExists(inherit)) {
-			throw("Circular inheritance #inherit# for #arguments.code#");
-		}
-		getSettings(inherit, arguments.settings, arguments.settingsData);
-		recurseCheck[inherit] = 1;
-	}
-
-	structAppend(arguments.settings, tmpSettings);
-
-}
+test = testObj.settingsData[url.test];
 
 css = gridsObj.css( ".testgrid",  settings );
 </cfscript>
@@ -137,7 +112,7 @@ css = gridsObj.css( ".testgrid",  settings );
 				return html;
 			}
 
-			$list.html(testgrid(<cfoutput>#testObj.rows#</cfoutput>));
+			$list.html(testgrid(<cfoutput>#test.rows#</cfoutput>));
 
 			$("#testmenu select").on("change", function( ) {
 				this.form.submit()

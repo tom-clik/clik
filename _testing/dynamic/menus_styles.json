@@ -43,7 +43,10 @@
 			"mobile": {
 				"menu-orientation": "vertical",
 				"menu-borders": "dividers",
-				"menu-align": "left"
+				"menu-stretch": "1",
+				"menu-align": "left",
+				"menu-submenu-show": "hide",
+				"menu-submenu-position": "relative"
 			}
 		}
 	},

@@ -74,10 +74,6 @@ stylesheets so both implementations remain equivalent.
 All HTML pages under `_testing` load the switcher script. Use the hovering
 **CSS mode** menu or append `?clik-style=classes` to test a page with the class
 stylesheets and property reflection enabled.
-5. If Safari 17 or older must be supported, serve the legacy class-based
-   stylesheets and corresponding classes, or add a JavaScript reflection
-   fallback. There is no CSS-only equivalent that preserves arbitrary
-   variable-driven mode selection in browsers without style queries.
 
 ## Bugs found during the audit
 

@@ -45,7 +45,7 @@ It works by hiding the image, getting the height of the container, fixing that h
 		border:1px solid gray;
 		padding:4px;
 		margin:20px 0;
-		--heightfix:1;
+		--height-fix:1;
 		--object-position-y:80%;
 		--object-position-x:60%;
 		/* this will work */
@@ -63,9 +63,9 @@ It works by hiding the image, getting the height of the container, fixing that h
 	@media (max-width:800px) {
 		#test {
 			--object-fit: contain;
-			--object-position-y:middle;
+			--object-position-y:center;
 			--object-position-x:center;
-			--heightfix:0;
+			--height-fix:0;
 			max-height: 300px;
 		}
 
@@ -88,7 +88,7 @@ It works by hiding the image, getting the height of the container, fixing that h
 	
 	@media (min-width:1200px) {
 		#test {
-			--heightfix:0;
+			--height-fix:0;
 		}
 	}
 	</style>

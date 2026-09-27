@@ -40,9 +40,9 @@ The easiest solution is to apply a fixed height to the content section. This wil
 
 The problem is we don't always know the height and usually want it to be whatever the height of the container is according to the page size.
 
-### "heightfix" property
+### `--height-fix` property
 
-We define a property "heightfix" on the image. This will enable the following:
+We define a `--height-fix` property on the `.cs-image` element. This will enable the following:
 
 1. Set display to none
 2. Work out size of parent
@@ -67,4 +67,4 @@ and then explicitly set the visbility in the JS.
 
 ### Implementation
 
-See `heightFix.js`. This is applied to all image cs in `clik_onready`. If the `--heightfix` property is true, it applies the logic above. It does the calcs and applies a class to the cs to apply height:100%, width:100% to the frame.
+See `heightFix.js`. This is applied to all image components in `clik_onready`. If the `--height-fix` property is true, it applies the logic above. It does the calculations and applies a class to the component to apply `height: 100%` and `width: 100%` to the frame. The old `--heightfix` spelling remains a JavaScript-only compatibility alias.

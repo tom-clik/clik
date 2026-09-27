@@ -15,7 +15,7 @@ testObj.getSettings(url.test, settings);
 
 test = testObj.settingsData[url.test];
 
-css = gridsObj.css( ".testgrid",  settings );
+css = gridsObj.css( "##testgrid",  settings );
 </cfscript>
 
 <!DOCTYPE html>
@@ -80,7 +80,7 @@ css = gridsObj.css( ".testgrid",  settings );
 <cfoutput>#testmenu#</cfoutput>
 </div>
 
-<div class="grid testgrid">
+<div id="testgrid" class="grid">
 	<div class="item">
 		<div class="imageWrap">
 			<figure>
@@ -103,13 +103,13 @@ css = gridsObj.css( ".testgrid",  settings );
 			lorem = ["Lorem","ipsum","dolor","sit","amet,","consectetur","adipisicing","elit,","sed","do","eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua."];
 
 			function testgrid(rows) {
-				html = "";
+				html = "<div class='gridInner'>";
 				text = "";
 				for (let i = 1 ; i <= rows; i++) {
 					text += lorem[i] + " ";
 					html += "<g>" + text + "</g>";
 				}
-				return html;
+				return "</div>" + html;
 			}
 
 			$list.html(testgrid(<cfoutput>#test.rows#</cfoutput>));

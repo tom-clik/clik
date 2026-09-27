@@ -62,7 +62,7 @@ html = formsObj.html(content);
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("##testform").clikForm({
+		$("#testform").clikForm({
 			debug:false,
 			// ApiHelper submission options:
 			// submit_mode: "form" | "json" | "jsonField" | "formPlusJsonField"

@@ -5,8 +5,8 @@ component name="grids" extends="baseScript" {
 		super.init(arguments.debug);
 
 		this.panels = [
-			{"name":"Main settings","panel":"main"},
-			{"name":"Items","panel":"items","selector":" > *", "states"=[{"state"="hover", "selector"="> *:hover","name":"Hover","description":"Hover state styling"}]}
+			{"name":"Main settings","panel":"main", "selector":" .gridInner"},
+			{"name":"Items","panel":"items","selector":" .gridInner > *", "states"=[{"state"="hover", "selector"="> *:hover","name":"Hover","description":"Hover state styling"}]}
 		];
 		this.styleDefs = [
 			"grid-mode":{"name"="Grid mode","type"="list","default"="none","options":[

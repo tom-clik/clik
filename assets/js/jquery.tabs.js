@@ -48,7 +48,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 		var defaults = {
 
 			vertical: false, // tab headings in vertical list
-			accordian: false, // use accordion mode (vertical ignored)
+			accordion: false, // use accordion mode (vertical ignored)
 			resize: "resize", // window event to trigger resize. use e.g. throttledresize
 			fixedheight:true,// height is always maximum size
 			fixheight:null,// deprecated alias for fixedheight
@@ -60,7 +60,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 		var settingTypes = {
 			vertical: "boolean",
-			accordian: "boolean",
+			accordion: "boolean",
 			fixedheight: "boolean",
 			fixheight: "boolean",
 			fitheight: "boolean",
@@ -110,7 +110,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 					console.log("opening " + $tab.attr("id"));
 					
-					if (plugin.settings.accordian){
+					if (plugin.settings.accordion){
 						console.log(plugin.settings.menuAnimationTime);
 						let open = $tab.hasClass("state_open");
 						if (open && ! plugin.settings.allowClosed) {
@@ -179,7 +179,7 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 
 		var setHeight = function($tab) {
     		console.log("Setting height for " + $tab.attr("id"));
-    		if (plugin.settings.accordian) return;
+    		if (plugin.settings.accordion) return;
     		
     		let tabs_height = 0;
     		
@@ -264,12 +264,12 @@ Works by positioning the tab content absolutely. On seleting a tab, has to work 
 				$element.removeClass("vertical");
 			}
 
-			if (plugin.settings.accordian) {
-				$element.addClass("accordian");
+			if (plugin.settings.accordion) {
+				$element.addClass("accordion");
 				clearDynamicHeights();
 			}
 			else {
-				$element.removeClass("accordian");
+				$element.removeClass("accordion");
 			}
 
 		}

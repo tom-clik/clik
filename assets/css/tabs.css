@@ -13,10 +13,10 @@ Those settings control layout/behavior, not only appearance.
 	- `false` (default): horizontal tab headers; selected panel is positioned below.
 	- `true`: adds `.vertical` class and places headers in a left column.
 
-- `--accordian` (`true`/`false`, boolean)
+- `--accordion` (`true`/`false`, boolean)
 
 	- `false` (default): classic tabs (one open tab, click already-open tab = no-op).
-	- `true`: adds `.accordian` class and animates open/close panel height.
+	- `true`: adds `.accordion` class and animates open/close panel height.
 
 - `--fixedheight` (`true`/`false`, boolean)
 
@@ -48,60 +48,49 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 
 */
 
-:root {
-	--dark-color: #ccc;
-	--lightcolor:#e4e4e4;
-	--border-color:#ffffff;
-}
-
 .cs-tabs {
-	container-name: tabs;
 	position: relative;
 	display: flex;
 	flex-wrap: nowrap;
 	flex-direction: row;
-	grid-gap:0; /* Applying a grid gap seems to work in some browsers */
+	grid-gap:0;
 	--vertical: false;
-	--accordian: false;
+	--accordion: false;
 	--fixedheight: true;
 	--fitheight: false;
 	--menuAnimationTime: 300;
 	--allowClosed: false;
 	--tab-padding:8px 14px;
-	--tab-font-size:inherit;
-	--tab-font-weight:inherit;
-	--tab-font:inherit;
-	--tab-background:var(--lightcolor);
+	--tab-open-background:#e4e4e4;
+	--tab-closed-background:#ccc;
 	--tab-border-width:1px;
-	--tab-border-color:var(--border-color);
+	--tab-border-color:var(--border-color, #9c9c9c);
 	--tab-border-radius: 8px 6px;
 	--tab-width:160px;
 	--tab-first-inset:6px;
 }
 
 .cs-tabs .tab:not(.state_open) .title {
-	--tab-background:var(--dark-color);
+	background:var(--tab-closed-background);
 }
 .cs-tabs .tab .title:hover {
-	--tab-background:var(--lightcolor);
+	background:var(--tab-open-background);
 }
 
-/* NB These classes are applied by the javaScript. Always uses the css settings */
+/* NB These classes are applied by the javaScript. For tabs, we don't use an innerContainer
+and as we need javaScript any way, we add these.
+*/
 .cs-tabs.vertical {
 	flex-direction: column;
-	grid-gap:0; /* Applying a grid gap seems to work in some browsers */
-	/*align-items: center;*/
+	grid-gap:0;
 }
 
-.cs-tabs.accordian {
+.cs-tabs.accordion {
 	display: block;
 }
 
 .cs-tabs .title {
 	cursor:pointer;
-	font-size: var(--tab-font-size);
-	font-weight: var(--tab-font-weight);
-	font-family: var(--tab-font);
 	padding:var(--tab-padding);
 	border-style:solid;
 	border-width:var(--tab-border-width);
@@ -111,36 +100,34 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	background: var(--tab-background);
 }
 
-@container tabs (style(--vertical: false) and style(--accordian: false) ) {
-
-	.title {
+.cs-tabs:not(.vertical):not(.accordion)	.title {
 		margin-left:-1px;
 		margin-bottom:-1px;
 		border-top-left-radius: var(--tab-border-radius);
 		border-top-right-radius: var(--tab-border-radius);
-	}
-
-	.tab:first-of-type .title {
-		margin-left:var(--tab-first-inset);
-	} 
-
 }
 
-@container tabs ( style(--vertical: true) or style(--accordian: true) ) {
+.cs-tabs:not(.vertical):not(.accordion)	.tab:first-of-type .title {
+		margin-left:var(--tab-first-inset);
+}
 
-	.title {
-		border-top-width: 0 !important;
-	}
-	
-	.tab:first-of-type .title {
-		border-top-width: var(--tab-border-width) !important;
-	}
+.cs-tabs:not(.vertical):not(.accordion) .item {
+		height:0;
+		position:absolute;
+		left:0;
+}
 
+.cs-tabs.vertical .title, .cs-tabs.accordion .title {
+	border-top-width: 0 !important;
+}
+
+.cs-tabs.vertical .tab:first-of-type .title, .cs-tabs.accordion .tab:first-of-type .title {
+	border-top-width: var(--tab-border-width) !important;
 }
 
 .cs-tabs .state_open .title { 
 	border-bottom-color: transparent;
-	background: var(--tab-background);
+	background: var(--tab-open-background);
 } 
 
 .cs-tabs .item {
@@ -148,12 +135,9 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	border-style:solid;
 	border-width:var(--tab-border-width);
 	border-color:var(--tab-border-color);
-	background: var(--tab-background);
+	background: var(--tab-open-background);
 	overflow: hidden;
 	padding: var(--tab-padding);
-	font-size: var(--tab-font-size);
-	font-weight: var(--tab-font-weight);
-	font-family: var(--tab-font);
 }
 
 .cs-tabs .state_open .item {
@@ -162,44 +146,28 @@ These are not parsed by JS, but are used by CSS rules to theme/size tabs:
 	display: block;
 }
 
-@container tabs (style(--vertical: false) and style(--accordian: false) ) {
-	.item {
-		height:0;
-		position:absolute;
-		left:0;
-	}
+.cs-tabs.vertical .title {
+	width:var(--tab-width);
+	border-right-width: 0 !important;
+}
+.cs-tabs.vertical	.item {
+	left:var(--tab-width);
+	position:absolute;
+	top:0;
 }
 
-@container tabs ( style(--vertical: true) ) {
-
-	.title {
-		width:var(--tab-width);
-		border-right-width: 0 !important;
-	}
-	.item {
-		left:var(--tab-width);
-		position:absolute;
-		top:0;
-	}
-
+.cs-tabs.accordion	.item {
+	position:static;
+	height: 0;
+	display: none;
 }
 
-@container tabs ( style(--accordian: true) ) {
+.cs-tabs.accordion	.state_open .item {
+	height: auto;
+	display: block;
+}
 
-	.item {
-		position:static;
-		height: 0;
-		display: none;
-	}
-
-	.state_open .item {
-		height: auto;
-		display: block;
-	}
-
-	.title {
-		margin-left:0px;
-	}
-
+.cs-tabs.accordion	.title {
+	margin-left:0px;
 }
 

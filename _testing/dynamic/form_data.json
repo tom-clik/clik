@@ -1,0 +1,131 @@
+[
+    {
+        "name": "field1",
+        "label": "Auto grow text",
+        "type": "textarea",
+        "required": true
+    },
+    {
+        "name": "field2",
+        "label": "Email",
+        "type": "email",
+        "required": true
+    },
+    {
+        "name": "field3",
+        "label": "Select 2 or 4",
+        "type": "list",
+        "multiple": true,
+        "required": true,
+        "min": 2,
+        "max": "3",
+        "options":
+        [
+            {
+                "value": 1,
+                "display": "Test"
+            },
+            {
+                "value": 1,
+                "display": "Test2"
+            },
+            {
+                "value": 1,
+                "display": "Test4"
+            },
+            {
+                "value": 1,
+                "display": "Test5"
+            }
+        ]
+    },
+    {
+        "name": "field4",
+        "label": "Checkboxes",
+        "type": "checkbox",
+        "required": true,
+        "options":
+        [
+            {
+                "value": 1,
+                "display": "Test"
+            },
+            {
+                "value": 1,
+                "display": "Test2"
+            },
+            {
+                "value": 1,
+                "display": "Test4"
+            },
+            {
+                "value": 1,
+                "display": "Test5"
+            }
+        ]
+    },
+    {
+        "name": "field5",
+        "label": "Radio",
+        "type": "radio",
+        "required": true,
+        "options":
+        [
+            {
+                "value": 1,
+                "display": "Test"
+            },
+            {
+                "value": 1,
+                "display": "Test2"
+            },
+            {
+                "value": 1,
+                "display": "Test4"
+            },
+            {
+                "value": 1,
+                "display": "Test5"
+            }
+        ]
+    },
+    {
+        "name": "field6",
+        "label": "Select or 1",
+        "type": "list",
+        "multiple": true,
+        "required": false,
+        "options":
+        [
+            {
+                "value": 1,
+                "display": "Test"
+            },
+            {
+                "value": 1,
+                "display": "Test2"
+            },
+            {
+                "value": 1,
+                "display": "Test4"
+            },
+            {
+                "value": 1,
+                "display": "Test5"
+            }
+        ]
+    },
+    {
+        "name": "field4",
+        "label": "Checkboxes",
+        "type": "checkbox",
+        "required": true,
+        "options":
+        [
+            {
+                "value": 1,
+                "display": "Test"
+            }
+        ]
+    }
+]

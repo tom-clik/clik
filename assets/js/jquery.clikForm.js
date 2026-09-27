@@ -74,8 +74,8 @@ $.validator.addMethod("code", function(value, element) {
 		if (!$field.length) {
 			return;
 		}
-		$field.find("> .error.clikFormError").remove();
-		$field.closest(".fieldrow").removeClass("error").addClass("valid");
+		$field.find("> .error").remove();
+		$field.removeClass("error").addClass("valid");
 	}
 
 	function addFieldError($form, fieldName, message) {
@@ -83,9 +83,8 @@ $.validator.addMethod("code", function(value, element) {
 		if (!$field.length) {
 			return;
 		}
-
-		$field.find("> .error.clikFormError").remove();
-		$field.closest(".fieldrow").removeClass("valid").addClass("error");
+		$field.find("> .error").remove();
+		$field.removeClass("valid").addClass("error");
 		$field.append("<div class='error clikFormError'>" + message + "</div>");
 	}
 
@@ -121,10 +120,8 @@ $.validator.addMethod("code", function(value, element) {
 	function showErrors($form, validator, errorMap, debug) {
 		errorMap = errorMap || {};
 
-		if (debug) {
-			console.log("clikForm showErrors", errorMap);
-		}
-
+		console.log("clikForm showErrors", errorMap);
+		
 		var fieldNames = {};
 		$form.find("input[name], select[name], textarea[name]").each(function() {
 			var $input = $(this);

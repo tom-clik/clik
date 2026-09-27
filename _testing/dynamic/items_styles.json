@@ -110,7 +110,7 @@
         "inherit": "4",
         "styles":
         {
-            "image-align": "right",
+            "image-align": "right"
         }
     },
     "5a":

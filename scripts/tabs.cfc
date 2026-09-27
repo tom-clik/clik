@@ -1,4 +1,4 @@
-component name="tabs" extends="basescript" {
+component name="tabs" extends="baseScript" {
 
 	public function init(boolean debug=0) {
 		
@@ -20,6 +20,7 @@ component name="tabs" extends="basescript" {
 			"tab-border-color":{"title":"Border color", "type":"color","default":"##9c9c9c","setting":1},
 			"tab-border-radius":{"title":"Tab corner radius", "type":"border-radius","default":"8px 6px","setting":1},
 			"tab-padding":{"title":"Tab padding", "type":"padding","default":"8px 14px","setting":1},
+			"tab-background":{"title":"Tab background", "type":"color","default":"transparent","setting":1},
 			"tab-open-background":{"title":"Open background color", "type":"color","default":"##e4e4e4","setting":1},
 			"tab-closed-background":{"title":"Closed background", "type":"color","default":"##cccccc","setting":1},
 			"tab-width":{"title":"Width of tabs in vertical mode", "type":"dimension","default":"160px","setting":1},

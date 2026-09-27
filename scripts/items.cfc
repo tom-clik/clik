@@ -1,4 +1,4 @@
-component name="items" extends="basescript" {
+component name="items" extends="baseScript" {
 
 	public function init(boolean debug=0) {
 		
@@ -7,8 +7,8 @@ component name="items" extends="basescript" {
 		this.panels = [
 			{"name":"Main settings","panel":"main", "states"=[{"state"="hover", "selector"=":hover","name":"Hover","description":"Hover state styling"}]},
 			{"name":"Title","panel":"title","selector":" .title", "states"=[{"state"="hover", "selector"=":hover .title","name":"Hover","description":"Hover state styling"}]},
-			{"name":"Image","panel":"image","selector":" figure", "states"=[{"state"="hover", "selector"=":hover figure","name":"Hover","description":"The hover state for menu items"}]},
-			{"name":"Text","panel":"text","selector":" .textWrap", "states"=[{"state"="hover", "selector"=":hover text","name":"Hover","description":"The hover state for menu items"}]},
+			{"name":"Image","panel":"image","selector":" .imageWrap", "states"=[{"state"="hover", "selector"=":hover .imageWrap","name":"Hover","description":"The hover state for menu items"}]},
+			{"name":"Text","panel":"text","selector":" .textWrap", "states"=[{"state"="hover", "selector"=":hover .textWrap","name":"Hover","description":"The hover state for menu items"}]},
 			{"name":"No image","panel":"noimage","selector":".noimage","system":1}
 		];
 		this.styleDefs = [
@@ -82,7 +82,12 @@ component name="items" extends="basescript" {
 					outputs.main["grid-template-areas"] =  """imageWrap  textWrap""";
 				}
 				else {
-					if (style["htop"] ) {
+					if (style["texttop"]) {
+						outputs.main["grid-template-areas"] = style["htop"]
+							? """title textWrap"" ""imageWrap textWrap"""
+							: """imageWrap textWrap"" ""title textWrap""";
+					}
+					else if (style["htop"] ) {
 						outputs.main["grid-template-areas"] =  """title title"" ""imageWrap  textWrap""";
 					}
 					else {
@@ -97,7 +102,12 @@ component name="items" extends="basescript" {
 				}
 				else {
 					outputs.main["grid-template-rows"] = "1fr min-content ";
-					if (style["htop"] ) {
+					if (style["texttop"]) {
+						outputs.main["grid-template-areas"] = style["htop"]
+							? """textWrap title"" ""textWrap imageWrap"""
+							: """textWrap imageWrap"" ""textWrap title""";
+					}
+					else if (style["htop"] ) {
 						outputs.main["grid-template-areas"] =  """title title"" ""textWrap imageWrap  """;
 					}
 					else {
@@ -125,6 +135,8 @@ component name="items" extends="basescript" {
 			if (! style["imagespace"]) {
 				outputs.noimage["--image-wrap-display"] = "none";
 				outputs.noimage["grid-template-columns"] = "1fr";
+				outputs.noimage["grid-template-rows"] = "min-content auto";
+				outputs.noimage["grid-template-areas"] = """title"" ""textWrap""";
 			}
 		}
 
@@ -144,6 +156,11 @@ component name="items" extends="basescript" {
 			if ( style["image-align"] eq "right" ) {
 				outputs.image["float"] = "right";
 				outputs.image["margin-left"] = "var(--item-gridgap)";
+			}
+
+			if (!style["htop"]) {
+				otherstyles.append({"> .title":"display: none;"});
+				otherstyles.append({".wraptitle":"display: block;"});
 			}
 
 		}

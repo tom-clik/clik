@@ -13,6 +13,7 @@ settings = {};
 testObj.getSettings(url.test, settings);
 
 content.data = deserializeJSON(FileRead(ExpandPath("form_data.json")));
+content.id = "test";
 
 css = formsObj.css( "##test",  settings );
 html = formsObj.html(content);
@@ -25,10 +26,9 @@ html = formsObj.html(content);
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../assets/css/reset.css">
 	<link rel="stylesheet" href="../../assets/css/fonts/fonts_local.css">
-	<link rel="stylesheet" href="../../assets/css/forms.css">
-	<link rel="stylesheet" href="../../assets/css/grids.css">
+	<link rel="stylesheet" href="../../assets/css/forms_classes.css">
+	<link rel="stylesheet" href="../../assets/css/grids_classes.css">
 	<link rel="stylesheet" href="../../assets/css/title.css">
-	<link rel="stylesheet" href="../../assets/css/forms.css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	<meta charset="UTF-8">
 	<style>
@@ -45,20 +45,20 @@ html = formsObj.html(content);
 <cfoutput>#testmenu#</cfoutput>
 </div>
 
-<div class="cs-form form" id="test">
+<div class="cs-form form">
 <cfoutput>
 	#html#
 </cfoutput>
 </div>
 
-<script src="../assets/js/jquery-3.4.1.js"></script>
-<script src="../assets/js/select2.min.js"></script>
-<script src="../assets/js/jquery.elastic.1.6.11.js"></script>
-<script src="../assets/js/jquery.validate.js"></script>
-<script src="../assets/js/jquery.serializeData.js"></script>
-<script src="../assets/js/apiHelper.js"></script>
-<script src="../assets/js/jquery.clikForm.js"></script>
-<script src="../assets/js/toast.js"></script> 
+<script src="../../assets/js/jquery-3.4.1.js"></script>
+<script src="../../assets/js/select2.min.js"></script>
+<script src="../../assets/js/jquery.elastic.1.6.11.js"></script>
+<script src="../../assets/js/jquery.validate.js"></script>
+<script src="../../assets/js/jquery.serializeData.js"></script>
+<script src="../../assets/js/apiHelper.js"></script>
+<script src="../../assets/js/jquery.clikForm.js"></script>
+<script src="../../assets/js/toast.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -125,4 +125,3 @@ html = formsObj.html(content);
 
 </body>
 </html>
-

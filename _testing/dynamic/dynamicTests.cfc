@@ -52,22 +52,26 @@ component {
 	/* Return complete struct of settings for a test, inheriting from others
 		Note use of settings as argument passed as reference.
 	 */
-	void function getSettings(code, settings) localmode=true {
-		tmpSettings = this.settingsData[arguments.code].styles;
-		recurseCheck = {};
+		void function getSettings(code, settings) localmode=true {
+			appendSettings(arguments.code, arguments.settings, {});
 
-		if ( this.settingsData[arguments.code].keyExists("inherit") ) {
-			inherit = this.settingsData[arguments.code].inherit;
-			if (recurseCheck.keyExists(inherit)) {
-				throw("Circular inheritance #inherit# for #arguments.code#");
-			}
-			getSettings(inherit, arguments.settings, this.settingsData);
-			recurseCheck[inherit] = 1;
 		}
 
-		deepStructAppend(arguments.settings, tmpSettings);
+		private void function appendSettings(required string code, required struct settings, required struct visited) localmode=true {
+			if (!this.settingsData.keyExists(arguments.code)) {
+				throw("Unknown inherited test '#arguments.code#'");
+			}
+			if (arguments.visited.keyExists(arguments.code)) {
+				throw("Circular inheritance involving '#arguments.code#'");
+			}
+			arguments.visited[arguments.code] = true;
 
-	}
+			if (this.settingsData[arguments.code].keyExists("inherit")) {
+				appendSettings(this.settingsData[arguments.code].inherit, arguments.settings, arguments.visited);
+			}
+			deepStructAppend(arguments.settings, this.settingsData[arguments.code].styles);
+			arguments.visited.delete(arguments.code);
+		}
 
 
 	/**

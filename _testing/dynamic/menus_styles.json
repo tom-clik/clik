@@ -93,7 +93,6 @@
 	},
 
 	"border": {
-		"inherit": "menu",
 		"description": "",
 		"styles": {
 			"menu-borders": "normal",
@@ -148,7 +147,6 @@
 	},
 
 	"icons": {
-		"inherit": "menu",
 		"description": "",
 		"styles": {
 			"menu-icon-display": "block"
@@ -168,7 +166,6 @@
 	},
 
 	"onlyicons": {
-		"inherit": "menu",
 		"description": "",
 		"styles": {
 			"menu-stretch": "0",

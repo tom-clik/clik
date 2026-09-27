@@ -1,4 +1,4 @@
-component name="menus" extends="basescript" {
+component name="menus" extends="baseScript" {
 
 	variables.type = "menu";
 	variables.title = "Menu";
@@ -209,9 +209,6 @@ component name="menus" extends="basescript" {
 			if ( arguments.keyExists("media")) args.media = arguments.media;
 			ret &= super.css(argumentCollection = args);
 		}
-		else {
-			throw("No sub menu");
-		}
 		return ret;
 	}
 
@@ -257,9 +254,6 @@ component name="menus" extends="basescript" {
 				outputs.main["grid-template-columns"] = "1fr";
 				outputs.main["--menu-text-align"] = "left";
 				outputs.main["--menu-item-justify"] = "start";
-		}
-		else {
-			outputs.main["--menu-orientationXXX"] = "**" & style["menu-orientation"] & "**";
 		}
 		
 		if ( style["menu-orientation"] eq "vertical" and style["menu-align"] eq "right" ) {

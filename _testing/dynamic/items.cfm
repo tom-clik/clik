@@ -22,7 +22,7 @@ css = itemsObj.css( ".item",  settings );
 	<link rel="stylesheet" href="../../assets/css/reset.css">
 	<link rel="stylesheet" href="../../assets/css/fonts/fonts_local.css">
 	<link rel="stylesheet" href="../../assets/css/forms.css">
-	<link rel="stylesheet" href="../../assets/css/grids.css">
+	<link rel="stylesheet" href="../../assets/css/grids_classes.css">
 	<link rel="stylesheet" href="../../assets/css/title.css">
 	<link rel="stylesheet" href="../../assets/css/items_classes.css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">

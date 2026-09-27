@@ -1,4 +1,4 @@
-component name="items" extends="basescript" {
+component name="grids" extends="baseScript" {
 
 	public function init(boolean debug=0) {
 		
@@ -25,7 +25,7 @@ component name="items" extends="basescript" {
 			"grid-width":{"name":"Item width","type"="dimension","default"="180px","description":"Minimum width of columns for an auto grid or specific width for a fixed width grid.",
 				"dependson":"grid-mode","dependvalue":["fit","fill","fixedwidth"],"setting":true},
 			"grid-max-height":{"name":"Max item height","type"="dimension","default"="auto","description":"Maximum height of items in grid","setting":1},
-			"grid-columns":{"name"="Columns","type"="integer","default"="2","description"="Number of columns for a fixed column grid":"grid-mode","dependvalue":"fixed","setting":true},
+			"grid-columns":{"name"="Columns","type"="integer","default"="2","description"="Number of columns for a fixed column grid","dependson":"grid-mode","dependvalue":"fixed","setting":true},
 			"grid-gap":{"type"="dimension","name":"Gap","default":0,"description":"Gap between grid items","setting":true},
 			"grid-template-columns":{"name":"Template columns","type"="text","description":"Column sizes when using fixed columns or named template areas","dependson":"grid-mode","dependvalue":["named","rows"],"default":"auto"},
 			"grid-template-rows":{"name":"Template rows","description":"Row sizes when using set rows or named items mode","type"="dimensionlist","dependson":"grid-mode","dependvalue":["named","rows"],"default":"auto"},
@@ -115,7 +115,7 @@ component name="items" extends="basescript" {
 		}
 
 		if ( style["grid-mode"] neq "named" ) {
-			outputs.items["grid-area"] = "auto !important";
+			outputs.items["grid-area"] = "unset !important";
 		}
 
 		return outputStyles(arguments.selector, outputs) & this.newLineChar;

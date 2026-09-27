@@ -2,7 +2,7 @@
  * 
  */
 
-component extends="basescript" {
+component extends="baseScript" {
 	
 	variables.type = "form";
 	variables.title = "form";
@@ -18,7 +18,7 @@ component extends="basescript" {
 
 		this.panels = [
 			{"panel":"main", "name":"Main"},
-			{"panel":"form", "name":"Form", "selector": " form"},
+			{"panel":"form", "name":"Form", "selector": ""},
 			{"panel":"buttons", "name":"Form", "selector": " .buttons"}
 		];
 
@@ -78,8 +78,9 @@ component extends="basescript" {
 			throw("data not defined for cs form");
 		}
 		action = arguments.content.action ? : "";
+		idAttribute = arguments.content.keyExists("id") ? " id='#encodeForHTMLAttribute(arguments.content.id)#'" : "";
 		ret = [];
-		ret.append("<form action='#action#'>");
+		ret.append("<form#idAttribute# action='#encodeForHTMLAttribute(action)#'>");
 		loop collection=arguments.content.data key="q" value="val" {
 			
 			ret.append("<div class='fieldrow'>");
@@ -95,16 +96,16 @@ component extends="basescript" {
 			ret.append("</div>");
 		}
 
-		if (! content.keyExists("buttons")) {
+		if (! arguments.content.keyExists("buttons")) {
 			buttons = [{name="submit",value="Submit"}];
 		}
 		else {
-			buttons = content.buttons;
+			buttons = arguments.content.buttons;
 		}
 
 
 		ret.append("<div class='fieldrow'>");
-		ret.append("	<div class='fieldLabel'></fieldLabel>");
+		ret.append("	<div class='fieldLabel'></div>");
 		ret.append("	<div class='field'>");
 		for (button in buttons) {
 			type = button.type ? : "submit";
@@ -149,11 +150,11 @@ component extends="basescript" {
 
 	private string function dspField(required struct fieldDef, required string name) localmode=true {
 		
-		options = [
+		options = arguments.fieldDef.options ? : [
 			{value="1", display="Option 1"},
 			{value="2", display="Option 2"},
 			{value="3", display="Option 3"}
-		]
+		];
 		switch( arguments.fieldDef.type ) {
 				case "textarea":
 					return "<textarea name='#arguments.name#'></textarea>";
@@ -189,6 +190,7 @@ component extends="basescript" {
 
 		loop collection=arguments.content.data key="q" value="val" {
 			if ( val.required ) {
+				data.rules["#q#"] = {};
 				data.rules["#q#"]["required"] = true;
 			}
 			if ( val.keyExists("message" ) ){

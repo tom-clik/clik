@@ -1,123 +1,80 @@
-component name="images" {
+component name="images" extends="baseScript" {
 
 	public function init(boolean debug=0) {
-		this.newLineChar = arguments.debug?  newLine(): "";
-		this.tabChar = arguments.debug?  chr(9): "";
+		super.init(arguments.debug);
+
+		this.panels = [
+			{"name":"Main settings","panel":"main"},
+			{"name":"Frame","panel":"frame","selector":" .frame"},
+			{"name":"Image","panel":"image","selector":" .image"},
+			{"name":"Caption","panel":"caption","selector":" .caption", "states"=[
+				{"state":"hover","selector":" .frame:hover .caption","name":"Hover","description":"Caption hover styling"}
+			]}
+		];
+
+		this.styleDefs = [
+			"height-fix":{"title":"Fix height","type":"boolean","default":"0"},
+			"object-fit":{"title":"Image fit","type":"list","default":"scale-down","setting":true,
+				"options":[{"value":"scale-down"},{"value":"cover"},{"value":"contain"},{"value":"fill"}]},
+			"object-position-x":{"title":"Horizontal image position","type":"halign","default":"center","setting":true},
+			"object-position-y":{"title":"Vertical image position","type":"valign","default":"center","setting":true},
+			"image-max-height":{"title":"Maximum image height","type":"dimension","default":"auto","setting":true},
+			"image-max-width":{"title":"Maximum image width","type":"dimension","default":"100%","setting":true},
+			"align-frame":{"title":"Frame alignment","type":"halign","default":"center","setting":true},
+			"justify-frame":{"title":"Frame justification","type":"valign","default":"start","setting":true},
+			"align-caption":{"title":"Caption alignment","type":"halign","default":"center","setting":true},
+			"justify-caption":{"title":"Caption justification","type":"valign","default":"start","setting":true},
+			"image-grow":{"title":"Grow image","type":"integer","default":"0","setting":true},
+			"frame-flex-direction":{"title":"Frame direction","type":"list","default":"column","setting":true,
+				"options":[{"value":"column"},{"value":"column-reverse"}]},
+			"transition-time":{"title":"Caption transition time","type":"time","default":"1s","setting":true},
+			"caption-position":{"title":"Caption position","type":"list","default":"under",
+				"options":[{"value":"top"},{"value":"bottom"},{"value":"under"},{"value":"above"},{"value":"overlay"}]}
+		];
+
+		updateDefaults();
 		return this;
 	}
 
-	private string function cssBlock(required string selector, required array rules) localmode=true {
-		return arguments.selector & " {" & this.newLineChar & this.tabChar & arguments.rules.toList(this.newLineChar & this.tabChar) & this.newLineChar & "}";
-	}
-
-	public string function css(required string selector, required struct settings) localmode=true {
+	public string function _css(required string selector, required struct settings) localmode=true {
 		style = duplicate(arguments.settings);
-		structAppend(style, {
-			"image-max-height" = "auto",
-			"image-max-width" = "100%",
-			"align-frame" = "center",
-			"justify-frame" = "start",
-			"align-caption" = "center",
-			"justify-caption" = "start",
-			"image-grow" = "0",
-			"frame-flex-direction" = "column",
-			"transition-time" = "1s",
-			"object-fit" = "scale-down",
-			"object-position-x" = "center",
-			"object-position-y" = "middle",
-			"heightfix" = "0",
-			"caption-position" = "under"
-		}, false);
-
-		blocks = [];
+		structAppend(style, this.defaultStyles, false);
+		outputs = getPanelsStruct();
+		otherstyles = [];
 		captionPosition = lCase(trim(style["caption-position"]));
 		justifyFrame = lCase(trim(style["justify-frame"]));
 
-		blocks.append(cssBlock(arguments.selector & " .frame", [
-			"position: relative;",
-			"display: flex;",
-			"flex-direction: #style['frame-flex-direction']#;",
-			"align-items: #style['align-frame']#;",
-			"justify-content: #style['justify-frame']#;"
-		]));
-
-		blocks.append(cssBlock(arguments.selector & " .frame img", [
-			"display: block;",
-			"width: 100%;",
-			"height: 100%;",
-			"object-fit: #style['object-fit']#;"
-		]));
-
-		blocks.append(cssBlock(arguments.selector & " .image", [
-			"height: #style['image-max-height']#;",
-			"width: #style['image-max-width']#;",
-			"flex-grow: #style['image-grow']#;",
-			"overflow: hidden;",
-			"display: flex;",
-			"flex-direction: column;",
-			"justify-content: #style['justify-frame']#;",
-			"align-items: #style['align-frame']#;"
-		]));
-
-		blocks.append(cssBlock(arguments.selector & " .caption", [
-			"display: flex;",
-			"flex-direction: column;",
-			"align-items: #style['align-caption']#;",
-			"justify-content: #style['justify-caption']#;",
-			"transition: opacity #style['transition-time']#;"
-		]));
-		blocks.append(cssBlock(arguments.selector & " .frame:hover .caption", ["opacity: 1 !important;"]));
-
-		if (captionPosition == "top" || captionPosition == "above") {
-			blocks.append(cssBlock(arguments.selector & " .frame", ["flex-direction: column-reverse;"]));
+		if (style["height-fix"]) {
+			otherstyles.append({"img":"display: none;"});
 		}
 
-		if (listFindNoCase("top,bottom", captionPosition) && justifyFrame == "end") {
-			if (captionPosition == "top") {
-				blocks.append(cssBlock(arguments.selector & " .image", ["margin-top: auto;", "margin-bottom: 0;"]));
-			} else {
-				blocks.append(cssBlock(arguments.selector & " .image", ["margin-top: 0;", "margin-bottom: auto;"]));
-			}
+		if (captionPosition eq "top" or captionPosition eq "above") {
+			outputs.frame["--frame-flex-direction"] = "column-reverse";
 		}
 
-		if (!listFindNoCase("under,above", captionPosition) && justifyFrame != "center") {
-			blocks.append(cssBlock(arguments.selector & " .frame", ["--image-grow: 1;"]));
+		if (listFindNoCase("top,bottom", captionPosition) and justifyFrame eq "end") {
+			outputs.image["margin-top"] = captionPosition eq "top" ? "auto" : "0";
+			outputs.image["margin-bottom"] = captionPosition eq "top" ? "0" : "auto";
 		}
 
+		if (!listFindNoCase("under,above", captionPosition) and justifyFrame neq "center") {
+			outputs.frame["--image-grow"] = "1";
+		}
 		if (listFindNoCase("under,above", captionPosition)) {
-			blocks.append(cssBlock(arguments.selector & " .frame", ["--image-grow: 0;"]));
-			blocks.append(cssBlock(arguments.selector & " .image", ["margin: 0;"]));
+			outputs.frame["--image-grow"] = "0";
+			outputs.image["margin"] = "0";
+		}
+		if (captionPosition eq "overlay") {
+			outputs.frame["--justify-frame"] = "start";
+			outputs.frame["--justify-caption"] = "center";
+			outputs.caption["position"] = "absolute";
+			outputs.caption["top"] = "0";
+			outputs.caption["left"] = "0";
+			outputs.caption["width"] = "100%";
+			outputs.caption["height"] = "100%";
+			outputs.caption["opacity"] = "0";
 		}
 
-		if (captionPosition == "overlay") {
-			blocks.append(cssBlock(arguments.selector & " .frame", ["justify-content: start;"]));
-			blocks.append(cssBlock(arguments.selector & " .caption", ["justify-content: center;"]));
-		}
-
-		blocks.append(cssBlock(arguments.selector & ".cs-image", [
-			"overflow: hidden;",
-			"min-width: 0;",
-			"min-height: 0;",
-			"display: flex;"
-		]));
-		blocks.append(cssBlock(arguments.selector & ".cs-image figure", ["display: flex;", "flex-grow: 1;", "max-height: 100%;", "flex-direction: column;"]));
-
-		imageTagRules = [
-			"object-fit: #style['object-fit']#;",
-			"flex-grow: 1;",
-			"max-width: 100%;",
-			"max-height: 100%;",
-			"min-height: 0;",
-			"height: auto;",
-			"width: 100%;",
-			"object-position: #style['object-position-x']# #style['object-position-y']#;"
-		];
-		if (trim(style["heightfix"]) == "1") {
-			imageTagRules.append("display: none;");
-		}
-		blocks.append(cssBlock(arguments.selector & ".cs-image img", imageTagRules));
-
-		return blocks.toList(chr(10) & chr(10));
+		return outputStyles(arguments.selector, outputs) & this.newLineChar & otherSettings(arguments.selector, otherstyles);
 	}
-
 }

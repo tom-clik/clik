@@ -23,8 +23,8 @@
 }
 
 @property --object-position-y {
-	syntax: 'top | middle | bottom | <length-percentage>'; 
-	initial-value: middle;
+	syntax: 'top | center | bottom | <length-percentage>';
+	initial-value: center;
 	inherits: true;
 }
 
@@ -70,7 +70,7 @@
 	justify-content: var(--justify-frame);
 }
 
-.cs-imagegrid:.flickity-enabled  .frame {
+.cs-imagegrid.flickity-enabled .frame {
 	margin-right: var(--grid-gap);
 }
 
@@ -135,7 +135,7 @@
 	margin:0 !important; /* you CANNOT apply margin here */
 }
 
-@container image ( style(--heightfix:1) ) {
+@container image ( style(--height-fix:1) ) {
 	img {
 		display: none;
 	}
@@ -183,13 +183,13 @@
 	top:40%;
 	--button-align:flex-start; 
 	--button-direction: row-reverse;
-	right:60x;
+	right:60px;
 }
 
 .previousButton.button{
 	right:unset;
 	top:40%;
-	left:60x;
+	left:60px;
 }
 
 .popup_image {

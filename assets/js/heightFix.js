@@ -55,7 +55,13 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 		}
 		
 		var resize = function() {
-			let resize =  clik.trueFalse( $image.css("--heightfix") ) || false;
+			// --heightfix was the original, undocumented spelling. Keep reading it so
+			// existing site styles do not break while --height-fix is adopted. Read
+			// it first because the registered property always computes to its initial
+			// value, even when --height-fix was not explicitly set.
+			let legacyHeightFix = $element.css("--heightfix").trim();
+			let heightFix = legacyHeightFix || $element.css("--height-fix").trim();
+			let resize = clik.trueFalse(heightFix) || false;
 			if (resize) {
 				$element.addClass("fixedheight");
 				$imageDiv.css("height","auto");

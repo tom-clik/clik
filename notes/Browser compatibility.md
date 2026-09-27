@@ -45,10 +45,35 @@ uses in Clik. JavaScript assumes ES2017-era features and a global jQuery.
 4. Validate setting values against any `@property` declaration. An invalid
    registered value computes to its initial value, which can look as if the
    style query was ignored.
-5. If Safari 17 or older must be supported, serve the legacy class-based
-   stylesheets and corresponding classes, or add a JavaScript reflection
-   fallback. There is no CSS-only equivalent that preserves arbitrary
-   variable-driven mode selection in browsers without style queries.
+5. If Safari 17 or older must be supported, replace each component stylesheet
+   with its `{type}_classes.css` counterpart and load
+   `assets/js/clik.classStyles.js`. The script reads the same properties from
+   the same HTML components and supplies the generated mode classes.
+
+## Class fallback
+
+Every stylesheet containing Clik container style queries has a separate class
+equivalent:
+
+- `columns_classes.css`
+- `forms_classes.css`
+- `grids_classes.css`
+- `images_classes.css`
+- `items_classes.css`
+- `menus_classes.css`
+- `navbuttons_classes.css`
+- `tabs_classes.css`
+
+Do not load a container version and its class version together. The class files
+contain the common/base declarations as well as class-prefixed replacements for
+all the style-query rules. They work with the same HTML; the reflection script
+adds only generated `clik-*` classes at runtime. Re-run
+`python3 tools/generate_class_css.py` after changing one of the container
+stylesheets so both implementations remain equivalent.
+
+All HTML pages under `_testing` load the switcher script. Use the hovering
+**CSS mode** menu or append `?clik-style=classes` to test a page with the class
+stylesheets and property reflection enabled.
 
 ## Bugs found during the audit
 

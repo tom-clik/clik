@@ -24,7 +24,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	<link rel="stylesheet" href="../assets/css/forms.css">
 	<link rel="stylesheet" href="../assets/css/navbuttons.css">
 	<link rel="stylesheet" href="../assets/css/toast.css" rel="stylesheet">
-	
+
 	<meta charset="UTF-8">
 	<style>
 
@@ -66,7 +66,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	form .error {
 		--field-background-color: #fdecea;
 	}
-	
+
 	.field4 {
 		--checkbox-cols: 2; /* number of cols for checkbox/radio fields */
 		--checkbox-gap: 12px;
@@ -79,15 +79,15 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 	/* Base style for both checkbox & radio */
 	.field4 input[type="checkbox"] + label:before,
 	.field4 input[type="radio"] + label:before {
-	    background: #ff00ff;
-	    background-image: none;
+		background: #ff00ff;
+		background-image: none;
 	}
 
 	/* Checked state for both */
 	.field4 input[type="checkbox"]:checked + label:before,
 	.field4 input[type="radio"]:checked + label:before {
-		  background-image: none;
-	    background: #ffff00;
+		background-image: none;
+		background: #ffff00;
 	}
 
 	.field6 input[type="checkbox"] + label:before,
@@ -120,11 +120,11 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 
 		<form action="form_resonse_valid.json" method="post">
 			<input type="hidden" name="hidden_test" value="hidden_test">
-			
+
 			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
-					
+
 					Auto grow text
 
 				</label>
@@ -147,10 +147,10 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
-					
+
 					Label 2
 
-					
+
 				</label>
 				</div>
 				<div class="field">
@@ -166,10 +166,10 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
-					
+
 					Label 3
 
-					
+
 				</label>
 				<div class="button"><a><i class="icon-help"></i></a></div>
 				</div>
@@ -187,10 +187,10 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 			<div class="fieldrow field4">
 				<div class="fieldLabel">
 				<label>
-					
+
 					Label 4
 
-					
+
 				</label>
 				<div class="button"><a><i class="icon-help"></i></a></div>
 				</div>
@@ -200,11 +200,11 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 					<input type="checkbox" name="field4" id="field4_3"  value="3"><label for="field4_3">field4_3</label>
 				</div>
 			</div>
-			
+
 			<div class="fieldrow">
 				<div class="fieldLabel">
 				<label>
-					
+
 					Label 5
 
 				</label>
@@ -272,7 +272,7 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 <script src="../assets/js/jquery.serializeData.js"></script>
 <script src="../assets/js/apiHelper.js"></script>
 <script src="../assets/js/jquery.clikForm.js"></script>
-<script src="../assets/js/toast.js"></script> 
+<script src="../assets/js/toast.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -288,35 +288,35 @@ Currently still uses lots of things like `field-background-color` and `button-bo
 				console.log("clikForm complete", payload);
 			},
 			rules : {
-				  email: {
-			    	required: true,
-			    	email: true
-			    },
-			    field2xxx: {
-			    	required: true,
-			    	minlength: 2,
-			    	maxlength: 3
-			    },
-			    field3x: {
-			    	required: true			    	
-			    },
-			    field6x: {
-			    	required: true		
-			    },
-			    field7x: {
-			    	required: true,
-			    	code: true		
-			    }
+				email: {
+					required: true,
+					email: true
+				},
+				field2xxx: {
+					required: true,
+					minlength: 2,
+					maxlength: 3
+				},
+				field3x: {
+					required: true
+				},
+				field6x: {
+					required: true
+				},
+				field7x: {
+					required: true,
+					code: true
+				}
 			},
 			messages: {
-		        email: {
-		            required: 'Email address is required',
-		            email: 'Please enter a valid email address'
-		        },
-		        field2: 'Please select 2 or 3 items',
-		        field3: "select some values",
-		        field6: "Please tick you agree to our terms and conditions"
-		    }
+				email: {
+					required: 'Email address is required',
+					email: 'Please enter a valid email address'
+				},
+				field2: 'Please select 2 or 3 items',
+				field3: "select some values",
+				field6: "Please tick you agree to our terms and conditions"
+			}
 
 		});
 	});

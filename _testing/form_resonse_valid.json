@@ -1,4 +1,5 @@
 {
 	"OK": 1,
-	"MESSAGE": "Great job"
+	"MESSAGE": "Great job",
+	"html": [{"id": "testform", "content": "<p role=\"status\">Great job</p>"}]
 }

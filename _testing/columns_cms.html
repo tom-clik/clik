@@ -221,14 +221,14 @@ Just trying out the new system with a simple style
 <script src="../assets/js/jquery-3.4.1.js"></script>
 
 <!-- Package -->
-<script src="../assets/js/_min/clikpage.0.16.min.js"></script>      
-<!-- <script src="../assets/js/clik_common.js"></script>
+<!-- <script src="../assets/js/_min/clikpage.0.16.min.js"></script>       -->
+<script src="../assets/js/clik_common.js"></script>
 <script src="../assets/js/jquery.throttledresize.js"></script>
 <script src="../assets/js/jquery.animateAuto.js"></script>
 <script src="../assets/js/clik_onready.js"></script>
 <script src="../assets/js/jquery.autoButton.js"></script>
 <script src="../assets/js/jquery.modal.js"></script>
-<script src="../assets/js/fadeInOnScroll.js"></script> -->
+<script src="../assets/js/fadeInOnScroll.js"></script>
 <!-- / Package -->
 
 <script src="../assets/js/stylesheet-switcher.js"></script>
@@ -254,37 +254,37 @@ Just trying out the new system with a simple style
 		$(".button").autoButton();
 		$(".modal").modal({	});
 		
-		// $("#menu,#xcol").on("open", function() {
-		// 	$this = $(this);
-		// 	const id = $this.attr("id");
-		// 	let settings = getColumnSettings();
-		// 	if (settings.height == "auto") {
-		// 		$this.animateAuto("height", settings["menu-anim-time"], function() {
-		// 			console.log("callback test")
-		// 		});
-		// 	}
-		// 	else {
-		// 		$this.css({'height':''});
-		// 	}
-		// 	const opts = {};
-		// 	opts["--" + id] = "open";
-		// 	$body.removeClass(id + "-close").addClass(id + "-open").css(opts);
-		// }).on("close",function() {
-		// 	$this = $(this);
-		// 	const id = $this.attr("id");
-		// 	let settings = getColumnSettings();
-		// 	if (settings.height == "auto") {
-		// 		$this.animate({"height":0}, settings["menu-anim-time"], function() { $this.css({"height":""}) });
-		// 	}
-		// 	else {
-		// 		$this.css({'height':''});
-		// 	}
-		// 	const opts = {};
-		// 	opts["--" + id] = "close";
-		// 	$body.removeClass(id + "-open").addClass(id + "-close").css(opts);
-		// 	$button = $("#" + id + "button");
-		// 	$button.trigger("close");
-		// });
+		$("#menu,#xcol").on("open", function() {
+			$this = $(this);
+			const id = $this.attr("id");
+			let settings = getColumnSettings();
+			if (settings.height == "auto") {
+				$this.animateAuto("height", settings["menu-anim-time"], function() {
+					console.log("callback test")
+				});
+			}
+			else {
+				$this.css({'height':''});
+			}
+			const opts = {};
+			opts["--" + id] = "open";
+			$body.removeClass(id + "-close").addClass(id + "-open").css(opts);
+		}).on("close",function() {
+			$this = $(this);
+			const id = $this.attr("id");
+			let settings = getColumnSettings();
+			if (settings.height == "auto") {
+				$this.animate({"height":0}, settings["menu-anim-time"], function() { $this.css({"height":""}) });
+			}
+			else {
+				$this.css({'height':''});
+			}
+			const opts = {};
+			opts["--" + id] = "close";
+			$body.removeClass(id + "-open").addClass(id + "-close").css(opts);
+			$button = $("#" + id + "button");
+			$button.trigger("close");
+		});
 
 		// Native launcher
 		StyleSheetSwitcher.init({

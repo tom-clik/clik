@@ -221,7 +221,16 @@ def transform(
             output.append(header + "{" + transform(body, source, contexts) + "}")
         elif contexts != [[]]:
             prefixes = [" ".join(selector for _, selector in context) for context in contexts]
-            selectors = [f"{prefix} {item}" for prefix in prefixes for item in split_selectors(header)]
+            selectors = []
+            for prefix in prefixes:
+                for item in split_selectors(header):
+                    # A query can target the container's own direct children.
+                    # Merge that container selector rather than nesting it twice.
+                    base = CONTAINERS[contexts[0][-1][0]]
+                    if item.startswith(base + " >"):
+                        selectors.append(prefix + item[len(base):])
+                    else:
+                        selectors.append(f"{prefix} {item}")
             output.append(",\n".join(selectors) + "{" + body + "}")
         else:
             output.append(header + "{" + body + "}")

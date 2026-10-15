@@ -12,19 +12,22 @@ Just trying out the new system with a simple style
 	<title>CMS Columns demo tests</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-	
+	<!-- package -->
 	<link rel="stylesheet" href="../assets/css/reset.css">
-	<link rel="stylesheet" href="../assets/css/fonts/fonts_local.css">
 	<link rel="stylesheet" href="../assets/css/title.css">
 	<link rel="stylesheet" href="../assets/css/navbuttons.css">
 	<link rel="stylesheet" href="../assets/css/columns.css">
 	<link rel="stylesheet" href="../assets/css/grids.css">
 	<link rel="stylesheet" href="../assets/css/menus.css">
-	<link rel="stylesheet" href="../assets/css/fonts/google_icons_local.css">
 	<link rel="stylesheet" href="../assets/css/icons.css">
 	<link rel="stylesheet" href="../assets/css/modal.css">
-	<link rel="stylesheet" href="../assets/css/schemes/columns_cms.css" id="page-scheme-stylesheet">
+	<!-- <link rel="stylesheet" href="../assets/css/_min/clikpage.0.24.min.css"> -->
+	<!-- /package -->
 
+	<link rel="stylesheet" href="../assets/css/fonts/fonts_local.css">
+	<link rel="stylesheet" href="../assets/css/fonts/google_icons_local.css">
+	<link rel="stylesheet" href="../assets/css/schemes/columns_cms.css" id="page-scheme-stylesheet">
+	
 	<script src="../assets/js/clik.classStyles.js"></script>
 </head>
 
@@ -167,6 +170,7 @@ Just trying out the new system with a simple style
 										</div>
 										<div id="maincol_bottom">
 											<h2>Maincol bottom</h2>
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nis</p>
 											<div id="testmenu">
 
 											</div>
@@ -215,11 +219,18 @@ Just trying out the new system with a simple style
 </div>
 
 <script src="../assets/js/jquery-3.4.1.js"></script>
-<script src="../assets/js/clik_common.js"></script>
+
+<!-- Package -->
+<script src="../assets/js/_min/clikpage.0.16.min.js"></script>      
+<!-- <script src="../assets/js/clik_common.js"></script>
 <script src="../assets/js/jquery.throttledresize.js"></script>
 <script src="../assets/js/jquery.animateAuto.js"></script>
+<script src="../assets/js/clik_onready.js"></script>
 <script src="../assets/js/jquery.autoButton.js"></script>
 <script src="../assets/js/jquery.modal.js"></script>
+<script src="../assets/js/fadeInOnScroll.js"></script> -->
+<!-- / Package -->
+
 <script src="../assets/js/stylesheet-switcher.js"></script>
 
 <script type="text/javascript">
@@ -243,37 +254,37 @@ Just trying out the new system with a simple style
 		$(".button").autoButton();
 		$(".modal").modal({	});
 		
-		$("#menu,#xcol").on("open", function() {
-			$this = $(this);
-			const id = $this.attr("id");
-			let settings = getColumnSettings();
-			if (settings.height == "auto") {
-				$this.animateAuto("height", settings["menu-anim-time"], function() {
-					console.log("callback test")
-				});
-			}
-			else {
-				$this.css({'height':''});
-			}
-			const opts = {};
-			opts["--" + id] = "open";
-			$body.removeClass(id + "-close").addClass(id + "-open").css(opts);
-		}).on("close",function() {
-			$this = $(this);
-			const id = $this.attr("id");
-			let settings = getColumnSettings();
-			if (settings.height == "auto") {
-				$this.animate({"height":0}, settings["menu-anim-time"], function() { $this.css({"height":""}) });
-			}
-			else {
-				$this.css({'height':''});
-			}
-			const opts = {};
-			opts["--" + id] = "close";
-			$body.removeClass(id + "-open").addClass(id + "-close").css(opts);
-			$button = $("#" + id + "button");
-			$button.trigger("close");
-		});
+		// $("#menu,#xcol").on("open", function() {
+		// 	$this = $(this);
+		// 	const id = $this.attr("id");
+		// 	let settings = getColumnSettings();
+		// 	if (settings.height == "auto") {
+		// 		$this.animateAuto("height", settings["menu-anim-time"], function() {
+		// 			console.log("callback test")
+		// 		});
+		// 	}
+		// 	else {
+		// 		$this.css({'height':''});
+		// 	}
+		// 	const opts = {};
+		// 	opts["--" + id] = "open";
+		// 	$body.removeClass(id + "-close").addClass(id + "-open").css(opts);
+		// }).on("close",function() {
+		// 	$this = $(this);
+		// 	const id = $this.attr("id");
+		// 	let settings = getColumnSettings();
+		// 	if (settings.height == "auto") {
+		// 		$this.animate({"height":0}, settings["menu-anim-time"], function() { $this.css({"height":""}) });
+		// 	}
+		// 	else {
+		// 		$this.css({'height':''});
+		// 	}
+		// 	const opts = {};
+		// 	opts["--" + id] = "close";
+		// 	$body.removeClass(id + "-open").addClass(id + "-close").css(opts);
+		// 	$button = $("#" + id + "button");
+		// 	$button.trigger("close");
+		// });
 
 		// Native launcher
 		StyleSheetSwitcher.init({

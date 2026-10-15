@@ -1,7 +1,9 @@
 {
-    "packages": [
+    "packages":
+    [
         {
-            "scripts": [
+            "scripts":
+            [
                 "reset",
                 "breadcrumb",
                 "definitions",
@@ -24,11 +26,28 @@
                 "modal",
                 "fadeInOnScroll"
             ],
-            "name":"content",
-            "min":"/assets/css/_min/clikpage.0.24.min.css"
+            "name": "content",
+            "min": "/assets/css/_min/clikpage.0.24.min.css"
+        },
+        {
+            "scripts":
+            [
+                "google_icons_donotuse_directly",
+                "google_icons_codes_donotuse_directly"
+            ],
+            "name": "google_icons"
+        },
+        {
+            "scripts":
+            [
+                "font-awesome_icons_codes_donotuse_directly",
+                "font-awesome_icons_donotuse_directly"
+            ],
+            "name": "font-awesome_icons"
         }
     ],
-    "scripts": [
+    "scripts":
+    [
         {
             "min": "/assets/css/reset.css",
             "name": "reset"
@@ -66,12 +85,6 @@
         {
             "min": "/assets/css/navbuttons.css",
             "name": "navbuttons",
-            "requires": "icons"
-        },
-        {
-            "min": "/assets/css/fonts/google_icons.css",
-            "debug": "/assets/css/fonts/google_icons_local.css",
-            "name": "google_icons",
             "requires": "icons"
         },
         {
@@ -115,7 +128,7 @@
             "name": "tabs"
         },
         {
-        	"debug": "/assets/css/jquery-ui.css",
+            "debug": "/assets/css/jquery-ui.css",
             "min": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css",
             "name": "jqueryui",
             "packageExclude": 1
@@ -127,9 +140,10 @@
             "packageExclude": 1
         },
         {
-        	"debug": "/assets/css/fonts/fonts_local.css",
-            "min": "/assets/css/fonts/fonts.css",
-            "name": "fonts"
+            "debug": "/assets/css/fonts/fonts_local.css",
+            "min": "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Open+Sans:wght@300&display=swap",
+            "name": "fonts",
+            "packageExclude": 1
         },
         {
             "debug": "/assets/css/jBox.all.css",
@@ -143,8 +157,8 @@
             "requires": "content"
         },
         {
-        	"debug": "/assets/css/fonts/font-awesome-local.css",
-        	"min": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css",
+            "debug": "/assets/css/fonts/font-awesome-local.css",
+            "min": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css",
             "name": "fontawesome",
             "packageExclude": 1
         },
@@ -177,45 +191,48 @@
             "requires": "jquery"
         },
         {
-          "debug":"/assets/css/tooltipster.css",
-          "min":"https://cdnjs.cloudflare.com/ajax/libs/tooltipster/4.2.8/css/tooltipster.main.min.css",
-          "description": "Tooltip library",
-          "name": "tooltipster",
-          "packageExclude": 1
+            "debug": "/assets/css/tooltipster.css",
+            "min": "https://cdnjs.cloudflare.com/ajax/libs/tooltipster/4.2.8/css/tooltipster.main.min.css",
+            "description": "Tooltip library",
+            "name": "tooltipster",
+            "packageExclude": 1
         },
         {
-          "min":"/assets/css/modal.css",
-          "description": "Modal",
-          "name": "modal"
+            "min": "/assets/css/modal.css",
+            "description": "Modal",
+            "name": "modal"
         },
         {
-          "min":"/assets/css/fadeInOnScroll.css",
-          "description": "Show content when visible",
-          "name": "fadeInOnScroll",
-          "requires": "jquery"
-        },
-        {
-            "debug": "/assets/css/fonts/google_icons.css",
-            "min": "/assets/css/_min/fonts/google_icons.1.min.css",
-            "name": "google_icons",
-            "requires": "icons",
-            "exclude_from_packages": 1,
-            "compress": 1
+            "min": "/assets/css/fadeInOnScroll.css",
+            "description": "Show content when visible",
+            "name": "fadeInOnScroll",
+            "requires": "jquery"
         },
         {
             "debug": "/assets/css/schemes/columns_cms.css",
-            "min": "/assets/css/_min/columns_cms.2.min.css",
+            "min": "/assets/css/_min/columns_cms.3.min.css",
             "name": "cms_columns",
             "requires": "reset",
             "compress": 1
         },
         {
-         
-            "debug": "/_clik/css/fonts/font-awesome-local.css",
-            "min": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css",
-            "name": "fontawesome",
-            "exclude_from_packages": 1
-         
+            "debug": "/assets/css/fonts/google_icons_local.css",
+            "min": "https://fonts.googleapis.com/icon?family=Material+Icons",
+            "name": "google_icons_donotuse_directly",
+            "notes": "Use package google_icons",
+            "requires": "icons"
+        },
+        {
+            "debug": "/assets/css/fonts/google_icons_codes.css",
+            "name": "google_icons_codes_donotuse_directly",
+            "requires": "google_icons_donotuse_directly",
+            "min": "/assets/css/_min/fonts/google_icons_codes.2.min.css",
+            "compress": 1
+        },
+        {
+            "debug": "/_clik/css/fonts/font-awesome_icons_local.css",
+            "min": "",
+            "name": "ont-awesome_icons_donotuse_directly"
         }
     ]
 }

@@ -15,7 +15,7 @@
         "tabs",
         "getSettings",
         "photogrid",
-       "justifiedGallery",
+        "justifiedGallery",
         "serializeData",
         "throttledresize",
         "heightFix",
@@ -24,7 +24,7 @@
         "fadeInOnScroll"
       ],
       "name": "main",
-      "min": "/assets/js/_min/clikpage.0.16.min.js",
+      "min": "/assets/js/_min/clik.0.18.min.js",
     },
     {
       "scripts": [
@@ -40,14 +40,11 @@
       "name": "coldlight"
     },
     {
-      "scripts_foobar": [
-        "clik_settings","messageHandler","settingsForm"
-      ],
       "scripts": [
         "clikForm"
       ],
-      "min": "/assets/js/_min/clikForm.0.1.min.js",
-      "name": "forms"
+      "name": "forms",
+      "pack": 0
     },
     {
       "scripts": [
@@ -180,16 +177,19 @@
       "requires": "jquery"
     },
     {
-      "min": "/assets/js/jquery.elastic.1.6.11.js",
+      "debug": "/assets/js/jquery.elastic.1.6.11.js",
+      "min": "/assets/js/_min/jquery.elastic.1.6.11.min.js",
       "description": "Elastic text form control",
       "name": "elastic",
       "requires": "jquery"
     },
     {
-      "min": "/assets/js/jquery.clikForm.js",
+      "debug": "/assets/js/jquery.clikForm.js",
+      "min": "/assets/js/_min/jquery.clikForm.min.1.js",
       "description": "Combines forms and validate in one plug-in to submit a form and display a returned|supplied message",
       "name": "clikForm",
-      "requires": "jquery,elastic,select2,validate,serializeData"
+      "requires": "jquery,elastic,select2,validate,serializeData",
+      "compress": 1
     },
     {
       "min": "/assets/js/jquery.autoButton.js",
@@ -270,25 +270,24 @@
       "packageExclude": 1
     },
     {
-      "min":"/assets/js/photogrid.js",
+      "debug":"/assets/js/photogrid.js",
       "description": "Clik wrapper for all photogrid functions. ",
       "name": "photogrid",
       "requires": "jquery,clik_common,justifiedGallery,masonryGrid"
     },
     {
-      "min":"/assets/js/jquery.justifiedGallery.js",
+      "debug":"/assets/js/jquery.justifiedGallery.js",
       "description": "Proper serialization of form data to submit via Ajax",
       "name": "justifiedGallery",
       "requires": "jquery"
     },
     {
-      "min":"/assets/js/jquery.serializeData.js",
+      "debug":"/assets/js/jquery.serializeData.js",
       "description": "Proper serialization of form data to submit via Ajax",
       "name": "serializeData",
       "requires": "jquery"
     },
     {
-      "min":"/assets/js/clik_settings_live.js",
       "debug":"/assets/js/clik_settings.js",
       "description": "Auto generated data file of style definitions for editing",
       "name": "clik_settings",
@@ -296,39 +295,48 @@
     },
     {
       "name":"getSettings",
-      "min":"/assets/js/getSettings.js",
+      "debug":"/assets/js/getSettings.js",
       "description": "Get content item settings from css custom vars",
       "requires": "jquery,clik_settings"
     },
     {
-      "min":"/assets/js/jquery.tabs.js",
+      "debug":"/assets/js/jquery.tabs.js",
       "description": "Tabbed content",
       "name": "tabs",
       "requires": "jquery,throttledresize"
     },
     {
-      "min":"/assets/js/clik.settingsForm.js",
+      "debug":"/assets/js/clik.settingsForm.js",
       "description": "Settings Editing form",
       "name": "settingsForm",
       "requires": "jquery,clik_settings,messageHandler"
     },
     {
-      "min":"/assets/js/jquery.autoopen.js",
+      "debug":"/assets/js/jquery.autoopen.js",
       "description": "Add open close methods to containers",
       "name": "autoopen",
       "requires": "jquery"
     },
     {
-      "min":"/assets/js/removeClassByPrefix.js",
+      "debug":"/assets/js/removeClassByPrefix.js",
       "description": "Utility for removing classes by prefix",
       "name": "removeClassByPrefix",
       "requires": "jquery"
     },
     {
-      "min":"/assets/js/fadeInOnScroll.js",
+      "debug":"/assets/js/fadeInOnScroll.js",
       "description": "Fade in content on scroll",
       "name": "fadeInOnScroll",
       "requires": "jquery"
+    },
+    {   
+        "debug": "/assets/js/apiHelper.js",
+        "min":"/assets/js/_min/apiHelper.min.1.js",
+        "description": "Shared helper for API requests and AJAX form submission",
+        "name": "apiHelper",
+        "requires": "jquery",
+        "compress": 1,
+        "packageExclude": 1
     }
   ]
 }

@@ -66,6 +66,7 @@ div.fieldrow.error {
 	grid-template-columns: 1fr;
 	grid-template-areas: "label" "error" "field";
 	--field-border-color: var(--error-color);
+	--field-background-color: var(--error-background-color, #fdecea);
 }form.clik-field-layout-row div.fieldrow,
 form.clik-field-layout-row div.fieldrow.error{
 		grid-template-areas: "label field";
@@ -86,6 +87,12 @@ div.fieldrow:nth-of-type(2n) {
 div.fieldrow > .error {
 	grid-area:error;
 	color: var(--error-color);
+}
+
+form > .error {
+	color: var(--error-color);
+	font-weight: bold;
+	margin-bottom: 1rem;
 }
 
 div.fieldrow > .fieldLabel {

@@ -242,14 +242,16 @@ body.clik-framed-1 .spanning > .inner{
 	container-name: xcol;
 	grid-area:xcol;
 	overflow: clip;
-}#xcol.clik-sticky-1 .inner{
+}#xcol.clik-sticky-1 > .inner{
 		position:sticky;
+		flex-grow: 0;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--xcol-top-padding, 4px) );
 		z-index: 90;
 	}
 
-#menu.clik-sticky-1 .inner{
+#menu.clik-sticky-1 > .inner{
 		position:sticky;
+		flex-grow: 0;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--menu-top-padding,4px) );
 		z-index: 90;
 	}

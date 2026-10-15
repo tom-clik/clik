@@ -54,7 +54,9 @@ $.validator.addMethod("code", function(value, element) {
 
 (function($) {
 	function getInputsByName($form, name) {
-		return $form.find("[name='" + name.replace(/'/g, "\\'") + "']");
+		return $form.find(":input[name]").filter(function() {
+			return this.name === name || this.name === name + "[]";
+		});
 	}
 
 	function getField($form, fieldName) {
@@ -75,7 +77,12 @@ $.validator.addMethod("code", function(value, element) {
 			return;
 		}
 		$field.find("> .error.clikFormError").remove();
-		$field.closest(".fieldrow").removeClass("error").addClass("valid");
+		var $row = $field.closest(".fieldrow");
+		$row.children(".clikFormError").filter(function() {
+			return $(this).attr("data-field") === fieldName;
+		}).remove();
+		if (!$row.find(".clikFormError").length) $row.removeClass("error").addClass("valid");
+		getInputsByName($form, fieldName).removeClass("error").removeAttr("aria-invalid");
 	}
 
 	function addFieldError($form, fieldName, message) {
@@ -84,9 +91,12 @@ $.validator.addMethod("code", function(value, element) {
 			return;
 		}
 
-		$field.find("> .error.clikFormError").remove();
+		clearFieldError($form, fieldName);
 		$field.closest(".fieldrow").removeClass("valid").addClass("error");
-		$field.append("<div class='error clikFormError'>" + message + "</div>");
+		getInputsByName($form, fieldName).attr("aria-invalid", "true");
+		var $row = $field.closest(".fieldrow");
+		$("<div>", {"class": "error clikFormError", "role": "alert", "data-field": fieldName})
+			.text(message).appendTo($row.length ? $row : $field);
 	}
 
 	function buildApiSubmitOptions($form, options) {
@@ -275,7 +285,7 @@ $.validator.addMethod("code", function(value, element) {
 									$cs.html("<div class='loading'></div>");
 									window.location.href = data.NEXTPAGE;
 								}
-								else {
+								else if (!(data && Array.isArray(data.html) && data.html.length)) {
 									var msg = (data && data.MESSAGE) || options.message;
 									if (options.show_success_message && window.ApiHelper && typeof ApiHelper.showMessage === "function") {
 										ApiHelper.showMessage({
@@ -293,7 +303,7 @@ $.validator.addMethod("code", function(value, element) {
 								
 								runOptionHandler(options.on_error, completePayload);
 
-								$cs.find(">.error").remove();
+								$form.children(".clikFormSummary").remove();
 								var topMessage = (data && data.MESSAGE) ? data.MESSAGE : options.error_message;
 
 								if (data && data["g-recaptcha-response"] !== undefined && data["g-recaptcha-response"] !== "") {
@@ -302,8 +312,8 @@ $.validator.addMethod("code", function(value, element) {
 										.append("<div class='validateError'><p> " + data[data["g-recaptcha-response"]] + "</p></div>");
 								}
 
-								$cs.prepend("<div class='error'>" + topMessage + "</div>");
-								showErrors($form, validator, data, options.debug);
+								$("<div>", {"class": "error clikFormSummary", "role": "alert"}).text(topMessage).prependTo($form);
+								showErrors($form, validator, data && (data.ERRORS || data.errors) || data, options.debug);
 
 								if ("grecaptcha" in window) {
 									grecaptcha.reset();

@@ -293,8 +293,9 @@ div.container:has(> div.container) {
 
 @container xcol ( style( --sticky:1 ) ) {
 
-	.inner {
+	#xcol > .inner {
 		position:sticky;
+		flex-grow: 0;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--xcol-top-padding, 4px) );
 		z-index: 90;
 	}
@@ -303,8 +304,9 @@ div.container:has(> div.container) {
 
 @container menu ( style( --sticky:1 ) ) {
 
-	.inner {
+	#menu > .inner {
 		position:sticky;
+		flex-grow: 0;
 		top: calc( (var(--header-fixed) * var(--header-height) ) + var(--menu-top-padding,4px) );
 		z-index: 90;
 	}

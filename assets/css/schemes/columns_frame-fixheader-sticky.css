@@ -1,0 +1,29 @@
+/* Framed Fixed header. Extracted from columns_samples.css. */
+
+body {
+	--header-fixed :1;
+}
+
+body {
+	--framed:1;
+}
+
+body {
+	padding:8px 12px;
+}
+
+@media (max-width:800px) {
+body {
+		padding:0;
+	}
+}
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}

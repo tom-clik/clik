@@ -1,0 +1,19 @@
+/* Basic. Extracted from columns_samples.css. */
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}
+
+@media (max-width:600px) {
+body {
+		--menupos:fixed;
+		--menu-width:100vw;
+		--menu: close;
+	}
+}

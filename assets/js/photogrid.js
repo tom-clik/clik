@@ -26,7 +26,7 @@ and then calls carousel or masonry if required.
       
       var $element = $(element), 
           element = element, 
-          $inner = $element.find(".gridInner"),
+          $inner = $element.children(".inner"),
           id = $element.attr("id"),
           $grid,
           $carousel,

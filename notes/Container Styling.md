@@ -8,7 +8,7 @@ By setting the container name to `grid` when can than apply styling so:
 
 ```css
 @container grid ( style(--grid-mode:flex) ) {
-	.gridInner {
+	.grid > .inner {
 		display: flex;
 	}
 }
@@ -30,7 +30,7 @@ Once complication is that the styling CAN'T be defined on the main container. Al
 
 ```html
 <div class='grid' id='mygrid'>
-	<div class='gridInner'>...</div>
+	<div class='inner'>...</div>
 </div>
 ```
 
@@ -46,7 +46,7 @@ While the user stylesheet would like this:
 The static css applies the styling using the inner container. 
 
 ```css
-.gridInner {
+.grid > .inner {
 	display:grid;
 	grid-gap:var(--grid-gap);
 	flex-direction: var(--flex-direction);
@@ -62,7 +62,7 @@ The static css applies the styling using the inner container.
 Often you will see properties set to inherit, e.g.
 
 ```
-.gridInner {
+.grid > .inner {
 	--grid-gap: inherit;
 	--grid-width: inherit;
 	--grid-columns: inherit;

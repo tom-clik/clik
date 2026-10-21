@@ -20,7 +20,7 @@ versions the base declarations still apply, but rules that select a component
 mode do not. This explains the broad “unstyled/default mode” failure rather
 than a problem with the extra inner element.
 
-The `gridInner`-style wrapper is still required: a container query cannot style
+The `inner`-style wrapper is still required: a container query cannot style
 the query container itself, only its descendants. `container-name` without a
 `container-type` is intentional for style-only queries; adding
 `container-type: inline-size` is not a Safari fix and can introduce unwanted
@@ -39,7 +39,7 @@ uses in Clik. JavaScript assumes ES2017-era features and a global jQuery.
    add style-query support.
 2. Inspect the computed custom property on the **named outer container**, not
    on its inner child. For example, `--grid-mode` must compute on `.grid` and
-   `.gridInner` must be its descendant.
+   `.grid > .inner` must be its descendant.
 3. Do not put component content in a shadow tree or move it outside the named
    container; container lookup follows the containing tree.
 4. Validate setting values against any `@property` declaration. An invalid

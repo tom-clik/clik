@@ -4,25 +4,6 @@
 
 --->
 
-<script>
-tests = [
-	{"id": "static-sticky-mobilefixed", "description":"Basic"},
-	{"id": "static-fixheader-sticky-mobilefixed", "description":"Fixed header"},
-	{"id": "static-fixheader-fixfooter-sticky-mobilefixed", "description":"Fixed header and footer"},
-	{"id": "frame", "description":"Framed"},
-	{"id": "frame-fixheader-sticky", "description":"Framed Fixed header"},
-	{"id": "frame-fixheader-fixfooter-sticky", "description":"Framed, Fixed header and footer"},
-	{"id": "simpler", "description":"Simpler"},
-	{"id": "nomenu", "description":"No menu"},
-	{"id": "sideheader-sticky", "description":"Side header"},
-	{"id": "slide-sticky", "description":"slide menu"},
-	{"id": "slide-fixheader-sticky", "description":"slide menu and fixed header"},
-	{"id": "slide-fixheader-fixfooter-sticky", "description":"slide header, fixed and footer"},
-	{"id": "fixed-fixheader-fixfooter-sticky", "description":"Fixed menu, header and footer, and menu"}
-];
-</script>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +19,9 @@ tests = [
 	<link rel="stylesheet" href="../assets/css/grids.css">
 	<link rel="stylesheet" href="../assets/css/menus.css">
 	<link rel="stylesheet" href="../assets/css/fonts/google_icons_local.css">
+	<link rel="stylesheet" href="../assets/css/fonts/google_icons_codes.css">
 	<link rel="stylesheet" href="../assets/css/icons.css">
 	<link rel="stylesheet" href="../assets/css/modal.css">
-	<link rel="stylesheet" href="../assets/css/schemes/columns_samples.css">
 	<link rel="stylesheet" href="../assets/css/schemes/columns_demo.css">
 
 	<style>
@@ -56,24 +37,24 @@ tests = [
 		}
 	
 	</style>
+	<link id="columns-layout" rel="stylesheet" href="../assets/css/schemes/columns_static-sticky-mobilefixed.css">
+
 	<!-- <link rel="stylesheet" href="../assets/css/schemes/columns_cms.css"> -->
 	
 	<!-- <link rel="stylesheet" href="../assets/css/icons.css"> -->
 
 	<script src="../assets/js/clik.classStyles.js"></script>
 </head>
-
-<!-- <body class="layout-fixed-fixheader-fixfooter-sticky"> -->
 <body>
 <div id="bodyWrapper" class="container">
 
 <div id="ubercontainer" class="grid">
 	
-	<div class="gridInner">
+	<div class="inner">
 		<!--- header is usually given a fixed height (see --header-height)
 			Much of the sticky/fixed functionality depends on this. ---> 
 		<div id="header" class="grid">
-			<div class="gridInner">
+			<div class="inner">
 				<div id="title" class="spanning">
 					<div class="inner">
 						
@@ -86,10 +67,10 @@ tests = [
 
 				<!--- To remove this or place it above the title, adjust #header grid --->
 				<div id="nav" class="grid spanning">
-					<div class="gridInner inner">
+					<div class="inner">
 						
 						<div id="menubuttons" class="grid">
-							<div class="gridInner">
+							<div class="inner">
 								<div id="menubutton" class="button auto navbutton state-open">
 									<a href="#menu.openclose" data-key="ctrl+m">
 										<svg  class="icon"  viewBox="0 0 16 16"><use xlink:href="../assets/images/chevron-right.svg#chevron-right" /></svg>
@@ -126,7 +107,7 @@ tests = [
 		</div>
 
 		<div id="content" class="grid">
-			<div class="gridInner">
+			<div class="inner">
 			
 				<!--- To remove this (also for content_bottom) either use the show=hide functionality 
 					(this is done in the "simpler" example)	or delete it and adjust the #content grid
@@ -140,7 +121,7 @@ tests = [
 
 				<div id="content_main" class="container spanning grid">
 					
-					<div class="inner gridInner">
+					<div class="inner">
 						
 						<div id="menu">
 							<div class="inner">
@@ -158,11 +139,11 @@ tests = [
 
 						<div id="content_wrap" class="grid">
 							
-							<div class="gridInner">
+							<div class="inner">
 
 								<div id="maincol" class="grid">
 
-									<div class="gridInner inner">
+									<div class="inner">
 
 										<div id="maincol_top">
 											<h2>Main col top XXX</h2>
@@ -193,9 +174,6 @@ tests = [
 										</div>
 										<div id="maincol_bottom">
 											<h2>Maincol bottom</h2>
-											<div id="testmenu">
-
-											</div>
 										</div>
 									</div>
 								</div>
@@ -229,7 +207,7 @@ tests = [
 
 		<div id="footer" class="grid">
 			
-			<div class="gridInner">
+			<div class="inner">
 
 				<!--- To remove this or place it below the footer, adjust #footer grid --->
 
@@ -240,7 +218,7 @@ tests = [
 				</div>
 
 				<div id="footer_main" class="grid spanning">
-					<div class="gridInner">
+					<div class="inner">
 						<div id="footer_left">
 							<div class="cs-text">This is the footer_left</div>
 						</div>
@@ -273,9 +251,7 @@ tests = [
 <script src="../assets/js/jquery.animateAuto.js"></script>
 <script src="../assets/js/jquery.autoButton.js"></script>
 <script src="../assets/js/jquery.modal.js"></script>
-<!--- test menu functionality --->
-<script src="../assets/js/removeClassByPrefix.js"></script>
-<script src="test_menu.js"></script>
+<script src="../assets/js/stylesheet-switcher.js"></script>
 
 <script type="text/javascript">
 
@@ -290,12 +266,6 @@ tests = [
 	}
 	
 	$(document).ready(function() {
-		
-		// Apply the layout class
-		hash = window.location.hash || "#" + tests[0].id;
-		hash = hash.replace("#","");
-		setTest(hash);
-		// / end apply layout class
 		
 		// generic clik stuff 
 		$(".button").autoButton();
@@ -349,7 +319,20 @@ tests = [
 			$button.trigger("close");
 		});
 
-		demoMenu(tests);
+		const layoutLink = document.getElementById("columns-layout");
+		layoutLink.addEventListener("load", function () {
+			document.body.style.removeProperty("--menu");
+			document.body.style.removeProperty("--xcol");
+			setBodyPadding();
+			$(window).trigger("resize");
+		});
+		StyleSheetSwitcher.init({
+			jsonUrl: "columns_styles.json",
+			storageKey: "clik-columns-layout",
+			panelTitle: "Column layouts",
+			launcherTop: 56,
+			replaceLinkSelector: "#columns-layout"
+		});
 		
 	});
 

@@ -14,7 +14,7 @@ See /_notes/grids.md
 HTML
 
 <div class='grid'>
-	<div class='gridInner'>
+	<div class='inner'>
 		any elements
 	</div>
 </div>
@@ -119,12 +119,12 @@ HTML
 	display: grid;
 }
 
-.grid:has(.gridInner) {
+.grid:has(> .inner) {
 	container-name:grid;
 	grid-template-rows: 1fr; /* need to get inner to expand, nothing to do with the grid itself */
 }
 
-.grid > .gridInner {
+.grid > .inner {
 	height:100%;
 	min-height: 100%;
 	align-self: stretch;
@@ -133,7 +133,7 @@ HTML
 /* Note the inheritance from the container. This is all to cope with
 grids within grids. We don't want the properties to cascade,
 but we need them to apply to the "inner" div */
-.gridInner {
+.grid > .inner {
 	--grid-gap: inherit;
 	--grid-width: inherit;
 	--grid-columns: inherit;
@@ -156,57 +156,59 @@ but we need them to apply to the "inner" div */
 	grid-template-rows: var(--grid-template-rows);
 }
 
-.gridInner > * {
+.grid > .inner > * {
 	--flex-stretch: inherit;
 	height: var(--grid-max-height);
 	flex-grow: var(--flex-stretch);
-}.grid.clik-grid-mode-none .gridInner{
+}
+.grid.clik-grid-mode-none > .inner{
 		display: block;
-	}
-.grid.clik-grid-mode-masonry .gridInner{
+}
+
+.grid.clik-grid-mode-masonry > .inner{
 		display: block;
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity 160ms;
-	}.grid.clik-grid-mode-masonry .gridInner.is-laidout{
+	}.grid.clik-grid-mode-masonry > .inner.is-laidout{
 		opacity: 1;
 		visibility: visible;
-	}.grid.clik-grid-mode-masonry .gridInner > *{
+	}.grid.clik-grid-mode-masonry > .inner > *{
 		--grid-width: inherit;
 		--grid-gap: inherit;
 		width: var(--grid-width);
 		padding-right: var(--grid-gap);
 		margin-bottom: var(--grid-gap);
-	}.grid.clik-grid-mode-masonry .gridInner > .wide{
+	}.grid.clik-grid-mode-masonry > .inner > .wide{
 		width: calc( var(--grid-width) * 2 );
 	}
 
-.grid.clik-grid-mode-fit .gridInner{
+.grid.clik-grid-mode-fit > .inner{
 		grid-template-columns: repeat(auto-fit, minmax(var(--grid-width),1fr));
 	}
 
-.grid.clik-grid-mode-fill .gridInner{
+.grid.clik-grid-mode-fill > .inner{
 		grid-template-columns: repeat(auto-fill, minmax(var(--grid-width),1fr));
 	}
-.grid.clik-grid-mode-flex .gridInner{
+.grid.clik-grid-mode-flex > .inner{
 		display: flex;
 		flex-direction: var(--flex-direction);
 		flex-wrap: var(--flex-wrap);
 	}
-.grid.clik-grid-mode-fixed .gridInner{
+.grid.clik-grid-mode-fixed > .inner{
 		grid-template-columns: repeat(var(--grid-columns), 1fr);
 	}
-.grid.clik-grid-mode-fixedwidth .gridInner{
+.grid.clik-grid-mode-fixedwidth > .inner{
 		grid-template-columns:  repeat(auto-fit, var(--grid-width));
 	}
-.grid.clik-grid-mode-rows .gridInner{
+.grid.clik-grid-mode-rows > .inner{
 		grid-template-columns: 1fr;
 	}
-.grid.clik-grid-mode-named .gridInner{
+.grid.clik-grid-mode-named > .inner{
 		grid-template-areas: var(--grid-template-areas);
 	}
-.grid:not(.clik-grid-mode-named) .gridInner > *:not(.fullWidth){
+.grid:not(.clik-grid-mode-named) > .inner > *:not(.fullWidth){
         grid-area: unset !important;
-    }.grid:not(.clik-grid-mode-named) .gridInner > .fullWidth{
+    }.grid:not(.clik-grid-mode-named) > .inner > .fullWidth{
         grid-column: 1 / -1;
     }

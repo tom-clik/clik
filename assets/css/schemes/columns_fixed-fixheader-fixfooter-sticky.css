@@ -1,0 +1,41 @@
+/* Fixed menu, header and footer, and menu. Extracted from columns_samples.css. */
+
+body {
+	--header-fixed :1;
+}
+
+body {
+	--footer-fixed :1;
+}
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}
+
+body #menu {
+	--sticky:0;
+}
+
+body {
+	--menu-width:400px;
+	--menu: close;
+	--menupos:fixed;
+	--site-align:left;
+}
+
+@media (max-width:600px) {
+body {
+		--menu-width:100vw;
+	}
+}
+
+/* Preserve the fixed-footer demo column width from columns_demo.css. */
+body {
+	--menu-width: 260px;
+}

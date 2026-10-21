@@ -11,7 +11,7 @@ See /_notes/grids.md
 HTML
 
 <div class='grid'>
-	<div class='gridInner'>
+	<div class='inner'>
 		any elements
 	</div>
 </div>
@@ -116,12 +116,12 @@ HTML
 	display: grid;
 }
 
-.grid:has(.gridInner) {
+.grid:has(> .inner) {
 	container-name:grid;
 	grid-template-rows: 1fr; /* need to get inner to expand, nothing to do with the grid itself */
 }
 
-.grid > .gridInner {
+.grid > .inner {
 	height:100%;
 	min-height: 100%;
 	align-self: stretch;
@@ -130,7 +130,7 @@ HTML
 /* Note the inheritance from the container. This is all to cope with
 grids within grids. We don't want the properties to cascade,
 but we need them to apply to the "inner" div */
-.gridInner {
+.grid > .inner {
 	--grid-gap: inherit;
 	--grid-width: inherit;
 	--grid-columns: inherit;
@@ -153,32 +153,32 @@ but we need them to apply to the "inner" div */
 	grid-template-rows: var(--grid-template-rows);
 }
 
-.gridInner > * {
+.grid > .inner > * {
 	--flex-stretch: inherit;
 	height: var(--grid-max-height);
 	flex-grow: var(--flex-stretch);
 }
 
 @container grid ( style(--grid-mode:none) ) {
-	.gridInner {
+	.grid > .inner {
 		display: block;
 	}
 }
 
 @container grid ( style(--grid-mode:masonry) ) {
-	.gridInner {
+	.grid > .inner {
 		display: block;
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity 160ms;
 	}
 
-	.gridInner.is-laidout {
+	.grid > .inner.is-laidout {
 		opacity: 1;
 		visibility: visible;
 	}
 
-	.gridInner > * {
+	.grid > .inner > * {
 		--grid-width: inherit;
 		--grid-gap: inherit;
 		width: var(--grid-width);
@@ -186,27 +186,27 @@ but we need them to apply to the "inner" div */
 		margin-bottom: var(--grid-gap);
 	}
 
-	.gridInner > .wide {
+	.grid > .inner > .wide {
 		width: calc( var(--grid-width) * 2 );
 	}
 
 }
 
 @container grid ( style(--grid-mode:fit) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-columns: repeat(auto-fit, minmax(var(--grid-width),1fr));
 	}
 
 }
 
 @container grid ( style(--grid-mode:fill) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-columns: repeat(auto-fill, minmax(var(--grid-width),1fr));
 	}
 }
 
 @container grid ( style(--grid-mode:flex) ) {
-	.gridInner {
+	.grid > .inner {
 		display: flex;
 		flex-direction: var(--flex-direction);
 		flex-wrap: var(--flex-wrap);
@@ -214,36 +214,36 @@ but we need them to apply to the "inner" div */
 }
 
 @container grid ( style(--grid-mode:fixed) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-columns: repeat(var(--grid-columns), 1fr);
 	}
 }
 
 @container grid ( style(--grid-mode:fixedwidth) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-columns:  repeat(auto-fit, var(--grid-width));
 	}
 }
 /* See notes on mode=rows */
 @container grid ( style(--grid-mode:rows) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-columns: 1fr;
 	}
 }
 
 @container grid ( style(--grid-mode:named) ) {
-	.gridInner {
+	.grid > .inner {
 		grid-template-areas: var(--grid-template-areas);
 	}
 }
 
 /* Setting a name seems to cause issues when in other modes*/
 @container grid ( not style(--grid-mode:named) ) {
-	.gridInner > *:not(.fullWidth) {
+	.grid > .inner > *:not(.fullWidth) {
         grid-area: unset !important;
     }
 
-    .gridInner > .fullWidth {
+    .grid > .inner > .fullWidth {
         grid-column: 1 / -1;
     }
 }

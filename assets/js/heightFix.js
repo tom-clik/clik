@@ -59,17 +59,18 @@ NB this is done for all cs-image containers in clik_onready. No reason it can't 
 			// existing site styles do not break while --height-fix is adopted. Read
 			// it first because the registered property always computes to its initial
 			// value, even when --height-fix was not explicitly set.
-			let legacyHeightFix = $element.css("--heightfix").trim();
-			let heightFix = legacyHeightFix || $element.css("--height-fix").trim();
+			let legacyHeightFix = ($element.css("--heightfix") || "").trim();
+			let heightFix = legacyHeightFix || ($element.css("--height-fix") || "").trim();
 			let enabled = clik.trueFalse(heightFix) || false;
 			if (enabled) {
 				$element.addClass("fixedheight");
+				// Remove the image's intrinsic height before measuring on every resize.
+				$image.css({"display":"none"});
 				$imageDiv.css("height","auto");
 				// Measure the fixed component, not the figure after its image is hidden.
 				// A figure with a hidden image and hidden caption has zero content height
 				// in Safari, which collapsed the image at the medium test breakpoints.
 				let h = $element.height();
-				$image.css({"display":"none"});
 				if (!h) {
 					h = $container.height();
 				}

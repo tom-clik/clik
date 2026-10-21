@@ -42,35 +42,43 @@
   }
 
   function createDraggable(handle, target, onStop) {
-    var dragging = false;
-    var startX = 0, startY = 0, startLeft = 0, startTop = 0;
-
-    handle.addEventListener('mousedown', function (e) {
-      dragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
+    var drag = null;
+    var moved = false;
+    handle.style.touchAction = 'none';
+    handle.style.userSelect = 'none';
+    handle.addEventListener('pointerdown', function (event) {
+      if (event.button !== 0 || event.target.closest('button, a, input, select') && event.target !== handle) return;
       var rect = target.getBoundingClientRect();
-      startLeft = rect.left;
-      startTop = rect.top;
-      document.body.style.userSelect = 'none';
-      e.preventDefault();
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
+      moved = false;
+      handle.setPointerCapture(event.pointerId);
     });
-
-    window.addEventListener('mousemove', function (e) {
-      if (!dragging) return;
-      var left = Math.max(0, startLeft + (e.clientX - startX));
-      var top = Math.max(0, startTop + (e.clientY - startY));
-      target.style.left = left + 'px';
-      target.style.top = top + 'px';
+    handle.addEventListener('pointermove', function (event) {
+      if (!drag || event.pointerId !== drag.id) return;
+      var dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+      if (!moved && Math.hypot(dx, dy) < 4) return;
+      moved = true;
+      var rect = target.getBoundingClientRect();
+      target.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, drag.left + dx)) + 'px';
+      target.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, drag.top + dy)) + 'px';
       target.style.right = 'auto';
+      event.preventDefault();
     });
-
-    window.addEventListener('mouseup', function () {
-      if (!dragging) return;
-      dragging = false;
-      document.body.style.userSelect = '';
-      if (onStop) onStop(target);
-    });
+    function stop(event) {
+      if (!drag || event.pointerId !== drag.id) return;
+      drag = null;
+      if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+      if (moved && onStop) onStop(target);
+    }
+    handle.addEventListener('pointerup', stop);
+    handle.addEventListener('pointercancel', stop);
+    handle.addEventListener('lostpointercapture', stop);
+    handle.addEventListener('click', function (event) {
+      if (!moved || event.detail === 0) return;
+      moved = false;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }, true);
   }
 
   function fetchStyles(config) {

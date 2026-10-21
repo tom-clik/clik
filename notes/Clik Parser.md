@@ -34,7 +34,7 @@ Our styling becomes more problematic.Something like this needs care:
 
 ```
 @container grid ( not style(--grid-mode:named) ) {
-	.gridInner > * {
+	.grid > .inner > * {
 		grid-area: unset !important;
 	}
 }

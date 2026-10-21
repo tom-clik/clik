@@ -1,0 +1,9 @@
+/* Simpler. Extracted from columns_samples.css. */
+
+body :is( #content_top, #content_bottom, #nav, #bottomnav) {
+	display:none;
+}
+
+body :is( #header, #footer, #content) {
+	--grid-template-rows: auto;
+}

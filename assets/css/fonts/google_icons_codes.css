@@ -13,11 +13,12 @@
 	--icon-cart: "shopping_cart";
 	--icon-account: "account_circle";
 	--icon-sortasc: "keyboard_arrow_up";
-	--icon-sort: "unfold_more";
+	--icon-sort: "sort_by_alpha";
 	--icon-sortdesc: "keyboard_arrow_down";
 	--icon-grip: "drag_handle";
 	--icon-add: "add_circle";
 	--icon-run: "play_arrow";
+	--icon-settings: "settings";
 	--icon-font: normal 400 1em/1 "Material Icons"; 
 }
 

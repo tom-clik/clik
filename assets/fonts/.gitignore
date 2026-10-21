@@ -2,3 +2,6 @@
 *.woff
 *.ttf
 *.xml
+
+# Font Awesome Free 7.3.1 Solid used by the standard icon mappings.
+!fa-solid-900.woff2

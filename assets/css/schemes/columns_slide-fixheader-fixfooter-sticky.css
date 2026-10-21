@@ -1,0 +1,36 @@
+/* slide header, fixed and footer. Extracted from columns_samples.css. */
+
+body {
+	--header-fixed :1;
+}
+
+body {
+	--footer-fixed :1;
+}
+
+body {
+	--site-align: left;
+	--menupos: slide;
+	--menu-width: 240px;
+}
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}
+
+@media (max-width:800px) {
+body {
+		--menupos: slidedown; 
+	}
+}
+
+/* Preserve the fixed-footer demo column width from columns_demo.css. */
+body {
+	--menu-width: 260px;
+}

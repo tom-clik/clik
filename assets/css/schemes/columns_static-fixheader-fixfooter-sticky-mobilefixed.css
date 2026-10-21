@@ -1,0 +1,32 @@
+/* Fixed header and footer. Extracted from columns_samples.css. */
+
+body {
+	--header-fixed :1;
+}
+
+body {
+	--footer-fixed :1;
+}
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}
+
+@media (max-width:600px) {
+body {
+		--menupos:fixed;
+		--menu-width:100vw;
+		--menu: close;
+	}
+}
+
+/* Preserve the fixed-footer demo column width from columns_demo.css. */
+body {
+	--menu-width: 260px;
+}

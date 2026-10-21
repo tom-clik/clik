@@ -1,0 +1,89 @@
+{
+  "styles": [
+    {
+      "id": "cms-default",
+      "title": "CMS Default",
+      "description": "Uses the existing columns_cms scheme.",
+      "href": "../assets/css/schemes/columns_cms.css",
+      "previewImage": "images/sample_cms.png"
+    },
+    {
+      "id": "static-sticky-mobilefixed",
+      "title": "Basic",
+      "description": "Column layout: static-sticky-mobilefixed.",
+      "href": "../assets/css/schemes/columns_static-sticky-mobilefixed.css"
+    },
+    {
+      "id": "static-fixheader-sticky-mobilefixed",
+      "title": "Fixed header",
+      "description": "Column layout: static-fixheader-sticky-mobilefixed.",
+      "href": "../assets/css/schemes/columns_static-fixheader-sticky-mobilefixed.css"
+    },
+    {
+      "id": "static-fixheader-fixfooter-sticky-mobilefixed",
+      "title": "Fixed header and footer",
+      "description": "Column layout: static-fixheader-fixfooter-sticky-mobilefixed.",
+      "href": "../assets/css/schemes/columns_static-fixheader-fixfooter-sticky-mobilefixed.css"
+    },
+    {
+      "id": "frame",
+      "title": "Framed",
+      "description": "Column layout: frame.",
+      "href": "../assets/css/schemes/columns_frame.css"
+    },
+    {
+      "id": "frame-fixheader-sticky",
+      "title": "Framed Fixed header",
+      "description": "Column layout: frame-fixheader-sticky.",
+      "href": "../assets/css/schemes/columns_frame-fixheader-sticky.css"
+    },
+    {
+      "id": "frame-fixheader-fixfooter-sticky",
+      "title": "Framed, Fixed header and footer",
+      "description": "Column layout: frame-fixheader-fixfooter-sticky.",
+      "href": "../assets/css/schemes/columns_frame-fixheader-fixfooter-sticky.css"
+    },
+    {
+      "id": "simpler",
+      "title": "Simpler",
+      "description": "Column layout: simpler.",
+      "href": "../assets/css/schemes/columns_simpler.css"
+    },
+    {
+      "id": "nomenu",
+      "title": "No menu",
+      "description": "Column layout: nomenu.",
+      "href": "../assets/css/schemes/columns_nomenu.css"
+    },
+    {
+      "id": "sideheader-sticky",
+      "title": "Side header",
+      "description": "Column layout: sideheader-sticky.",
+      "href": "../assets/css/schemes/columns_sideheader-sticky.css"
+    },
+    {
+      "id": "slide-sticky",
+      "title": "slide menu",
+      "description": "Column layout: slide-sticky.",
+      "href": "../assets/css/schemes/columns_slide-sticky.css"
+    },
+    {
+      "id": "slide-fixheader-sticky",
+      "title": "slide menu and fixed header",
+      "description": "Column layout: slide-fixheader-sticky.",
+      "href": "../assets/css/schemes/columns_slide-fixheader-sticky.css"
+    },
+    {
+      "id": "slide-fixheader-fixfooter-sticky",
+      "title": "slide header, fixed and footer",
+      "description": "Column layout: slide-fixheader-fixfooter-sticky.",
+      "href": "../assets/css/schemes/columns_slide-fixheader-fixfooter-sticky.css"
+    },
+    {
+      "id": "fixed-fixheader-fixfooter-sticky",
+      "title": "Fixed menu, header and footer, and menu",
+      "description": "Column layout: fixed-fixheader-fixfooter-sticky.",
+      "href": "../assets/css/schemes/columns_fixed-fixheader-fixfooter-sticky.css"
+    }
+  ]
+}

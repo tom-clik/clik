@@ -79,17 +79,49 @@
 		return url.href;
 	}
 
+	function makeSwitcherDraggable(switcher) {
+		const handle = switcher.querySelector("strong");
+		let drag = null;
+		handle.style.cursor = "grab";
+		handle.style.touchAction = "none";
+		handle.style.userSelect = "none";
+		handle.title = "Drag CSS mode switcher";
+		handle.addEventListener("pointerdown", function (event) {
+			if (event.button !== 0) return;
+			const rect = switcher.getBoundingClientRect();
+			drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
+			handle.setPointerCapture(event.pointerId);
+		});
+		handle.addEventListener("pointermove", function (event) {
+			if (!drag || event.pointerId !== drag.id) return;
+			const rect = switcher.getBoundingClientRect();
+			switcher.style.left = Math.max(0, Math.min(innerWidth - rect.width, drag.left + event.clientX - drag.x)) + "px";
+			switcher.style.top = Math.max(0, Math.min(innerHeight - rect.height, drag.top + event.clientY - drag.y)) + "px";
+			switcher.style.right = "auto";
+			event.preventDefault();
+		});
+		function stop(event) {
+			if (!drag || event.pointerId !== drag.id) return;
+			drag = null;
+			if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+		}
+		handle.addEventListener("pointerup", stop);
+		handle.addEventListener("pointercancel", stop);
+		handle.addEventListener("lostpointercapture", stop);
+	}
+
 	function addSwitcher() {
 		const current = selectedMode();
 		const switcher = document.createElement("nav");
 		switcher.className = "clik-style-switcher";
 		switcher.setAttribute("aria-label", "CSS implementation");
-		switcher.innerHTML = `<strong>CSS mode</strong><a href="${modeUrl("container")}">Container</a><a href="${modeUrl("classes")}">Classes</a>`;
+		switcher.innerHTML = `<strong>&#9881; CSS mode</strong><a href="${modeUrl("container")}">Container</a><a href="${modeUrl("classes")}">Classes</a>`;
 		switcher.querySelectorAll("a")[current === "classes" ? 1 : 0].setAttribute("aria-current", "page");
 		const style = document.createElement("style");
 		style.textContent = ".clik-style-switcher{position:fixed;z-index:2147483647;right:8px;top:8px;display:flex;gap:6px;align-items:center;padding:7px 9px;border:1px solid #555;border-radius:5px;background:#fff;color:#222;font:12px/1.2 sans-serif;box-shadow:0 2px 8px #0005;opacity:.3;transition:opacity .15s}.clik-style-switcher:hover,.clik-style-switcher:focus-within{opacity:1}.clik-style-switcher a{color:#0645ad}.clik-style-switcher a[aria-current=page]{font-weight:bold;text-decoration:none;color:#222}";
 		document.head.appendChild(style);
 		document.body.appendChild(switcher);
+		makeSwitcherDraggable(switcher);
 	}
 
 	switchStylesheets();
@@ -106,6 +138,13 @@
 			});
 		};
 		reflectAll();
+		// Swapped stylesheets may finish loading after DOMContentLoaded. Their
+		// @property initial values must be available before reflecting defaults.
+		document.addEventListener("load", function (event) {
+			if (event.target.matches && event.target.matches('link[rel~="stylesheet"]')) {
+				scheduleReflection();
+			}
+		}, true);
 		window.addEventListener("resize", scheduleReflection);
 		new MutationObserver(scheduleReflection).observe(document.body, {
 			attributes: true,

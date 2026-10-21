@@ -26,6 +26,7 @@ Just trying out the new system with a simple style
 
 	<link rel="stylesheet" href="../assets/css/fonts/fonts_local.css">
 	<link rel="stylesheet" href="../assets/css/fonts/google_icons_local.css">
+	<link rel="stylesheet" href="../assets/css/fonts/google_icons_codes.css">
 	<link rel="stylesheet" href="../assets/css/schemes/columns_cms.css" id="page-scheme-stylesheet">
 	
 	<script src="../assets/js/clik.classStyles.js"></script>
@@ -37,10 +38,10 @@ Just trying out the new system with a simple style
 
 <div id="ubercontainer" class="grid">
 	
-	<div class="gridInner">
+	<div class="inner">
 		
 		<div id="header" class="grid">
-			<div class="gridInner">
+			<div class="inner">
 				
 				<div id="title">
 					<div  id="site-title" class="cs-title">
@@ -50,11 +51,11 @@ Just trying out the new system with a simple style
 
 				<!--- To remove this or place it above the title, adjust #header grid --->
 				<div id="nav" class="grid">
-					<div class="inner spanning gridInner">
+					<div class="inner spanning">
 						
 						<div id="menubuttons">
 							<div class="grid">
-								<div class="gridInner">
+								<div class="inner">
 									<div id="hamburger" class="button auto navbutton ">
 										<a href="#menu.openclose">
 											<i class="icon-menu"></i>
@@ -81,12 +82,12 @@ Just trying out the new system with a simple style
 		</div>
 		
 		<div id="content" class="grid">
-			<div class="gridInner">
+			<div class="inner">
 				
 				
 				<div id="content_main" class="container grid">
 					
-					<div class="inner gridInner spanning">
+					<div class="inner spanning">
 						
 						<div id="menu">
 							<div class="inner">
@@ -103,11 +104,11 @@ Just trying out the new system with a simple style
 
 						<div id="content_wrap" class="grid">
 							
-							<div class="gridInner">
+							<div class="inner">
 
 								<div id="maincol" class="grid">
 
-									<div class="inner gridInner">
+									<div class="inner">
 
 										<div id="maincol_top">
 											<h2>Main col top</h2>
@@ -117,7 +118,7 @@ Just trying out the new system with a simple style
 
 										</div>
 										<div id="maincol_grid" class="grid">
-											<div class="gridInner">
+											<div class="inner">
 												<div class="item">
 													<div class="itemInner">
 														<h3 class="title">Main col grid</h3>
@@ -202,7 +203,7 @@ Just trying out the new system with a simple style
 
 		<div id="footer" class="grid">
 			
-			<div class="gridInner inner spanning">
+			<div class="inner spanning">
 				<p  class="cs-text">&copy Clik.com 2024</p>
 			</div>
 				
@@ -288,7 +289,7 @@ Just trying out the new system with a simple style
 
 		// Native launcher
 		StyleSheetSwitcher.init({
-			jsonUrl: "../assets/js/stylesheet-switcher.sample.json",
+			jsonUrl: "columns_styles.json",
 			panelTitle: "Styles",
 			variantClass: "native",
 			storageKey: "clik-style-choice",

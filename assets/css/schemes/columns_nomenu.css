@@ -1,0 +1,5 @@
+/* No menu. Extracted from columns_samples.css. */
+
+body {
+	--menupos: none;
+}

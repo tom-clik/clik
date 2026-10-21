@@ -19,7 +19,7 @@ Apply masonry to any grids with grid-mode=masonry
 
 		var $element = $(element), 
 			element = element,
-			$grid =$element.find(".gridInner"),
+			$grid =$element.children(".inner"),
 			$imagegridGrid,
 			mode = 'noinit';
 

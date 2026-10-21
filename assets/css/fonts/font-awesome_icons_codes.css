@@ -1,31 +1,36 @@
-/*
-WIP
+/**
+ * Standard Clik icons mapped to Font Awesome Free 7.3.1 (Classic Solid).
+ * Load after icons.css, together with font-awesome_icons_local.css.
+ * Unicode mappings: https://github.com/FortAwesome/Font-Awesome/tree/7.3.1/metadata
  */
-
-body { 
-	--icon-close:'\f2d3';
-	--icon-menu:'\f0c9';
-	--icon-previous:'\f104';
-	--icon-next:'\f105';
-	--icon-squares:'\f00a';
-	--icon-fullscreen: "\f31e";
-	--icon-fullscreen_exit: "\f066";
-	--icon-first_page: "\f100";
-	--icon-last_page: "\f101";
-	--icon-help: "\f059";
-	--icon-cart: "\f07a";
-	--icon-done: "\f00c";
-	--icon-favorite: "\f004";
-	--icon-home: "\f015";
-	--icon-search: "\f002";
-	--icon-account: "\f2bd";
-	--icon-list: "\f03a";
-	--icon-sortasc: "\f882";
-	--icon-sort: "\f0dc";
-	--icon-sortdesc: "\f15d";
-	--icon-grip: "\f58e";
-	--icon-info: "\f05a";
-	--icon-font: normal 400 1em/1 "Font Awesome"; 
+:root {
+	--icon-close: "\f00d"; /* xmark */
+	--icon-menu: "\f0c9"; /* bars */
+	--icon-previous: "\f053"; /* chevron-left */
+	--icon-next: "\f054"; /* chevron-right */
+	--icon-squares: "\f00a"; /* table-cells */
+	--icon-fullscreen: "\f065"; /* expand */
+	--icon-fullscreen_exit: "\f066"; /* compress */
+	--icon-first_page: "\f100"; /* angles-left */
+	--icon-last_page: "\f101"; /* angles-right */
+	--icon-help: "\f059"; /* circle-question */
+	--icon-cart: "\f07a"; /* cart-shopping */
+	--icon-done: "\f00c"; /* check */
+	--icon-favorite: "\f004"; /* heart */
+	--icon-home: "\f015"; /* house */
+	--icon-search: "\f002"; /* magnifying-glass */
+	--icon-account: "\f2bd"; /* circle-user */
+	--icon-list: "\f03a"; /* list */
+	--icon-sortasc: "\f15e"; /* arrow-up-a-z */
+	--icon-sort: "\f0dc"; /* sort */
+	--icon-sortdesc: "\f881"; /* arrow-down-z-a */
+	--icon-grip: "\f7a4"; /* grip-lines */
+	--icon-info: "\f05a"; /* circle-info */
+	--icon-delete: "\f1f8"; /* trash */
+	--icon-credit_card: "\f09d"; /* credit-card */
+	--icon-edit: "\f044"; /* pen-to-square */
+	--icon-add: "\f055"; /* circle-plus */
+	--icon-run: "\f04b"; /* play */
+	--icon-settings: "\f013"; /* gear */
+	--icon-font: normal 900 1em/1 "Font Awesome 7 Free";
 }
-
-	

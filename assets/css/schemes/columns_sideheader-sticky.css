@@ -1,0 +1,17 @@
+/* Side header. Extracted from columns_samples.css. */
+
+body {
+	--headerpos:side;
+	--xcol: close;
+	--site-align: left;
+}
+
+body :is( #xcol, #menu ) {
+	--sticky:1;
+}
+
+@media (max-width:800px) {
+body :is( #xcol, #menu ) {
+		--sticky:0;
+	}
+}

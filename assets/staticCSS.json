@@ -27,20 +27,20 @@
                 "fadeInOnScroll"
             ],
             "name": "content",
-            "min": "/assets/css/_min/clikpage.0.24.min.css"
+            "min": "//assets.clik.com/css/_min/clikpage.0.25.min.css"
         },
         {
             "scripts":
             [
                 "google_icons_donotuse_directly",
-                "google_icons_codes_donotuse_directly"
+                "google_icons_codes"
             ],
             "name": "google_icons"
         },
         {
             "scripts":
             [
-                "font-awesome_icons_codes_donotuse_directly",
+                "font-awesome_icons_codes",
                 "font-awesome_icons_donotuse_directly"
             ],
             "name": "font-awesome_icons"
@@ -75,8 +75,10 @@
             "name": "menus"
         },
         {
-            "min": "/assets/css/grids.css",
-            "name": "grids"
+            "debug": "/assets/css/grids.css",
+            "min": "/assets/css/_min/grids.0.24.min.css",
+            "name": "grids",
+            "compress": 1
         },
         {
             "min": "/assets/css/icons.css",
@@ -210,7 +212,7 @@
         },
         {
             "debug": "/assets/css/schemes/columns_cms.css",
-            "min": "/assets/css/_min/columns_cms.3.min.css",
+            "min": "//assets.clik.com/css/_min/columns_cms.3.min.css",
             "name": "cms_columns",
             "requires": "reset",
             "compress": 1
@@ -224,15 +226,23 @@
         },
         {
             "debug": "/assets/css/fonts/google_icons_codes.css",
-            "name": "google_icons_codes_donotuse_directly",
+            "name": "google_icons_codes",
             "requires": "google_icons_donotuse_directly",
             "min": "/assets/css/_min/fonts/google_icons_codes.2.min.css",
             "compress": 1
         },
         {
             "debug": "/_clik/css/fonts/font-awesome_icons_local.css",
-            "min": "",
-            "name": "ont-awesome_icons_donotuse_directly"
+            "min": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/solid.css",
+            "name": "font-awesome_icons_donotuse_directly"
+        },
+        {
+            "debug": "/_clik/css/fonts/font-awesome_icons_codes.css",
+            "name": "font-awesome_icons_codes",
+            "requires": "font-awesome_icons_donotuse_directly",
+            "min": "/assets/css/_min/fonts/font-awesome_icons_codes.1.min.css",
+            "compress": 1
         }
+        
     ]
 }

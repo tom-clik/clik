@@ -44,7 +44,8 @@ A build process would probably also push the files to the cloud or similar.
 
 <cfscript>
 mappings = [
-	"/assets/" = ExpandPath("../assets/")
+	"/assets/" = ExpandPath("../assets/"),
+	"//assets.clik.com/" = ExpandPath("../assets/")
 ];
 
 for (opts in ["CSS","JS"]) {
